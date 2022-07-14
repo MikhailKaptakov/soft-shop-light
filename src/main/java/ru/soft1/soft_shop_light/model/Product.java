@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "product", uniqueConstraints = {@UniqueConstraint(columnNames = {"name"}, name = "unique_name")})
+@Table(name = "product")
 public class Product extends AbstractEntity {
 
     @Id
@@ -53,10 +53,10 @@ public class Product extends AbstractEntity {
     @Range(min = 0, max = Integer.MAX_VALUE)
     private int deliveryTimeInDays;
 
-    @Column(name = "nds_include", nullable = false, columnDefinition = "bool default true")
+    @Column(name = "nds_include", nullable = false /*columnDefinition = "bool default true"*/)
     private boolean ndsInclude;
 
-    @Column(name = "req_tech_support", nullable = false, columnDefinition = "bool default false")
+    @Column(name = "req_tech_support", nullable = false/*, columnDefinition = "bool default false"*/)
     private boolean requiredTechnicalSupport;
 
     public Product() {

@@ -30,7 +30,7 @@ public class ProductOrder extends AbstractEntity {
     @Size(max = 128)
     private String email;
 
-    @Column(name = "telephoneNumber", nullable = false)
+    @Column(name = "telephone_number", nullable = false)
     @TelephoneRu
     @NotBlank
     private String telephoneNumber;
@@ -97,6 +97,20 @@ public class ProductOrder extends AbstractEntity {
         this.positions = positions;
     }
 
+    public boolean isIncluded(long productId) {
+        return getById(productId) == null;
+    }
 
+    public OrderPosition getById(long productId) {
+        return positions.stream()
+                .filter((p)-> p.getProduct().getId().equals(id))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public void addProduct(Product product) {
+        //todo если продукт имеется, то добавляем +1, если нет - создаем новуюб позицию и добавляем
+        //todo - перенести этот метод на уровень сервисов
+    }
 
 }

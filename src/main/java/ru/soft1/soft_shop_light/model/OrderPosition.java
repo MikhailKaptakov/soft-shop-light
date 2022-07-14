@@ -29,14 +29,23 @@ public class OrderPosition extends AbstractEntity{
     @NotNull
     @Positive
     @Range(max = Byte.MAX_VALUE)
-    private byte count;
+    private int count;
 
     public OrderPosition() {
     }
 
-    public OrderPosition(long id, Product product, byte count) {
+    public OrderPosition(long id, Product product, int count) {
         super(id);
         this.product = product;
         this.count = count;
     }
+
+    public OrderPosition(Product product, int count) {
+        this.product = product;
+        this.count = count;
+    }
+
+    public void addOne() {
+        count++;
+    };
 }
