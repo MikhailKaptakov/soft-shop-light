@@ -1,0 +1,87 @@
+package ru.soft1.soft_shop_light.model;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.hibernate.validator.constraints.Range;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+@Data
+@Entity
+@Table(name = "product", uniqueConstraints = {@UniqueConstraint(columnNames = {"name"}, name = "unique_name")})
+public class Product implements HasId {
+
+    public static final int START_SEQ = 1000;
+
+    @Id
+    @SequenceGenerator(name = "product_seq", sequenceName = "product_seq", allocationSize = 1, initialValue = START_SEQ)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_seq")
+    private Long id;
+
+    @Column(name = "name", nullable = false)
+    @NotBlank
+    @Size(min=3, max=50)
+    private String name;
+
+    @Column(name = "vendor", nullable = false)
+    @NotBlank
+    @Size(min=3, max=50)
+    private String vendor;
+
+    @Column(name = "country")
+    @Size(min=3, max=50)
+    private String country;
+
+    @Column(name = "license_time", nullable = false)
+    @NotBlank
+    @Size(min=3, max=50)
+    private String licenseTime;
+
+    @Column(name = "description")
+    @Size(max=3000)
+    private String description;
+
+    @Column(name = "price", nullable = false)
+    @NotNull
+    @Range(min = 0, max = Integer.MAX_VALUE)
+    private int price;
+
+    @Column(name = "delivery_time_in_days", nullable = false)
+    @NotNull
+    @Range(min = 0, max = Integer.MAX_VALUE)
+    private int deliveryTimeInDays;
+
+    @Column(name = "nds_include", nullable = false, columnDefinition = "bool default true")
+    private boolean ndsInclude;
+
+    @Column(name = "req_tech_support", nullable = false, columnDefinition = "bool default false")
+    private boolean requiredTechnicalSupport;
+
+    public Product() {
+    }
+
+    public Product(long id,
+                   String name,
+                   String vendor,
+                   String country,
+                   String licenseTime,
+                   String description,
+                   int price,
+                   int deliveryTimeInDays,
+                   boolean ndsInclude,
+                   boolean requiredTechnicalSupport) {
+        this.id = id;
+        this.name = name;
+        this.vendor = vendor;
+        this.country = country;
+        this.licenseTime = licenseTime;
+        this.description = description;
+        this.price = price;
+        this.deliveryTimeInDays = deliveryTimeInDays;
+        this.ndsInclude = ndsInclude;
+        this.requiredTechnicalSupport = requiredTechnicalSupport;
+    }
+}
