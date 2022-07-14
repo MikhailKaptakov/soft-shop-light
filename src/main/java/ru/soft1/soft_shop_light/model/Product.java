@@ -10,11 +10,10 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "product", uniqueConstraints = {@UniqueConstraint(columnNames = {"name"}, name = "unique_name")})
-public class Product implements HasId {
-
-    public static final int START_SEQ = 1000;
+public class Product extends AbstractEntity {
 
     @Id
     @SequenceGenerator(name = "product_seq", sequenceName = "product_seq", allocationSize = 1, initialValue = START_SEQ)
