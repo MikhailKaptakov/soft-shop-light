@@ -25,27 +25,27 @@ public class OrderPosition extends AbstractEntity{
     @NotNull
     private Product product;
 
-    @Column(name = "count", nullable = false)
+    @Column(name = "product_value", nullable = false)
     @NotNull
     @Positive
     @Range(max = Byte.MAX_VALUE)
-    private int count;
+    private int value;
 
     public OrderPosition() {
     }
 
-    public OrderPosition(long id, Product product, int count) {
+    public OrderPosition(long id, Product product, int value) {
         super(id);
         this.product = product;
-        this.count = count;
+        this.value = value;
     }
 
-    public OrderPosition(Product product, int count) {
+    public OrderPosition(Product product, int value) {
         this.product = product;
-        this.count = count;
+        this.value = value;
     }
 
     public void addOne() {
-        count++;
+        value++;
     };
 }

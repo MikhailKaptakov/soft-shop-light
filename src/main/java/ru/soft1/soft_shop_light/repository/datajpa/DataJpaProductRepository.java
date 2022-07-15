@@ -14,11 +14,11 @@ import java.util.List;
 @Repository
 public interface DataJpaProductRepository extends JpaRepository<Product, Long> {
 
-    List<Product> findAllOrderById();
-
     @Modifying
     @Transactional
-    @Query("DELETE FROM product p WHERE p.id=:id")
-    long delete(@Param("id") long id);
+    @Query("DELETE FROM Product p WHERE p.id=:id")
+    int delete(@Param("id") long id);
 
+    @Query("SELECT p FROM Product p ORDER BY p.id ASC")
+    List<Product> findAllOrderedById();
 }

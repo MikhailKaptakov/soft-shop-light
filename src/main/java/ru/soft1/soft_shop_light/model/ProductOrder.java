@@ -54,7 +54,7 @@ public class ProductOrder extends AbstractEntity {
     @Size(min=3, max=100)
     private String companyName;
 
-    @Column(name = "address_name", nullable = false)
+    @Column(name = "address", nullable = false)
     @Size(min=3, max=100)
     private String address;
 
@@ -108,9 +108,17 @@ public class ProductOrder extends AbstractEntity {
                 .orElse(null);
     }
 
-    public void addProduct(Product product) {
-        //todo если продукт имеется, то добавляем +1, если нет - создаем новуюб позицию и добавляем
-        //todo - перенести этот метод на уровень сервисов
+    public boolean addProduct(Product product) {
+        if (product == null) {
+            return false;
+        }
+        OrderPosition pos = getById(product.getId());
+        if (pos != null) {
+            pos.addOne();
+        } else {
+            positions.add(new OrderPosition(product, 1));
+        }
+        return true;
     }
 
 }

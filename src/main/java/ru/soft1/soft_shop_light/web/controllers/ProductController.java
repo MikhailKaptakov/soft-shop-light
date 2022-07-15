@@ -44,12 +44,12 @@ public class ProductController {
     @PostMapping("/{id}")
     public String addToOrder(Model model, @PathVariable("id") long id) {
         ProductOrder order = (ProductOrder) model.getAttribute(ProductController.currentOrderAttribute);
+        //check not null order
         Product product = ValidationUtil.checkNotFoundWithId(productRepository.get(id), id);
-
-        order.getById(id).addOne();
-
+        order.addProduct(product);
         return "forward:/products";
     }
+
 
 
     /*@PostMapping("/register")

@@ -15,7 +15,7 @@ public class ProductRepository {
     DataJpaProductRepository dataJpaProductRepository;
 
     public List<Product> getAllOrderById() {
-        return dataJpaProductRepository.findAllOrderById();
+        return dataJpaProductRepository.findAllOrderedById();
     }
 
     public List<Product> getAllBySort(Sort sort) {
