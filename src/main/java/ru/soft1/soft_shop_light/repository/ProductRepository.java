@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import ru.soft1.soft_shop_light.model.Product;
-import ru.soft1.soft_shop_light.repository.datajpa.DataJpaProductRepository;
+import ru.soft1.soft_shop_light.repository.crud.CrudProductRepository;
 
 import java.util.List;
 
@@ -12,26 +12,26 @@ import java.util.List;
 public class ProductRepository {
 
     @Autowired
-    DataJpaProductRepository dataJpaProductRepository;
+    CrudProductRepository crudProductRepository;
 
     public List<Product> getAllOrderById() {
-        return dataJpaProductRepository.findAllOrderedById();
+        return crudProductRepository.findAllOrderedById();
     }
 
     public List<Product> getAllBySort(Sort sort) {
-        return  dataJpaProductRepository.findAll(sort).stream().toList();
+        return  crudProductRepository.findAll(sort).stream().toList();
     }
 
     public Product save(Product product) {
-        return dataJpaProductRepository.save(product);
+        return crudProductRepository.save(product);
     }
 
     public boolean delete(long id) {
-        return dataJpaProductRepository.delete(id) != 0;
+        return crudProductRepository.delete(id) != 0;
     }
 
     public Product get(long id) {
-        return dataJpaProductRepository.findById(id).orElse(null);
+        return crudProductRepository.findById(id).orElse(null);
     }
 
 }

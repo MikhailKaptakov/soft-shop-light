@@ -2,6 +2,7 @@ package ru.soft1.soft_shop_light.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.CreationTimestamp;
 import ru.soft1.soft_shop_light.util.validation.TelephoneRu;
 
 import javax.persistence.*;
@@ -62,7 +63,7 @@ public class ProductOrder extends AbstractEntity {
     @Size(min=3, max=256)
     private String comment;
 
-    @Column(name = "order_date_time", nullable = false, columnDefinition = "date default current_date", updatable = false)
+    @Column(name = "order_date_time", nullable = false, columnDefinition = "timestamp default current_timestamp", updatable = false)
     @NotNull
     private LocalDateTime orderDateTime;
 

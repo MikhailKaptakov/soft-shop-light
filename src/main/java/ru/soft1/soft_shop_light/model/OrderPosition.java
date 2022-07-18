@@ -11,7 +11,7 @@ import javax.validation.constraints.Positive;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "order_position", uniqueConstraints = {@UniqueConstraint(columnNames = {"product_id"},
+@Table(name = "order_position", uniqueConstraints = {@UniqueConstraint(columnNames = {"product_id", "order_id"},
         name = "order_product_id")})
 public class OrderPosition extends AbstractEntity{
 
@@ -47,5 +47,5 @@ public class OrderPosition extends AbstractEntity{
 
     public void addOne() {
         value++;
-    };
+    }
 }

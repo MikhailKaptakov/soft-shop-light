@@ -13,6 +13,6 @@ public class popDb {
 
     @Disabled //use if you need drop db
     @Test
-    void drop() {
+    void pop() {
     }
 }

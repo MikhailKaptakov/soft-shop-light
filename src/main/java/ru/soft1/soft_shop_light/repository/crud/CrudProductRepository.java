@@ -1,4 +1,4 @@
-package ru.soft1.soft_shop_light.repository.datajpa;
+package ru.soft1.soft_shop_light.repository.crud;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -12,7 +12,7 @@ import java.util.List;
 
 @Transactional(readOnly = true)
 @Repository
-public interface DataJpaProductRepository extends JpaRepository<Product, Long> {
+public interface CrudProductRepository extends JpaRepository<Product, Long> {
 
     @Modifying
     @Transactional
