@@ -22,11 +22,11 @@ public class ProductService {
     }
 
     @Cacheable("products") //todo настроить кеш
-    public List<Product> getAllProducts() {
+    public List<Product> getAll() {
         return productRepository.getAllOrderById();
     }
 
-    public Product getProduct(long id) {
+    public Product get(long id) {
         return ValidationUtil.checkNotFoundWithId(productRepository.get(id), id);
     }
 

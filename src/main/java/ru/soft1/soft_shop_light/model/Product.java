@@ -83,4 +83,17 @@ public class Product extends AbstractEntity {
         this.ndsInclude = ndsInclude;
         this.requiredTechnicalSupport = requiredTechnicalSupport;
     }
+
+    public Product(Product product) {
+        this(product.id,
+                product.name,
+                product.vendor,
+                product.country,
+                product.licenseTime,
+                product.description,
+                product.price,
+                product.deliveryTimeInDays,
+                product.ndsInclude,
+                product.requiredTechnicalSupport);
+    }
 }

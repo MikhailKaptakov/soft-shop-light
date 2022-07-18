@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import ru.soft1.soft_shop_light.configuration.ValidationCustomer;
 import ru.soft1.soft_shop_light.model.Product;
 import ru.soft1.soft_shop_light.service.ProductService;
 import ru.soft1.soft_shop_light.util.validation.ValidationUtil;
@@ -27,18 +28,21 @@ public class RestProductController {
     @Autowired
     private ProductService productService;
 
+    // доступен всем пользователям
     @GetMapping
     public List<Product> getAll() {
         log.info("get all");
-        return productService.getAllProducts();
+        return productService.getAll();
     }
 
+    // доступен всем пользователям
     @GetMapping("/{id}")
     public Product get(@PathVariable("id") long id) {
         log.info("get {}", id);
-        return productService.getProduct(id);
+        return productService.get(id);
     }
 
+    // доступен исключительно админу
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
@@ -46,17 +50,19 @@ public class RestProductController {
         productService.delete(id);
     }
 
+    // доступен исключительно админу
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@Validated @RequestBody Product product, @PathVariable long id) {
+    public void update(@Validated(ValidationCustomer.Web.class) @RequestBody Product product, @PathVariable long id) {
         log.info("update {} with id={}", product, id);
         ValidationUtil.assureIdConsistent(product, id);
         productService.update(product);
     }
 
+    // доступен исключительно админу
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Product> create(@Validated @RequestBody Product product) {
+    public ResponseEntity<Product> create(@Validated(ValidationCustomer.Web.class) @RequestBody Product product) {
         log.info("create {}", product);
         checkNew(product);
         Product created = productService.create(product);
