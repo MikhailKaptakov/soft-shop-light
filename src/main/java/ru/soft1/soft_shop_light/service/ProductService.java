@@ -35,9 +35,9 @@ public class ProductService {
     }
 
     @CacheEvict(value = "products", allEntries = true)
-    public Product update(Product product) {
+    public void update(Product product) {
         Assert.notNull(product, "product must not be null");
-        return productRepository.save(product);
+        productRepository.save(product);
     }
 
     @CacheEvict(value = "products", allEntries = true)

@@ -23,7 +23,7 @@ import static ru.soft1.soft_shop_light.util.validation.ValidationUtil.checkNew;
 @RequestMapping(value = RestProductController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class RestProductController {
 
-    static final String REST_URL = "/rest/admin/products";
+    static final String REST_URL = "/rest/products";
 
     @Autowired
     private ProductService productService;

@@ -56,7 +56,8 @@ class ProductServiceTest {
     void update() {
         Product expected = ProductTestData.getProductOne();
         expected.setName("New name for product 1");
-        ProductTestData.PRODUCT_MATCHER.assertMatch(productService.update(expected), expected);
+        productService.update(expected);
+        ProductTestData.PRODUCT_MATCHER.assertMatch(productService.get(expected.getId()), expected);
     }
 
     @Test

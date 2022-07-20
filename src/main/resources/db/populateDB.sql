@@ -1,6 +1,9 @@
 DELETE FROM order_position;
 DELETE FROM product;
 DELETE FROM product_order_no_authority;
+ALTER SEQUENCE order_position_seq RESTART WITH 1000;
+ALTER SEQUENCE product_seq RESTART WITH 1000;
+ALTER SEQUENCE product_order_seq RESTART WITH 1000;
 
 INSERT INTO product (id, name, vendor, country, license_time, description, price, delivery_time_in_days, nds_include, req_tech_support, available)
 VALUES (1, 'prod1','vendor1','country1','33 minutes','description',1000,5,true,true, true),
