@@ -34,22 +34,38 @@ class RestProductControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void get() {
+    void get() throws Exception {
+        Product expected = ProductTestData.getProductOne();
+        perform(MockMvcRequestBuilders.get(REST_URL + expected.getId()))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(ProductTestData.PRODUCT_MATCHER.contentJson(expected));
+    }
+
+    @Test
+    void invalidGet() throws Exception {
+        perform(MockMvcRequestBuilders.get(REST_URL + 100))
+                .andExpect(status().isUnprocessableEntity())
+                .andDo(print());
+        //todo exception handling
+    }
+
+    @Test
+    void delete() throws Exception{
+/*        perform(MockMvcRequestBuilders.post(REST_URL + 100))
+                .andExpect(status().isUnprocessableEntity())
+                .andDo(print());*/
         //todo
     }
 
     @Test
-    void delete() {
+    void update() throws Exception {
         //todo
     }
 
     @Test
-    void update() {
-        //todo
-    }
-
-    @Test
-    void create() {
+    void create() throws Exception{
         //todo
     }
 }

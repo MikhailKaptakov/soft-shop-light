@@ -1,5 +1,6 @@
 package ru.soft1.soft_shop_light.service;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import ru.soft1.soft_shop_light.model.Product;
+import ru.soft1.soft_shop_light.repository.ProductRepository;
 import ru.soft1.soft_shop_light.support.ProductTestData;
 import ru.soft1.soft_shop_light.support.TimingExtension;
 import ru.soft1.soft_shop_light.util.exception.NotFoundException;
@@ -23,6 +25,9 @@ class ProductServiceTest {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private ProductRepository productRepository;
 
     @Test
     void getAll() {
@@ -43,8 +48,8 @@ class ProductServiceTest {
 
     @Test
     void delete() {
-
-        //todo
+        productService.delete(ProductTestData.FIRST_ID + 3);
+        Assertions.assertNotNull(productRepository.get(ProductTestData.FIRST_ID + 3));
     }
 
     @Test

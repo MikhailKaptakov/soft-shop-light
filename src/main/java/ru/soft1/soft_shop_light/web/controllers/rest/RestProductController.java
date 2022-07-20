@@ -28,14 +28,16 @@ public class RestProductController {
     @Autowired
     private ProductService productService;
 
-    // доступен всем пользователям
+    //todo getAllAvailable доступен всем пользователям
+
+    // доступен исключительно админу
     @GetMapping
     public List<Product> getAll() {
         log.info("get all");
         return productService.getAll();
     }
 
-    // доступен всем пользователям
+    // доступен исключительно админу
     @GetMapping("/{id}")
     public Product get(@PathVariable("id") long id) {
         log.info("get {}", id);

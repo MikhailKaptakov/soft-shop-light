@@ -30,7 +30,7 @@ public class ProductController {
     @GetMapping
     public String getAll(Model model) {
         log.debug("get all products");
-        model.addAttribute("products", productService.getAll());
+        model.addAttribute("products", productService.getAll()); //todo getAvailable
         return "products";
     }
 
