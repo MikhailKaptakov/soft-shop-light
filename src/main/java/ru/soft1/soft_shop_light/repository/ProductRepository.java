@@ -3,6 +3,7 @@ package ru.soft1.soft_shop_light.repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.soft1.soft_shop_light.model.Product;
 import ru.soft1.soft_shop_light.repository.crud.CrudProductRepository;
 
@@ -22,10 +23,12 @@ public class ProductRepository {
         return  crudProductRepository.findAll(sort).stream().toList();
     }
 
+    @Transactional
     public Product save(Product product) {
         return crudProductRepository.save(product);
     }
 
+    @Transactional
     public boolean delete(long id) {
         return crudProductRepository.delete(id) != 0;
     }
@@ -34,4 +37,7 @@ public class ProductRepository {
         return crudProductRepository.findById(id).orElse(null);
     }
 
+    //todo getAvailableOrderById
+    //todo getAvailable(sort)
+    //
 }

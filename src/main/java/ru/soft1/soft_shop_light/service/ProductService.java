@@ -21,7 +21,7 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    @Cacheable("products") //todo настроить кеш
+    @Cacheable("products")
     public List<Product> getAll() {
         return productRepository.getAllOrderById();
     }
@@ -35,9 +35,9 @@ public class ProductService {
     }
 
     @CacheEvict(value = "products", allEntries = true)
-    public void update(Product product) {
+    public Product update(Product product) {
         Assert.notNull(product, "product must not be null");
-        productRepository.save(product);
+        return productRepository.save(product);
     }
 
     @CacheEvict(value = "products", allEntries = true)
@@ -45,4 +45,7 @@ public class ProductService {
         Assert.notNull(product, "product must not be null");
         return productRepository.save(product);
     }
+
+    //todo getAvailable
+    //todo getAvailable(Sort)
 }

@@ -1,33 +1,76 @@
 package ru.soft1.soft_shop_light.repository;
 
+import org.attoparser.ParsingDocTypeMarkupUtil;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Sort;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlConfig;
+import ru.soft1.soft_shop_light.model.Product;
+import ru.soft1.soft_shop_light.support.ProductTestData;
+import ru.soft1.soft_shop_light.support.TimingExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
+import javax.persistence.PersistenceException;
+import javax.validation.ConstraintViolationException;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
-class ProductRepositoryTest {
+import static ru.soft1.soft_shop_light.support.ProductTestData.getAllProduct;
+
+@SpringBootTest
+@Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"), executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@ExtendWith(TimingExtension.class)
+public class ProductRepositoryTest {
+
+    @Autowired
+    private ProductRepository productRepository;
 
     @Test
     void getAllOrderById() {
-        //todo
+        ProductTestData.PRODUCT_MATCHER.assertMatch(productRepository.getAllOrderById(), getAllProduct());
     }
 
     @Test
     void getAllBySort() {
-        //todo
+        List<Product> expected = new ArrayList<>(ProductTestData.getAllProduct());
+        expected.sort(Comparator.comparing(Product::getName));
+        ProductTestData.PRODUCT_MATCHER.assertMatch(
+                productRepository.getAllBySort(Sort.by(Sort.Direction.ASC, "name")), expected);
     }
 
     @Test
     void save() {
-        //todo
+        Product expected = ProductTestData.getNewProduct();
+        Product actual = productRepository.save(expected);
+        expected.setId((long)Product.START_SEQ);
+        ProductTestData.PRODUCT_MATCHER.assertMatch(
+                actual, expected);
+    }
+
+    @Test
+    void illegalSave() {
+        Product product = ProductTestData.getNewProduct();
+        product.setName("");
+        Assertions.assertThrows(Exception.class,()-> {productRepository.save(product);});
     }
 
     @Test
     void delete() {
-        //todo
+        //todo только 4 product тестовых данных не связан с другими таблицами. Касакадное удаление хранящихся
+        // позиций заказов - не допустимо (поетря данных заказов), требуется добавить обработку эксепшенов на уровне сервиса
+        // в описании эксепшенов дать сообщение о недопустимости удаления связанной сущности (фигурирующей в каком либо заказе)
+        //метод delete использовать очень аккуратно
+        Assertions.assertTrue(productRepository.delete(ProductTestData.FIRST_ID + 3));
+        Assertions.assertNull(productRepository.get(ProductTestData.FIRST_ID + 3));
     }
 
     @Test
     void get() {
-        //todo
+        ProductTestData.PRODUCT_MATCHER.assertMatch(productRepository.get(ProductTestData.FIRST_ID),
+                ProductTestData.getProductOne());
     }
 }

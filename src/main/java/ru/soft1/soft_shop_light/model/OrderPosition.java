@@ -20,6 +20,7 @@ public class OrderPosition extends AbstractEntity{
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_position_seq")
     private Long id;
 
+    //todo убрать зависимость?
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id", nullable = false)
     @NotNull
@@ -30,6 +31,8 @@ public class OrderPosition extends AbstractEntity{
     @Positive
     @Range(max = Byte.MAX_VALUE)
     private int value;
+
+    //todo productdetails и конвертер в строку определённого формата?
 
     public OrderPosition() {
     }

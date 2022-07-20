@@ -43,16 +43,22 @@ class ProductServiceTest {
 
     @Test
     void delete() {
+
         //todo
     }
 
     @Test
     void update() {
-        //todo
+        Product expected = ProductTestData.getProductOne();
+        expected.setName("New name for product 1");
+        ProductTestData.PRODUCT_MATCHER.assertMatch(productService.update(expected), expected);
     }
 
     @Test
     void create() {
-        //todo
+        Product expected = ProductTestData.getNewProduct();
+        Product actual = productService.create(expected);
+        expected.setId((long)Product.START_SEQ);
+        ProductTestData.PRODUCT_MATCHER.assertMatch(actual, expected);
     }
 }

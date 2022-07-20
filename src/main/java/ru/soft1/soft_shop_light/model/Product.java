@@ -59,10 +59,13 @@ public class Product extends AbstractEntity {
     @Column(name = "req_tech_support", nullable = false/*, columnDefinition = "bool default false"*/)
     private boolean requiredTechnicalSupport;
 
+    @Column(name="available", nullable = false, columnDefinition = "boolean default true")
+    private boolean available;
+
     public Product() {
     }
 
-    public Product(long id,
+    public Product(Long id,
                    String name,
                    String vendor,
                    String country,
@@ -71,8 +74,23 @@ public class Product extends AbstractEntity {
                    int price,
                    int deliveryTimeInDays,
                    boolean ndsInclude,
-                   boolean requiredTechnicalSupport) {
+                   boolean requiredTechnicalSupport,
+                   boolean available) {
+        this(name, vendor, country, licenseTime, description, price,
+                deliveryTimeInDays, ndsInclude, requiredTechnicalSupport, available);
         this.id = id;
+    }
+
+    public Product(String name,
+                   String vendor,
+                   String country,
+                   String licenseTime,
+                   String description,
+                   int price,
+                   int deliveryTimeInDays,
+                   boolean ndsInclude,
+                   boolean requiredTechnicalSupport,
+                   boolean available) {
         this.name = name;
         this.vendor = vendor;
         this.country = country;
@@ -82,6 +100,20 @@ public class Product extends AbstractEntity {
         this.deliveryTimeInDays = deliveryTimeInDays;
         this.ndsInclude = ndsInclude;
         this.requiredTechnicalSupport = requiredTechnicalSupport;
+        this.available = available;
+    }
+
+    public Product(String name,
+                   String vendor,
+                   String country,
+                   String licenseTime,
+                   String description,
+                   int price,
+                   int deliveryTimeInDays,
+                   boolean ndsInclude,
+                   boolean requiredTechnicalSupport) {
+        this(name, vendor, country, licenseTime, description, price,
+                deliveryTimeInDays, ndsInclude, requiredTechnicalSupport, true);
     }
 
     public Product(Product product) {
@@ -94,6 +126,7 @@ public class Product extends AbstractEntity {
                 product.price,
                 product.deliveryTimeInDays,
                 product.ndsInclude,
-                product.requiredTechnicalSupport);
+                product.requiredTechnicalSupport,
+                product.available);
     }
 }
