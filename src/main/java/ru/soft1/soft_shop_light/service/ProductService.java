@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import ru.soft1.soft_shop_light.model.Product;
 import ru.soft1.soft_shop_light.repository.ProductRepository;
@@ -30,6 +31,7 @@ public class ProductService {
         return ValidationUtil.checkNotFoundWithId(productRepository.get(id), id);
     }
 
+
     @CacheEvict(value = {"products", "available_products"}, allEntries = true)
     public void delete(long id) {
         ValidationUtil.checkNotFoundWithId(productRepository.delete(id), id);
@@ -52,4 +54,11 @@ public class ProductService {
         return productRepository.getAllAvailable();
     }
 
+    @Transactional
+    @CacheEvict(value = {"products", "available_products"}, allEntries = true)
+    public void setAvailable(long id, boolean available) {
+        Product product = get(id);
+        product.setAvailable(available);
+        productRepository.save(product);
+    }
 }

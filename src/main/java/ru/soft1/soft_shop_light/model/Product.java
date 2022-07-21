@@ -51,13 +51,11 @@ public class Product extends AbstractEntity {
 
     @Column(name = "price", nullable = false)
     @NotNull
-    @NoHtml
     @Range(min = 0, max = Integer.MAX_VALUE)
     private int price;
 
     @Column(name = "delivery_time_in_days", nullable = false)
     @NotNull
-    @NoHtml
     @Range(min = 0, max = Integer.MAX_VALUE)
     private int deliveryTimeInDays;
 

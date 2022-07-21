@@ -49,7 +49,7 @@ class ProductServiceTest {
     @Test
     void delete() {
         productService.delete(ProductTestData.FIRST_ID + 3);
-        Assertions.assertNotNull(productRepository.get(ProductTestData.FIRST_ID + 3));
+        Assertions.assertNull(productRepository.get(ProductTestData.FIRST_ID + 3));
     }
 
     @Test
@@ -72,5 +72,13 @@ class ProductServiceTest {
     void getAvailable() {
         List<Product> expected = ProductTestData.getAllAvailableProduct();
         ProductTestData.PRODUCT_MATCHER.assertMatch(productService.getAvailable(), expected);
+    }
+
+    @Test
+    void setAvailable() {
+        Product expected = ProductTestData.getProductFive();
+        expected.setAvailable(true);
+        productService.setAvailable(expected.getId(), true);
+        ProductTestData.PRODUCT_MATCHER.assertMatch(productService.get(expected.getId()), expected);
     }
 }

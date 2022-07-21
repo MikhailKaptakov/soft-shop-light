@@ -28,8 +28,6 @@ public class RestProductController {
     @Autowired
     private ProductService productService;
 
-    //todo getAllAvailable доступен всем пользователям
-
     // доступен исключительно админу
     @GetMapping
     public List<Product> getAll() {
@@ -37,6 +35,14 @@ public class RestProductController {
         return productService.getAll();
     }
 
+    @PatchMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void setAvailable(@PathVariable long id, @RequestParam boolean available) {
+        log.info(available ? "enable {}" : "disable {}", id);
+        productService.setAvailable(id, available);
+    }
+
+    /*доступен всем пользователям*/
     @GetMapping("/available")
     public List<Product> getAllAvailable() {
         log.info("get available");

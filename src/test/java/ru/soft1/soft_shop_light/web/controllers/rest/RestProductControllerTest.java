@@ -1,5 +1,6 @@
 package ru.soft1.soft_shop_light.web.controllers.rest;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -146,4 +147,14 @@ class RestProductControllerTest extends AbstractControllerTest {
                 .andExpect(errorType(VALIDATION_ERROR));
     }
 
+    @Test
+    void setAvailable() throws Exception{
+        perform(MockMvcRequestBuilders.patch(REST_URL + 5)
+                .param("available", "true")
+                .contentType(MediaType.APPLICATION_JSON))
+                /*.with(userHttpBasic(admin)))*/ //todo
+                .andDo(print())
+                .andExpect(status().isNoContent());
+        Assertions.assertTrue(productService.get(5).isAvailable());
+    }
 }

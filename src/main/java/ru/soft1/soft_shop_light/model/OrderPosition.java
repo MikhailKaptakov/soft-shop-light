@@ -32,6 +32,8 @@ public class OrderPosition extends AbstractEntity{
     @Range(max = Byte.MAX_VALUE)
     private int value;
 
+
+
     //todo productdetails и конвертер в строку определённого формата?
 
     public OrderPosition() {
