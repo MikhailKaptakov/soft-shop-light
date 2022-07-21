@@ -31,7 +31,7 @@ public class ProductService {
         return ValidationUtil.checkNotFoundWithId(productRepository.get(id), id);
     }
 
-
+    @Transactional
     @CacheEvict(value = {"products", "available_products"}, allEntries = true)
     public void delete(long id) {
         ValidationUtil.checkNotFoundWithId(productRepository.delete(id), id);

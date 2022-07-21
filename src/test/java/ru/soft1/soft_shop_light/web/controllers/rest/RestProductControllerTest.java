@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import ru.soft1.soft_shop_light.model.Product;
 import ru.soft1.soft_shop_light.service.ProductService;
 import ru.soft1.soft_shop_light.support.ProductTestData;
@@ -21,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.soft1.soft_shop_light.util.exception.ErrorType.VALIDATION_ERROR;
 
-
+@Transactional
 class RestProductControllerTest extends AbstractControllerTest {
 
     private static final String REST_URL = RestProductController.REST_URL + '/';
@@ -73,6 +74,15 @@ class RestProductControllerTest extends AbstractControllerTest {
                 .andExpect(status().isNoContent())
                 .andDo(print());
         assertThrows(NotFoundException.class, () -> productService.get(4));
+    }
+
+    //попытка удалить связанную сущность
+    @Test
+    void deleteInvalid() throws Exception{
+        perform(MockMvcRequestBuilders.delete(REST_URL + 3))
+                .andExpect(status().isConflict())
+                .andDo(print());
+        ProductTestData.PRODUCT_MATCHER.assertMatch(productService.get(3), ProductTestData.getProductThree());
     }
 
     @Test

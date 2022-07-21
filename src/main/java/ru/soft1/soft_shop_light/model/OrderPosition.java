@@ -3,6 +3,8 @@ package ru.soft1.soft_shop_light.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.Range;
+import ru.soft1.soft_shop_light.to.ProductDetails;
+import ru.soft1.soft_shop_light.util.converters.ProductDetailsConverter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -20,8 +22,7 @@ public class OrderPosition extends AbstractEntity{
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_position_seq")
     private Long id;
 
-    //todo убрать зависимость?
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false)
     @NotNull
     private Product product;
@@ -32,9 +33,9 @@ public class OrderPosition extends AbstractEntity{
     @Range(max = Byte.MAX_VALUE)
     private int value;
 
-
-
-    //todo productdetails и конвертер в строку определённого формата?
+    @Convert(converter = ProductDetailsConverter.class)
+    @Column(name = "product_details", nullable = false)
+    private ProductDetails productDetails;
 
     public OrderPosition() {
     }
@@ -43,11 +44,13 @@ public class OrderPosition extends AbstractEntity{
         super(id);
         this.product = product;
         this.value = value;
+        this.productDetails = new ProductDetails(product);
     }
 
     public OrderPosition(Product product, int value) {
         this.product = product;
         this.value = value;
+        this.productDetails = new ProductDetails(product);
     }
 
     public void addOne() {

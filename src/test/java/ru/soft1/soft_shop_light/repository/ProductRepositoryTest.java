@@ -60,9 +60,6 @@ public class ProductRepositoryTest {
 
     @Test
     void delete() {
-        //todo только 4 product тестовых данных не связан с другими таблицами. Касакадное удаление хранящихся
-        // позиций заказов - не допустимо (поетря данных заказов), требуется добавить обработку эксепшенов на уровне сервиса
-        // в описании эксепшенов дать сообщение о недопустимости удаления связанной сущности (фигурирующей в каком либо заказе)
         //метод delete использовать очень аккуратно
         Assertions.assertTrue(productRepository.delete(ProductTestData.FIRST_ID + 3));
         Assertions.assertNull(productRepository.get(ProductTestData.FIRST_ID + 3));
