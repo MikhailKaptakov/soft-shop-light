@@ -3,6 +3,7 @@ package ru.soft1.soft_shop_light.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.Range;
+import ru.soft1.soft_shop_light.util.validation.NoHtml;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -22,34 +23,41 @@ public class Product extends AbstractEntity {
 
     @Column(name = "name", nullable = false)
     @NotBlank
+    @NoHtml
     @Size(min=3, max=50)
     private String name;
 
     @Column(name = "vendor", nullable = false)
     @NotBlank
+    @NoHtml
     @Size(min=3, max=50)
     private String vendor;
 
     @Column(name = "country")
     @Size(min=3, max=50)
+    @NoHtml
     private String country;
 
     @Column(name = "license_time", nullable = false)
     @NotBlank
     @Size(min=3, max=50)
+    @NoHtml
     private String licenseTime;
 
     @Column(name = "description")
+    @NoHtml
     @Size(max=3000)
     private String description;
 
     @Column(name = "price", nullable = false)
     @NotNull
+    @NoHtml
     @Range(min = 0, max = Integer.MAX_VALUE)
     private int price;
 
     @Column(name = "delivery_time_in_days", nullable = false)
     @NotNull
+    @NoHtml
     @Range(min = 0, max = Integer.MAX_VALUE)
     private int deliveryTimeInDays;
 

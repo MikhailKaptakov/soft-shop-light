@@ -8,15 +8,17 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.soft1.soft_shop_light.model.Product;
 import ru.soft1.soft_shop_light.service.ProductService;
 import ru.soft1.soft_shop_light.support.ProductTestData;
+import ru.soft1.soft_shop_light.util.exception.NotFoundException;
 import ru.soft1.soft_shop_light.web.controllers.AbstractControllerTest;
-import ru.soft1.soft_shop_light.web.json.JacksonObjectMapper;
 import ru.soft1.soft_shop_light.web.json.JsonUtil;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static ru.soft1.soft_shop_light.util.exception.ErrorType.VALIDATION_ERROR;
 
 
 class RestProductControllerTest extends AbstractControllerTest {
@@ -37,6 +39,17 @@ class RestProductControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    void getAllAvailable() throws Exception {
+        List<Product> expected = ProductTestData.getAllAvailableProduct();
+        perform(MockMvcRequestBuilders.get(REST_URL + "available"))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(ProductTestData.PRODUCT_MATCHER.contentJson(expected));
+    }
+
+
+    @Test
     void get() throws Exception {
         Product expected = ProductTestData.getProductOne();
         perform(MockMvcRequestBuilders.get(REST_URL + expected.getId()))
@@ -51,20 +64,21 @@ class RestProductControllerTest extends AbstractControllerTest {
         perform(MockMvcRequestBuilders.get(REST_URL + 100))
                 .andExpect(status().isUnprocessableEntity())
                 .andDo(print());
-        //todo exception handling
     }
 
     @Test
     void delete() throws Exception{
-/*        perform(MockMvcRequestBuilders.post(REST_URL + 100))
-                .andExpect(status().isUnprocessableEntity())
-                .andDo(print());*/
-        //todo
+        perform(MockMvcRequestBuilders.delete(REST_URL + 4))
+                .andExpect(status().isNoContent())
+                .andDo(print());
+        assertThrows(NotFoundException.class, () -> productService.get(4));
     }
 
     @Test
     void deleteNotFound() throws Exception{
-        //todo
+        perform(MockMvcRequestBuilders.delete(REST_URL + 100))
+                .andExpect(status().isUnprocessableEntity())
+                .andDo(print());
     }
 
     @Test
@@ -80,18 +94,29 @@ class RestProductControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void updateDuplicate() throws Exception{
-        //todo
-    }
-
-    @Test
     void updateInvalid() throws Exception{
-        //todo
+        Product invalid = ProductTestData.getProductOne();
+        invalid.setName("");
+        perform(MockMvcRequestBuilders.put(REST_URL + invalid.getId())
+                .contentType(MediaType.APPLICATION_JSON))
+               /* .with(userHttpBasic(admin))
+                .content(jsonWithPassword(invalid, "password")))*/ //todo
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(errorType(VALIDATION_ERROR));
     }
 
     @Test
     void updateHtmlUnsafe() throws Exception{
-        //todo
+        Product updated = ProductTestData.getProductOne();
+        updated.setName("<script>alert(123)</script>");
+        perform(MockMvcRequestBuilders.put(REST_URL + updated.getId())
+                .contentType(MediaType.APPLICATION_JSON))
+               /* .with(userHttpBasic(admin))
+                .content(jsonWithPassword(updated, "password")))*/ //todo
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(errorType(VALIDATION_ERROR));
     }
 
     @Test
@@ -109,17 +134,16 @@ class RestProductControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void createDuplicate() throws Exception{
-        //todo
-    }
-
-    @Test
     void createInvalid() throws Exception {
-        //todo
+        Product invalid = ProductTestData.getNewProduct();
+        invalid.setName("");
+        perform(MockMvcRequestBuilders.post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON))
+                /*.with(userHttpBasic(admin))*/ //todo
+                /*.content(jsonWithPassword(invalid, "newPass")))*/
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(errorType(VALIDATION_ERROR));
     }
 
-    @Test
-    void createHtmlUnsafe() throws Exception{
-        //todo
-    }
 }

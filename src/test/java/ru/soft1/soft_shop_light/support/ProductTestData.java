@@ -54,4 +54,8 @@ public class ProductTestData {
     public static List<Product> getAllProduct() {
         return List.of(getProductOne(), getProductTwo(), getProductThree(), getProductFour(), getProductFive());
     }
+
+    public static List<Product> getAllAvailableProduct() {
+        return List.of(getProductOne(), getProductTwo(), getProductThree(), getProductFour());
+    }
 }

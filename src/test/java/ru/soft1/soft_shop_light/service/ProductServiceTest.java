@@ -43,7 +43,7 @@ class ProductServiceTest {
 
     @Test
     void getNotFound() {
-        assertThrows(NotFoundException.class, () -> {productService.get(17);});
+        assertThrows(NotFoundException.class, () -> productService.get(17));
     }
 
     @Test
@@ -66,5 +66,11 @@ class ProductServiceTest {
         Product actual = productService.create(expected);
         expected.setId((long)Product.START_SEQ);
         ProductTestData.PRODUCT_MATCHER.assertMatch(actual, expected);
+    }
+
+    @Test
+    void getAvailable() {
+        List<Product> expected = ProductTestData.getAllAvailableProduct();
+        ProductTestData.PRODUCT_MATCHER.assertMatch(productService.getAvailable(), expected);
     }
 }

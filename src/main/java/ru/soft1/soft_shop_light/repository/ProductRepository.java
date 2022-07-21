@@ -37,6 +37,10 @@ public class ProductRepository {
         return crudProductRepository.findById(id).orElse(null);
     }
 
+    public List<Product> getAllAvailable() {
+        return crudProductRepository.findAllAvailableOrderedById();
+    }
+
     //todo getAvailableOrderById
     //todo getAvailable(sort)
     //

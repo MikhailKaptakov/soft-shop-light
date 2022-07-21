@@ -55,7 +55,7 @@ public class ProductRepositoryTest {
     void illegalSave() {
         Product product = ProductTestData.getNewProduct();
         product.setName("");
-        Assertions.assertThrows(Exception.class,()-> {productRepository.save(product);});
+        Assertions.assertThrows(Exception.class,()-> productRepository.save(product));
     }
 
     @Test
@@ -72,5 +72,11 @@ public class ProductRepositoryTest {
     void get() {
         ProductTestData.PRODUCT_MATCHER.assertMatch(productRepository.get(ProductTestData.FIRST_ID),
                 ProductTestData.getProductOne());
+    }
+
+    @Test
+    void getAllAvailable() {
+        ProductTestData.PRODUCT_MATCHER.assertMatch(productRepository.getAllAvailable(),
+                ProductTestData.getAllAvailableProduct());
     }
 }

@@ -37,6 +37,12 @@ public class RestProductController {
         return productService.getAll();
     }
 
+    @GetMapping("/available")
+    public List<Product> getAllAvailable() {
+        log.info("get available");
+        return productService.getAvailable();
+    }
+
     // доступен исключительно админу
     @GetMapping("/{id}")
     public Product get(@PathVariable("id") long id) {
