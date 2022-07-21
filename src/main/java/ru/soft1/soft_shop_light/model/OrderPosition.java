@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.Range;
 import ru.soft1.soft_shop_light.to.ProductDetails;
-import ru.soft1.soft_shop_light.util.converters.ProductDetailsConverter;
+import ru.soft1.soft_shop_light.util.converters.ProductDetailsJsonConverter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -26,6 +26,7 @@ public class OrderPosition extends AbstractEntity{
     @JoinColumn(name = "product_id", nullable = false)
     @NotNull
     private Product product;
+    //todo или вообще заменить продукт айди? Тогда как передавать продукт дитейлз?
 
     @Column(name = "product_value", nullable = false)
     @NotNull
@@ -33,7 +34,7 @@ public class OrderPosition extends AbstractEntity{
     @Range(max = Byte.MAX_VALUE)
     private int value;
 
-    @Convert(converter = ProductDetailsConverter.class)
+    @Convert(converter = ProductDetailsJsonConverter.class)
     @Column(name = "product_details", nullable = false)
     private ProductDetails productDetails;
 

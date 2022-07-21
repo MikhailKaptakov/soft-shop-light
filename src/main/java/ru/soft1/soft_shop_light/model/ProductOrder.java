@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Data
@@ -124,4 +125,8 @@ public class ProductOrder extends AbstractEntity {
         return true;
     }
 
+    public int takeTotalPrice() {
+        return positions.stream().map((p)->{return p.getValue()*p.getProductDetails().getPrice();})
+                .toList().stream().reduce(0, Integer::sum);
+    }
 }

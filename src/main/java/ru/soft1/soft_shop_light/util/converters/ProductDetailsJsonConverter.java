@@ -7,7 +7,7 @@ import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
 @Converter
-public class ProductDetailsConverter implements AttributeConverter<ProductDetails, String> {
+public class ProductDetailsJsonConverter implements AttributeConverter<ProductDetails, String> {
     @Override
     public String convertToDatabaseColumn(ProductDetails productDetails) {
         return productDetails.toJson();

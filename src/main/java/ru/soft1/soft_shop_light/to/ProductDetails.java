@@ -51,18 +51,6 @@ public class ProductDetails {
         this.requiredTechnicalSupport = product.isRequiredTechnicalSupport();
     }
 
-    public String getMessage() {
-        return getSeparatedString("Product identifier: " + product_id) +
-                getSeparatedString("Name: " + name) +
-                getSeparatedString("Vendor: " + vendor) +
-                getSeparatedString("Country: " + country) +
-                getSeparatedString("License time: " + licenseTime) +
-                getSeparatedString("Expected delivery time: " + deliveryTimeInDays + " days") +
-                isNdsIncludedAnswer() +
-                isRequiredTechnicalSupport() +
-                getSeparatedString("Price: " + price);
-    }
-
     public String toJson() {
         return JsonUtil.writeValue(this);
     }
@@ -81,27 +69,5 @@ public class ProductDetails {
                 ", requiredTechnicalSupport=" + requiredTechnicalSupport +
                 '}';
     }
-
-    private String getSeparatedString(String string) {
-        return string + lineSeparator();
-    }
-
-    private String isNdsIncludedAnswer() {
-        if (ndsInclude) {
-            return getSeparatedString("NDS is included");
-        } else {
-            return getSeparatedString("NDS is not included");
-        }
-    }
-
-    private String isRequiredTechnicalSupport() {
-        if (requiredTechnicalSupport) {
-            return getSeparatedString("Technical support included");
-        } else {
-            return getSeparatedString("Technical support is not provided");
-        }
-    }
-
-
 
 }
