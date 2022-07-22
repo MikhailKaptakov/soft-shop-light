@@ -6,16 +6,13 @@ import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Arrays;
-
 @Configuration
 @EnableCaching
 public class CacheConfiguration {
 
     @Bean
     public CacheManager cacheManager() {
-        ConcurrentMapCacheManager cacheManager = new ConcurrentMapCacheManager();
-        cacheManager.setCacheNames(Arrays.asList("products", "available_products"));
+        ConcurrentMapCacheManager cacheManager = new ConcurrentMapCacheManager("products");
         return cacheManager;
     }
 }

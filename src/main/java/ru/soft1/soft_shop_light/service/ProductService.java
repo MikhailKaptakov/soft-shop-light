@@ -27,15 +27,17 @@ public class ProductService {
         return productRepository.getAllOrderById();
     }
 
+    @Cacheable("products")
     public Product get(long id) {
         return ValidationUtil.checkNotFoundWithId(productRepository.get(id), id);
     }
 
-    @Cacheable("available_products")
+    @Cacheable("products")
     public List<Product> getAllAvailable() {
         return productRepository.getAllAvailable();
     }
 
+    @Cacheable("products")
     public Product getAvailable(long id) {
         Product product = ValidationUtil.checkNotFoundWithId(productRepository.get(id), id);
         ValidationUtil.checkNotFoundWithId(product.isAvailable(), id);
@@ -43,12 +45,12 @@ public class ProductService {
     }
 
     @Transactional
-    @CacheEvict(value = {"products", "available_products"}, allEntries = true)
+    @CacheEvict(value = "products", allEntries = true)
     public void delete(long id) {
         ValidationUtil.checkNotFoundWithId(productRepository.delete(id), id);
     }
 
-    @CacheEvict(value = {"products", "available_products"}, allEntries = true)
+    @CacheEvict(value = "products", allEntries = true)
     public void update(Product product) {
         Assert.notNull(product, "product must not be null");
         productRepository.save(product);
@@ -61,7 +63,7 @@ public class ProductService {
     }
 
     @Transactional
-    @CacheEvict(value = {"products", "available_products"}, allEntries = true)
+    @CacheEvict(value ="products", allEntries = true)
     public void setAvailable(long id, boolean available) {
         Product product = get(id);
         product.setAvailable(available);
