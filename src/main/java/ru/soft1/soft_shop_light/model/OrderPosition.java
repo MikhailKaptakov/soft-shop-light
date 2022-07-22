@@ -35,7 +35,7 @@ public class OrderPosition extends AbstractEntity{
     private int value;
 
     @Convert(converter = ProductDetailsJsonConverter.class)
-    @Column(name = "product_details", nullable = false)
+    @Column(name = "product_details", nullable = true)
     private ProductDetails productDetails;
 
     public OrderPosition() {

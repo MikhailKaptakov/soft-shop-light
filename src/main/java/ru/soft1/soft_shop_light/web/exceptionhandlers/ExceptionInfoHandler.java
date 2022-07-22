@@ -16,6 +16,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import ru.soft1.soft_shop_light.util.exception.*;
 import ru.soft1.soft_shop_light.util.validation.ValidationUtil;
 
+import javax.mail.SendFailedException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
@@ -41,6 +42,21 @@ public class ExceptionInfoHandler {
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ErrorInfo> handleError(HttpServletRequest req, NotFoundException e) {
         return logAndGetErrorInfo(req, e, false, ErrorType.DATA_NOT_FOUND);
+    }
+
+    @ExceptionHandler(SendFailedException.class)
+    public ResponseEntity<ErrorInfo> conflict(HttpServletRequest req, SendFailedException e) {
+        String rootMsg = ValidationUtil.getRootCause(e).getMessage();
+        if (rootMsg != null) {
+            String lowerCaseMsg = rootMsg.toLowerCase();
+            for (Map.Entry<String, String> entry : CONSTRAINS_I18N_MAP.entrySet()) {
+                if (lowerCaseMsg.contains(entry.getKey())) {
+                    return logAndGetErrorInfo(req, e, false, ErrorType.BAD_EMAIL_SEND,
+                            messageSourceAccessor.getMessage(entry.getValue()));
+                }
+            }
+        }
+        return logAndGetErrorInfo(req, e, true, DATA_ERROR);
     }
 
     @ExceptionHandler(ApplicationException.class)

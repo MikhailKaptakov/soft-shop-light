@@ -24,6 +24,8 @@ import static ru.soft1.soft_shop_light.util.validation.ValidationUtil.checkNew;
 @RequestMapping(value = RestProductController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class RestProductController {
 
+    //todo разбить на два контроллера, для юзеров и для админов
+
     static final String REST_URL = "/rest/products";
 
     @Autowired
