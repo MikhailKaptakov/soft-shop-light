@@ -40,8 +40,4 @@ public class ProductRepository {
     public List<Product> getAllAvailable() {
         return crudProductRepository.findAllAvailableOrderedById();
     }
-
-    //todo getAvailableOrderById
-    //todo getAvailable(sort)
-    //
 }

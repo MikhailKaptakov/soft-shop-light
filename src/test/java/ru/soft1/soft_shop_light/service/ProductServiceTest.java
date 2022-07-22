@@ -71,7 +71,7 @@ class ProductServiceTest {
     @Test
     void getAvailable() {
         List<Product> expected = ProductTestData.getAllAvailableProduct();
-        ProductTestData.PRODUCT_MATCHER.assertMatch(productService.getAvailable(), expected);
+        ProductTestData.PRODUCT_MATCHER.assertMatch(productService.getAllAvailable(), expected);
     }
 
     @Test

@@ -49,8 +49,12 @@ public class ValidationUtil {
     }
 
     public static void checkNotFound(boolean found, String msg) {
-        if (!found) {
-            throw new NotFoundException("Not found entity with " + msg);
+        checkCondition(found, "Not found entity with ", msg);
+    }
+
+    public static void checkCondition(boolean isOk, String staticMessage, String arg) {
+        if (!isOk) {
+            throw new NotFoundException(staticMessage + " " + arg);
         }
     }
 

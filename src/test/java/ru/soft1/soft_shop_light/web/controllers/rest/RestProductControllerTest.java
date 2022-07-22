@@ -31,8 +31,8 @@ class RestProductControllerTest extends AbstractControllerTest {
     private ProductService productService;
 
     @Test
-    void getAll() throws Exception {
-        List<Product> expected = ProductTestData.getAllProduct();
+    void getAllAvailable() throws Exception {
+        List<Product> expected = ProductTestData.getAllAvailableProduct();
         perform(MockMvcRequestBuilders.get(REST_URL))
                 .andExpect(status().isOk())
                 .andDo(print())
@@ -41,18 +41,7 @@ class RestProductControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void getAllAvailable() throws Exception {
-        List<Product> expected = ProductTestData.getAllAvailableProduct();
-        perform(MockMvcRequestBuilders.get(REST_URL + "available"))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(ProductTestData.PRODUCT_MATCHER.contentJson(expected));
-    }
-
-
-    @Test
-    void get() throws Exception {
+    void getAvailable() throws Exception {
         Product expected = ProductTestData.getProductOne();
         perform(MockMvcRequestBuilders.get(REST_URL + expected.getId()))
                 .andExpect(status().isOk())
@@ -62,109 +51,17 @@ class RestProductControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void invalidGet() throws Exception {
+    void invalidGetAvailable() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL + 100))
                 .andExpect(status().isUnprocessableEntity())
                 .andDo(print());
     }
 
     @Test
-    void delete() throws Exception{
-        perform(MockMvcRequestBuilders.delete(REST_URL + 4))
-                .andExpect(status().isNoContent())
-                .andDo(print());
-        assertThrows(NotFoundException.class, () -> productService.get(4));
-    }
-
-    //попытка удалить связанную сущность
-    @Test
-    void deleteInvalid() throws Exception{
-        perform(MockMvcRequestBuilders.delete(REST_URL + 3))
-                .andExpect(status().isConflict())
-                .andDo(print());
-        ProductTestData.PRODUCT_MATCHER.assertMatch(productService.get(3), ProductTestData.getProductThree());
-    }
-
-    @Test
-    void deleteNotFound() throws Exception{
-        perform(MockMvcRequestBuilders.delete(REST_URL + 100))
+    void GetNotAvailable() throws Exception {
+        perform(MockMvcRequestBuilders.get(REST_URL + 5))
                 .andExpect(status().isUnprocessableEntity())
                 .andDo(print());
     }
 
-    @Test
-    void update() throws Exception {
-        Product expected = ProductTestData.getProductOne();
-        expected.setName("New name");
-        perform(MockMvcRequestBuilders.put(REST_URL + expected.getId())
-                .contentType(MediaType.APPLICATION_JSON)
-                /*.with(userHttpBasic(admin))*/ //todo security
-                .content( JsonUtil.writeValue(expected)))
-                .andExpect(status().isNoContent());
-        ProductTestData.PRODUCT_MATCHER.assertMatch(productService.get(expected.id()), expected);
-    }
-
-    @Test
-    void updateInvalid() throws Exception{
-        Product invalid = ProductTestData.getProductOne();
-        invalid.setName("");
-        perform(MockMvcRequestBuilders.put(REST_URL + invalid.getId())
-                .contentType(MediaType.APPLICATION_JSON))
-               /* .with(userHttpBasic(admin))
-                .content(jsonWithPassword(invalid, "password")))*/ //todo
-                .andDo(print())
-                .andExpect(status().isUnprocessableEntity())
-                .andExpect(errorType(VALIDATION_ERROR));
-    }
-
-    @Test
-    void updateHtmlUnsafe() throws Exception{
-        Product updated = ProductTestData.getProductOne();
-        updated.setName("<script>alert(123)</script>");
-        perform(MockMvcRequestBuilders.put(REST_URL + updated.getId())
-                .contentType(MediaType.APPLICATION_JSON))
-               /* .with(userHttpBasic(admin))
-                .content(jsonWithPassword(updated, "password")))*/ //todo
-                .andDo(print())
-                .andExpect(status().isUnprocessableEntity())
-                .andExpect(errorType(VALIDATION_ERROR));
-    }
-
-    @Test
-    void create() throws Exception {
-        Product expected = ProductTestData.getNewProduct();
-        ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
-                .contentType(MediaType.APPLICATION_JSON)
-                /*.with(userHttpBasic(user))*///todo
-                .content(JsonUtil.writeValue(expected)));
-
-        expected.setId((long)Product.START_SEQ);
-        Product actual = ProductTestData.PRODUCT_MATCHER.readFromJson(action);
-        ProductTestData.PRODUCT_MATCHER.assertMatch(actual, expected);
-        ProductTestData.PRODUCT_MATCHER.assertMatch(productService.get(expected.getId()), expected);
-    }
-
-    @Test
-    void createInvalid() throws Exception {
-        Product invalid = ProductTestData.getNewProduct();
-        invalid.setName("");
-        perform(MockMvcRequestBuilders.post(REST_URL)
-                .contentType(MediaType.APPLICATION_JSON))
-                /*.with(userHttpBasic(admin))*/ //todo
-                /*.content(jsonWithPassword(invalid, "newPass")))*/
-                .andDo(print())
-                .andExpect(status().isUnprocessableEntity())
-                .andExpect(errorType(VALIDATION_ERROR));
-    }
-
-    @Test
-    void setAvailable() throws Exception{
-        perform(MockMvcRequestBuilders.patch(REST_URL + 5)
-                .param("available", "true")
-                .contentType(MediaType.APPLICATION_JSON))
-                /*.with(userHttpBasic(admin)))*/ //todo
-                .andDo(print())
-                .andExpect(status().isNoContent());
-        Assertions.assertTrue(productService.get(5).isAvailable());
-    }
 }
