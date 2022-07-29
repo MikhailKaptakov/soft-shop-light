@@ -45,7 +45,6 @@ public class Product extends AbstractEntity {
     private String licenseTime;
 
     @Column(name = "description")
-    @NoHtml
     @Size(max=3000)
     private String description;
 
@@ -69,6 +68,9 @@ public class Product extends AbstractEntity {
     private boolean available;
 
     public Product() {
+        this.ndsInclude = true;
+        this.requiredTechnicalSupport = false;
+        this.available = true;
     }
 
     public Product(Long id,
@@ -136,3 +138,7 @@ public class Product extends AbstractEntity {
                 product.available);
     }
 }
+
+
+//todo при сериализации формы, необходимо создать конвертер для полей с чек боксами
+//todo посмотреть как передаются данные в запросе в боди или заголовке

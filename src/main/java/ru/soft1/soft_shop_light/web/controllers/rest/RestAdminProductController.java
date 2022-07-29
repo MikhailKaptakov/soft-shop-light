@@ -24,7 +24,7 @@ import static ru.soft1.soft_shop_light.util.validation.ValidationUtil.checkNew;
 @RequestMapping(value = RestAdminProductController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class RestAdminProductController {
 
-    static final String REST_URL = "/rest/admin/products";
+    static final String REST_URL = "/admin/rest/products";
 
     @Autowired
     private ProductService productService;
@@ -46,17 +46,45 @@ public class RestAdminProductController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
+    @PostMapping(value = "/save")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void saveOrUpdate(@Validated(ValidationCustomer.Web.class) Product product) {
+        if (product.itsNew()) {
+            log.info("create {}", product);
+            checkNew(product);
+            productService.create(product);
+        } else {
+            log.info("update {} with id={}", product, product.getId());
+            ValidationUtil.assureIdConsistent(product, product.getId());
+            productService.update(product);
+        }
+    }
+
     @GetMapping("/{id}")
     public Product get(@PathVariable("id") long id) {
         log.info("get {}", id);
         return productService.get(id);
     }
 
-    @PatchMapping("/{id}")
+    @PostMapping("/available/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void setAvailable(@PathVariable long id, @RequestParam boolean available) {
-        log.info(available ? "enable {}" : "disable {}", id);
+        log.info(available ? "available {}" : "not available {}", id);
         productService.setAvailable(id, available);
+    }
+
+    @PostMapping("/nds/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void setNds(@PathVariable long id, @RequestParam boolean isNds) {
+        log.info(isNds ? "nds {}" : "not nds {}", id);
+        productService.setNds(id, isNds);
+    }
+
+    @PostMapping("/techSupport/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void setTechSupport(@PathVariable long id, @RequestParam boolean isTechSupport) {
+        log.info(isTechSupport ? "nds {}" : "not nds {}", id);
+        productService.setTechSupport(id, isTechSupport);
     }
 
     @Transactional
@@ -74,8 +102,5 @@ public class RestAdminProductController {
         ValidationUtil.assureIdConsistent(product, id);
         productService.update(product);
     }
-
 }
 
-
-//todo add security!!!

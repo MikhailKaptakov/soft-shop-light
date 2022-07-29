@@ -81,4 +81,20 @@ class ProductServiceTest {
         productService.setAvailable(expected.getId(), true);
         ProductTestData.PRODUCT_MATCHER.assertMatch(productService.get(expected.getId()), expected);
     }
+
+    @Test
+    void setNds() {
+        Product expected = ProductTestData.getProductFive();
+        expected.setNdsInclude(true);
+        productService.setNds(expected.getId(), true);
+        ProductTestData.PRODUCT_MATCHER.assertMatch(productService.get(expected.getId()), expected);
+    }
+
+    @Test
+    void setTechSupport() {
+        Product expected = ProductTestData.getProductFive();
+        expected.setRequiredTechnicalSupport(true);
+        productService.setTechSupport(expected.getId(), true);
+        ProductTestData.PRODUCT_MATCHER.assertMatch(productService.get(expected.getId()), expected);
+    }
 }

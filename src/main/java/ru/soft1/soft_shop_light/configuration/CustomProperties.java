@@ -15,4 +15,6 @@ public class CustomProperties {
 
     @Email
     private String recipientEmail = "test@test.ru";
+
+
 }

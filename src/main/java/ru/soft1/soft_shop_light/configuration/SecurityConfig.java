@@ -28,10 +28,13 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception{
         return httpSecurity
                 .authorizeRequests()
-                .antMatchers( "/rest/admin", "/rest/admin/**").access("isAuthenticated()")
+                .antMatchers( "/admin/**", "/admin", "/adminalt").hasRole("ADMIN")
                 .antMatchers("/", "/**").permitAll()
                 .and()
                 .formLogin().loginPage("/login")
+                .and()
+                .logout()
+                .logoutSuccessUrl("/")
                 .and()
                 .build();
     }
@@ -40,11 +43,9 @@ public class SecurityConfig {
     public UserDetailsService userDetailsService(PasswordEncoder encoder) {
         List<UserDetails> usersList = new ArrayList<>();
         usersList.add(new User(
-                "Andrey", encoder.encode("AchtoTak()ePassw0rd"),
+                "Andrey", encoder.encode("1"),
                 Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"))));
         return new InMemoryUserDetailsManager(usersList);
     }
-
-
 
 }

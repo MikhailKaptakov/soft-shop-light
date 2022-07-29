@@ -69,4 +69,20 @@ public class ProductService {
         product.setAvailable(available);
         productRepository.save(product);
     }
+
+    @Transactional
+    @CacheEvict(value ="products", allEntries = true)
+    public void setNds(long id, boolean isNds) {
+        Product product = get(id);
+        product.setNdsInclude(isNds);
+        productRepository.save(product);
+    }
+
+    @Transactional
+    @CacheEvict(value ="products", allEntries = true)
+    public void setTechSupport(long id, boolean isSupported) {
+        Product product = get(id);
+        product.setRequiredTechnicalSupport(isSupported);
+        productRepository.save(product);
+    }
 }

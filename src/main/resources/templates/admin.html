@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:spring="http://www.springframework.org/tags">
+<head th:replace="fragments/headTag.html::headerimport"></head>
+
+<body>
+<script th:src="@{/js/common.js}" defer></script>
+<script th:src="@{/js/products.js}" defer></script>
+
+<div class="jumbotron pt-4">
+    <div class="container">
+        <h3 class="text-center" th:utext="#{products.title}"></h3>
+        <button class="btn btn-primary" onclick="add()">
+            <span class="fa fa-plus"></span>
+            <spring:message code="common.add"/>
+        </button>
+        <table class="table table-striped" id="datatable">
+            <thead>
+            <tr>
+                <th>id</th>
+                <th th:utext="#{products.name}"></th>
+                <th th:utext="#{products.vendor}"></th>
+                <th th:utext="#{products.country}"></th>
+                <th th:utext="#{products.licenseTime}"></th>
+                <th th:utext="#{products.price}"></th>
+                <th th:utext="#{products.description}"></th>
+                <th th:utext="#{products.deliveryTimeInDays}"></th>
+                <th th:utext="#{products.ndsInclude}"></th>
+                <th th:utext="#{products.requiredTechnicalSupport}"></th>
+                <th th:utext="#{products.available}"></th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="editRow">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modalTitle"></h4>
+                <button type="button" class="close" data-dismiss="modal" onclick="closeNoty()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="detailsForm">
+                    <input type="hidden" id="id" name="id">
+
+                    <div class="form-group">
+                        <label for="name" class="col-form-label" th:utext="#{products.name}"></label>
+                        <input type="text" class="form-control" id="name" name="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="vendor" class="col-form-label" th:utext="#{products.vendor}"></label>
+                        <input type="text" class="form-control" id="vendor" name="vendor">
+                    </div>
+                    <div class="form-group">
+                        <label for="country" class="col-form-label" th:utext="#{products.country}"></label>
+                        <input type="text" class="form-control" id="country" name="country">
+                    </div>
+                    <div class="form-group">
+                        <label for="licenseTime" class="col-form-label" th:utext="#{products.licenseTime}"></label>
+                        <input type="text" class="form-control" id="licenseTime" name="licenseTime">
+                    </div>
+                    <div class="form-group">
+                        <label for="price" class="col-form-label" th:utext="#{products.price}"></label>
+                        <input type="number" step="1" min="0" max="1000000000" class="form-control" id="price" name="price">
+                    </div>
+                    <div class="form-group">
+                        <label for="description" class="col-form-label" th:utext="#{products.description}"></label>
+                        <input type="text" class="form-control" id="description" name="description">
+                    </div>
+                    <div class="form-group">
+                        <label for="deliveryTimeInDays" class="col-form-label" th:utext="#{products.deliveryTimeInDays}"></label>
+                        <input type="number" step="1" min="0" max="1825" class="form-control" id="deliveryTimeInDays" name="deliveryTimeInDays">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeNoty()">
+                    <span class="fa fa-close"></span>
+                    <span th:utext="#{common.cancel}"></span>
+                </button>
+                <button type="button" class="btn btn-primary" onclick="save()">
+                    <span class="fa fa-check"></span>
+                    <span th:utext="#{common.save}"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" th:inline="javascript">
+    var i18n = [];
+
+    i18n["addTitle"] = '<span th:utext="#{common.add}"></span>';
+    i18n["editTitle"] = '<span th:utext="#{common.edit}"></span>';
+    i18n["common.deleted"] = '<span th:utext="#{common.deleted}"></span>';
+    i18n["common.saved"] = '<span th:utext="#{common.saved}"></span>';
+    i18n["common.enabled"] = '<span th:utext="#{common.enabled}"></span>';
+    i18n["common.disabled"] = '<span th:utext="#{common.disabled}"></span>';
+    i18n["common.search"] = '<span th:utext="#{common.search}"></span>';
+    i18n["common.confirm"] = '<span th:utext="#{common.confirm}"></span>';
+</script>
+</body>
+</html>

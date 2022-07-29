@@ -44,7 +44,7 @@ class RestAdminProductControllerTest extends AbstractControllerTest {
 
     @Test
     void setAvailable() throws Exception{
-        perform(MockMvcRequestBuilders.patch(REST_URL + 5)
+        perform(MockMvcRequestBuilders.patch(REST_URL +"available/"+ 5)
                 .param("available", "true")
                 .contentType(MediaType.APPLICATION_JSON))
                 /*.with(userHttpBasic(admin)))*/ //todo
@@ -52,6 +52,17 @@ class RestAdminProductControllerTest extends AbstractControllerTest {
                 .andExpect(status().isNoContent());
         Assertions.assertTrue(productService.get(5).isAvailable());
     }
+
+    @Test
+    void setNds() throws Exception {
+    //todo
+    }
+
+    @Test
+    void setTechSupport() throws Exception {
+        //todo
+    }
+
 
     @Test
     void get() throws Exception {
@@ -157,5 +168,10 @@ class RestAdminProductControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity())
                 .andExpect(errorType(VALIDATION_ERROR));
+    }
+
+    @Test
+    void saveOrUpdate() throws Exception {
+        //todo
     }
 }

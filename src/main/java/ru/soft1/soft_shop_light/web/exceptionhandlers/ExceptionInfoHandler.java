@@ -1,5 +1,6 @@
 package ru.soft1.soft_shop_light.web.exceptionhandlers;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.MessageSourceAccessor;
@@ -22,10 +23,10 @@ import java.util.Map;
 
 import static ru.soft1.soft_shop_light.util.exception.ErrorType.DATA_ERROR;
 
+@Slf4j
 @RestControllerAdvice(annotations = RestController.class)
 @Order(Ordered.HIGHEST_PRECEDENCE + 5)
 public class ExceptionInfoHandler {
-    private static final Logger log = LoggerFactory.getLogger(ExceptionInfoHandler.class);
 
     public static final String EXCEPTION_DUPLICATE_EMAIL = "exception.user.duplicateEmail";
 
@@ -104,6 +105,7 @@ public class ExceptionInfoHandler {
     private ResponseEntity<ErrorInfo> logAndGetErrorInfo(HttpServletRequest req, Exception e, boolean logStackTrace,
                                                          ErrorType errorType, String... details) {
         Throwable rootCause = ValidationUtil.logAndGetRootCause(log, req, e, logStackTrace, errorType);
+
         return ResponseEntity.status(errorType.getStatus())
                 .body(new ErrorInfo(req.getRequestURL(), errorType,
                         messageSourceAccessor.getMessage(errorType.getErrorCode()),

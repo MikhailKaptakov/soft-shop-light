@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/headTag.html::headerimport"></head>
+<body>
+
+<form id="detailsForm" >
+    <input type="hidden" id="id" name="id">
+    <div class="form-group">
+        <label for="name" class="col-form-label" th:utext="#{products.name}"></label>
+        <input type="text" class="form-control" id="name" name="name">
+    </div>
+    <div class="form-group">
+        <label for="vendor" class="col-form-label" th:utext="#{products.vendor}"></label>
+        <input type="text" class="form-control" id="vendor" name="vendor">
+    </div>
+    <div class="form-group">
+        <label for="country" class="col-form-label" th:utext="#{products.country}"></label>
+        <input type="text" class="form-control" id="country" name="country">
+    </div>
+    <div class="form-group">
+        <label for="licenseTime" class="col-form-label" th:utext="#{products.licenseTime}"></label>
+        <input type="text" class="form-control" id="licenseTime" name="licenseTime">
+    </div>
+    <div class="form-group">
+        <label for="price" class="col-form-label" th:utext="#{products.price}"></label>
+        <input type="number" min="0" max="1000000000" class="form-control" id="price" name="price">
+    </div>
+    <div class="form-group">
+        <label for="description" class="col-form-label" th:utext="#{products.description}"></label>
+        <input type="text" class="form-control" id="description" name="description">
+    </div>
+    <div class="form-group">
+        <label for="deliveryTimeInDays" class="col-form-label" th:utext="#{products.deliveryTimeInDays}"></label>
+        <input type="number" min="0" max="1825" class="form-control" id="deliveryTimeInDays" name="deliveryTimeInDays">
+    </div>
+    <div class="form-group">
+        <label for="ndsInclude" class="col-form-label" th:utext="#{products.ndsInclude}"></label>
+        <input type="checkbox" class="form-control" id="ndsInclude" name="ndsInclude">
+    </div>
+    <div class="form-group">
+        <label for="requiredTechnicalSupport" class="col-form-label" th:utext="#{products.requiredTechnicalSupport}"></label>
+        <input type="checkbox" class="form-control" id="requiredTechnicalSupport" name="requiredTechnicalSupport">
+    </div>
+    <div class="form-group">
+        <label for="available" class="col-form-label" th:utext="#{products.available}"></label>
+        <input type="checkbox" class="form-control" id="available" name="available">
+    </div>
+
+</form>
+<button type="button" class="btn btn-primary" onclick="mynmspc.api.save()">
+    <span class="fa fa-check"></span>
+    <span th:utext="#{common.save}"></span>
+</button>
+
+</body>
+<script th:src="@{/js/ajax.js}" defer></script>
+</html>

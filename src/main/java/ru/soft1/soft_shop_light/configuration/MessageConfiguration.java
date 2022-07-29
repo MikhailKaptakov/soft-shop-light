@@ -27,7 +27,6 @@ public class MessageConfiguration {
         messageSource.setBasename("classpath:/messages/messages");
         messageSource.setDefaultEncoding("UTF-8");
         messageSource.setCacheSeconds(60);
-        /*messageSource.setFallbackToSystemLocale(false);*/
         return messageSource;
     }
 
@@ -39,7 +38,7 @@ public class MessageConfiguration {
     @Bean
     public CookieLocaleResolver localeResolver() {
         CookieLocaleResolver localeResolver = new CookieLocaleResolver();
-        localeResolver.setDefaultLocale(Locale.ENGLISH);
+        localeResolver.setDefaultLocale(new Locale("ru", "RU"));
         return localeResolver;
     }
 
