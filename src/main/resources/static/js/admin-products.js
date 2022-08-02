@@ -1,4 +1,4 @@
-const productAjaxUrl = "/admin/rest/products/";
+const productAjaxUrl = "/admin/ui/products/";
 
 // https://stackoverflow.com/a/5064235/548473
 const ctx = {

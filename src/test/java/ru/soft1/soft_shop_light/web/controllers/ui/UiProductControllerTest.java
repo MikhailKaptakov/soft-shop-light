@@ -1,18 +1,14 @@
-package ru.soft1.soft_shop_light.web.controllers.rest;
+package ru.soft1.soft_shop_light.web.controllers.ui;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import ru.soft1.soft_shop_light.model.Product;
 import ru.soft1.soft_shop_light.service.ProductService;
 import ru.soft1.soft_shop_light.support.ProductTestData;
-import ru.soft1.soft_shop_light.util.exception.NotFoundException;
 import ru.soft1.soft_shop_light.web.controllers.AbstractControllerTest;
-import ru.soft1.soft_shop_light.web.json.JsonUtil;
 
 import java.util.List;
 
@@ -20,12 +16,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.soft1.soft_shop_light.util.exception.ErrorType.VALIDATION_ERROR;
 
 @Transactional
-class RestProductControllerTest extends AbstractControllerTest {
+class UiProductControllerTest extends AbstractControllerTest {
 
-    private static final String REST_URL = RestProductController.REST_URL + '/';
+    private static final String REST_URL = UiProductController.URL + '/';
 
     @Autowired
     private ProductService productService;

@@ -44,6 +44,7 @@ function updateRow(id) {
     $.get(ctx.ajaxUrl + id, function (data) {
         $.each(data, function (key, value) {
             form.find("input[name='" + key + "']").val(value);
+            form.find("textarea[name='" + key + "']").val(value);
         });
         $('#editRow').modal();
     });

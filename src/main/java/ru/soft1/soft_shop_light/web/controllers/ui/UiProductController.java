@@ -1,4 +1,4 @@
-package ru.soft1.soft_shop_light.web.controllers.rest;
+package ru.soft1.soft_shop_light.web.controllers.ui;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +11,10 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping(value = RestProductController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-public class RestProductController {
+@RequestMapping(value = UiProductController.URL, produces = MediaType.APPLICATION_JSON_VALUE)
+public class UiProductController {
 
-    static final String REST_URL = "/rest/products";
+    static final String URL = "/ui/products";
 
     @Autowired
     private ProductService productService;

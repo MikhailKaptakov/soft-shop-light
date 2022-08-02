@@ -16,5 +16,8 @@ public class CustomProperties {
     @Email
     private String recipientEmail = "test@test.ru";
 
+    private String adminName = "Andrey";
+
+    private String adminPassword = "1";
 
 }

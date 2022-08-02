@@ -11,7 +11,7 @@ tr[data-meal-excess="true"] {
 }
 
 tr[data-product-available="false"] {
-    opacity: 0.9;
+    opacity: 0.4;
 }
 
 .error, .message {

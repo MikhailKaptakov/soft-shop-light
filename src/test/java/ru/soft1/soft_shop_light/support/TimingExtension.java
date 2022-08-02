@@ -2,8 +2,6 @@ package ru.soft1.soft_shop_light.support;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.extension.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.util.StopWatch;
 
 @Slf4j

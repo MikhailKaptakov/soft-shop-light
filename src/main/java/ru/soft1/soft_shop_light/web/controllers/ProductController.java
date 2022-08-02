@@ -28,9 +28,9 @@ public class ProductController {
     }
 
     @GetMapping
-    public String getAll(Model model) {
+    public String getAllAvailable(Model model) {
         log.debug("get all products");
-        model.addAttribute("products", productService.getAll()); //todo getAvailable
+        model.addAttribute("products", productService.getAllAvailable()); //todo getAvailable
         return "products";
     }
 

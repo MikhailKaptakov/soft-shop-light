@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/headTag.html::headerimport"></head>
+<body>
+<script th:src="@{/js/render.js}" defer></script>
+<script th:src="@{/js/user-products.js}" defer></script>
+<!--<div>
+    <br/>
+    <p th:utext="${product.name}">NAME</p>
+    <p th:utext="${product.vendor}">VENDOR</p>
+    <p th:utext="${product.country}">COUNTRY</p>
+    <p th:utext="${product.licenseTime}">LICENSE_TIME</p>
+    <p th:utext="${product.price}">PRICE</p>
+    <p th:utext="${product.deliveryTimeInDays}">DELIVERY_TIME</p>
+    <p th:utext="${product.ndsInclude}">NDS</p>
+    <p th:utext="${product.requiredTechnicalSupport}">TECHNICAL_SUPPORT</p>
+    <p th:utext="${product.description}">DESCRIPTION</p>
+    <br/>
+</div>-->
+
+<div id="product-list"></div>
+</body>
+</html>

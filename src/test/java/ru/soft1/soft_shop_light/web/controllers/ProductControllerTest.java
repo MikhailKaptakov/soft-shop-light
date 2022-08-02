@@ -14,7 +14,6 @@ class ProductControllerTest extends AbstractControllerTest{
         perform(get("/products"))
                 .andExpect(status().isOk())
                 .andDo(print());
-        //todo rework test
     }
     @Test
     void addToOrder() throws Exception {

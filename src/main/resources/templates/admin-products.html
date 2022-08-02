@@ -7,7 +7,7 @@
 
 <body>
 <script th:src="@{/js/common.js}" defer></script>
-<script th:src="@{/js/products.js}" defer></script>
+<script th:src="@{/js/admin-products.js}" defer></script>
 
 <div class="jumbotron pt-4">
     <div class="container">
@@ -71,7 +71,7 @@
                     </div>
                     <div class="form-group">
                         <label for="description" class="col-form-label" th:utext="#{products.description}"></label>
-                        <input type="text" class="form-control" id="description" name="description">
+                        <textarea rows="10" maxlength="3000" class="form-control" id="description" name="description"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="deliveryTimeInDays" class="col-form-label" th:utext="#{products.deliveryTimeInDays}"></label>
@@ -106,3 +106,7 @@
 </script>
 </body>
 </html>
+
+<!--
+todo fix exception message
+-->

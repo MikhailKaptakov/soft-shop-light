@@ -1,4 +1,4 @@
-package ru.soft1.soft_shop_light.web.controllers.rest;
+package ru.soft1.soft_shop_light.web.controllers.ui;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +21,10 @@ import static ru.soft1.soft_shop_light.util.validation.ValidationUtil.checkNew;
 
 @Slf4j
 @RestController
-@RequestMapping(value = RestAdminProductController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-public class RestAdminProductController {
+@RequestMapping(value = UiAdminProductController.URL, produces = MediaType.APPLICATION_JSON_VALUE)
+public class UiAdminProductController {
 
-    static final String REST_URL = "/admin/rest/products";
+    static final String URL = "/admin/ui/products";
 
     @Autowired
     private ProductService productService;
@@ -42,7 +42,7 @@ public class RestAdminProductController {
         checkNew(product);
         Product created = productService.create(product);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(REST_URL + "/" + created.getId()).build().toUri();
+                .path(URL + "/" + created.getId()).build().toUri();
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 

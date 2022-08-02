@@ -28,7 +28,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception{
         return httpSecurity
                 .authorizeRequests()
-                .antMatchers( "/admin/**", "/admin", "/adminalt").hasRole("ADMIN")
+                .antMatchers( "/admin/**", "/admin").hasRole("ADMIN")
                 .antMatchers("/", "/**").permitAll()
                 .and()
                 .formLogin().loginPage("/login")
@@ -40,10 +40,10 @@ public class SecurityConfig {
     }
 
     @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder encoder) {
+    public UserDetailsService userDetailsService(PasswordEncoder encoder, CustomProperties customProperties) {
         List<UserDetails> usersList = new ArrayList<>();
         usersList.add(new User(
-                "Andrey", encoder.encode("1"),
+                customProperties.getAdminName(), encoder.encode(customProperties.getAdminPassword()),
                 Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"))));
         return new InMemoryUserDetailsManager(usersList);
     }

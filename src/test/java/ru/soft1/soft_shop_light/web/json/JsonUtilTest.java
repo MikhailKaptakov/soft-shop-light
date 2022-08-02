@@ -29,19 +29,4 @@ class JsonUtilTest {
         List<Product> actual = JsonUtil.readValues(json, Product.class);
         ProductTestData.PRODUCT_MATCHER.assertMatch(actual, expected);
     }
-
-   /*
-    //todo after security
-    @Test
-    void writeOnlyAccess() {
-        Product
-        String json = JsonUtil.writeValue(user);
-        System.out.println(json);
-        assertThat(json, not(containsString("password")));
-        String jsonWithPass = jsonWithPassword(user, "newPass");
-        System.out.println(jsonWithPass);
-        User user = JsonUtil.readValue(jsonWithPass, User.class);
-        assertEquals(user.getPassword(), "newPass");
-    }
-*/
 }
