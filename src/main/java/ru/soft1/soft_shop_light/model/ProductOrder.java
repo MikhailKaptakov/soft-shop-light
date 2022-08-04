@@ -72,8 +72,6 @@ public class ProductOrder extends AbstractEntity {
     @JoinColumn(name = "order_id", nullable = false)
     private List<OrderPosition> positions = new ArrayList<>();
 
- /*todo   private Set<OrderStatus>*/
-
     public ProductOrder() {
     }
 
