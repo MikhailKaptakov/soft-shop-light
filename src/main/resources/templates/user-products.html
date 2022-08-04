@@ -1,9 +1,22 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/headTag.html::headerimport"></head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head th:replace="fragments/head-tag.html::head-tag-import"></head>
 <body>
+<link th:href="@{css/styles.css}" rel="stylesheet" />
 <script th:src="@{/js/render.js}" defer></script>
 <script th:src="@{/js/user-products.js}" defer></script>
-<div id="product-list"></div>
+<!-- Navigation-->
+<nav th:replace="fragments/fragments.html::navigation"></nav>
+<!-- Header-->
+<header th:replace="fragments/fragments.html::header" ></header>
+<!-- Section-->
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center" id="product-list">
+        </div>
+    </div>
+</section>
+<!-- Footer-->
+<footer th:replace="fragments/fragments.html::footer"></footer>
 </body>
 </html>

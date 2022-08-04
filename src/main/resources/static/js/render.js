@@ -13,30 +13,40 @@ render.product.renderProductListContainer = function(containerId) {
     return document.getElementById(containerId);
 }
 render.product.renderProductContainer = function(product, productListContainer) {
-    const productContainer = render.product.getProductContainer();
-    productContainer.id = "product" + product.id;
+    const productContainer = render.product.getProductContainer(product);
+    const fieldContainer = render.product.getFieldContainer(product);
+    const dataContainer = render.product.getDataContainer(product);
     productListContainer.appendChild(productContainer);
-
-    productContainer.append(render.product.fieldData("Name", product.name));
-    productContainer.append(render.product.fieldData("Vendor", product.vendor));
-    productContainer.append(render.product.fieldData("Country", product.country));
-    productContainer.append(render.product.fieldData("License", product.license));
-    productContainer.append(render.product.fieldData("Price", product.price));
-    productContainer.append(render.product.fieldData("Deliver by", product.deliveryTimeInDays));
-    productContainer.append(render.product.fieldData("NDS", product.ndsInclude));
-    productContainer.append(render.product.fieldData("Support", product.requiredTechnicalSupport));
-    productContainer.append(render.product.fieldData("Description", product.description));
+    productContainer.append(fieldContainer);
+    fieldContainer.append(dataContainer);
 }
 
-render.product.getProductContainer = function() {
+render.product.getProductContainer = function(product) {
     const productContainer = document.createElement("div");
+    productContainer.id = "p" + product.id;
+    productContainer.className = "col mb-5";
     return productContainer;
 }
 
-render.product.fieldData = function(title, value) {
-    const field = document.createElement("div");
-    const p = document.createElement("p");
-    p.innerText = title + " " + value;
-    field.appendChild(p);
-    return field;
+render.product.getFieldContainer = function(product) {
+    const fieldContainer = document.createElement("div");
+    fieldContainer.id = "f" + product.id;
+    fieldContainer.className = "card h-100";
+    //здесь добавить аппенд изображения (вполне вероятно с ссылкой на загрузку изображения по айди)
+    //изображению установить стиль class="card-img-top"
+    //здесь же импорт кнопок
+    return fieldContainer;
+}
+
+render.product.getDataContainer = function(product) {
+    const dataContainer = document.createElement("div");
+    dataContainer.id = "d" + product.id;
+    dataContainer.className = "card-body p-4";
+    dataContainer.innerHTML = '<div class="text-center">' +
+                                    '<h5 class="fw-bolder">' + product.name + '</h5>' +
+                                    '<p>' + product.price + ' р.' + '</p>' + '<ul class="list-unstyled">' +
+                                    '<li>' + product.country + '</li>' +
+                                    '<li>' + 'Время лицензии ' + product.licenseTime + '</li>' +
+                               '</ul></div>';
+    return dataContainer;
 }
