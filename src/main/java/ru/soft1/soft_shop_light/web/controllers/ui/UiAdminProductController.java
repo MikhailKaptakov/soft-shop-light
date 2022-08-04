@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.soft1.soft_shop_light.configuration.ValidationCustomer;
 import ru.soft1.soft_shop_light.model.Product;
@@ -85,6 +86,12 @@ public class UiAdminProductController {
     public void setTechSupport(@PathVariable long id, @RequestParam boolean isTechSupport) {
         log.info(isTechSupport ? "nds {}" : "not nds {}", id);
         productService.setTechSupport(id, isTechSupport);
+    }
+
+    @PostMapping("/img/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void setImage(@PathVariable long id, @RequestParam MultipartFile image) {
+        productService.saveImage(id, image);
     }
 
     @Transactional

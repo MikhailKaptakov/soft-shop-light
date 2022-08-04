@@ -9,7 +9,8 @@ public enum ErrorType {
     DATA_ERROR("error.dataError", HttpStatus.CONFLICT),
     VALIDATION_ERROR("error.validationError", HttpStatus.UNPROCESSABLE_ENTITY),
     WRONG_REQUEST("error.wrongRequest", HttpStatus.BAD_REQUEST),
-    BAD_EMAIL_SEND("error.badEmailSend", HttpStatus.CONFLICT);
+    BAD_EMAIL_SEND("error.badEmailSend", HttpStatus.CONFLICT),
+    IMAGE_CONVERTION_ERROR("error.imageConversionError", HttpStatus.CONFLICT);
 
 
     private final String errorCode;

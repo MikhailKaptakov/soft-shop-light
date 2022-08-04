@@ -6,10 +6,16 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import ru.soft1.soft_shop_light.model.Product;
 import ru.soft1.soft_shop_light.repository.ProductRepository;
+import ru.soft1.soft_shop_light.util.exception.ImageConversionException;
 import ru.soft1.soft_shop_light.util.validation.ValidationUtil;
 
+import javax.imageio.IIOException;
+import java.io.IOException;
 import java.util.List;
 
 @Slf4j
@@ -84,5 +90,21 @@ public class ProductService {
         Product product = get(id);
         product.setRequiredTechnicalSupport(isSupported);
         productRepository.save(product);
+    }
+
+    @Transactional
+    @CacheEvict(value ="products", allEntries = true)
+    public void saveImage(long id, MultipartFile image) {
+        Product product = get(id);
+        product.setImageBytes(toBytes(image));
+        productRepository.save(product);
+    }
+
+    private byte[] toBytes(MultipartFile image) {
+        try {
+            return image.getBytes();
+        } catch (IOException e) {
+            throw new ImageConversionException("Не удалось преобразовать изображение");
+        }
     }
 }

@@ -67,6 +67,10 @@ public class Product extends AbstractEntity {
     @Column(name="available", nullable = false, columnDefinition = "boolean default true")
     private boolean available;
 
+    @Column(name="logo")
+    @Lob
+    private byte[] imageBytes; //todo может быть нулевым, если вернулся нуль, то отобразить стандартное изображение для товара (эт для рендеринга уже)
+
     public Product() {
         this.ndsInclude = true;
         this.requiredTechnicalSupport = false;

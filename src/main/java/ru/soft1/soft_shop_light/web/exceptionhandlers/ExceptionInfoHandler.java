@@ -60,6 +60,21 @@ public class ExceptionInfoHandler {
         return logAndGetErrorInfo(req, e, true, DATA_ERROR);
     }
 
+    @ExceptionHandler(ImageConversionException.class)
+    public ResponseEntity<ErrorInfo> conflict(HttpServletRequest req, ImageConversionException e) {
+        String rootMsg = ValidationUtil.getRootCause(e).getMessage();
+        if (rootMsg != null) {
+            String lowerCaseMsg = rootMsg.toLowerCase();
+            for (Map.Entry<String, String> entry : CONSTRAINS_I18N_MAP.entrySet()) {
+                if (lowerCaseMsg.contains(entry.getKey())) {
+                    return logAndGetErrorInfo(req, e, false, ErrorType.BAD_EMAIL_SEND,
+                            messageSourceAccessor.getMessage(entry.getValue()));
+                }
+            }
+        }
+        return logAndGetErrorInfo(req, e, true, DATA_ERROR);
+    }
+
     @ExceptionHandler(ApplicationException.class)
     public ResponseEntity<ErrorInfo> updateRestrictionError(HttpServletRequest req, ApplicationException appEx) {
         return logAndGetErrorInfo(req, appEx, false, appEx.getType(),
