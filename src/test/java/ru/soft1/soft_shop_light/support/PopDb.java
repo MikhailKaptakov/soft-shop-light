@@ -10,7 +10,6 @@ import org.springframework.test.context.jdbc.SqlConfig;
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"),
         executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 public class PopDb {
-
     @Disabled //use if you need drop db
     @Test
     void pop() {

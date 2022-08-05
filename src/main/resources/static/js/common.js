@@ -17,7 +17,6 @@ function makeEditable(datatableOpts) {
             }
         ));
     form = $('#detailsForm');
-
     $(document).ajaxError(function (event, jqXHR, options, jsExc) {
         failNoty(jqXHR);
     });
@@ -50,6 +49,11 @@ function updateRow(id) {
     });
 }
 
+function setImageRow(id) {
+   $('#imageRow').modal();
+   $('#imageRow')[0].entityId = id;
+}
+
 function deleteRow(id) {
     if (confirm(i18n['common.confirm'])) {
         $.ajax({
@@ -75,6 +79,25 @@ function save() {
         $("#editRow").modal("hide");
         ctx.updateTable();
         successNoty("common.saved");
+    });
+}
+
+function saveImage() {
+    let fd = new FormData();
+    let files = $('#image')[0].files[0];
+    fd.append('image', files);
+
+    $.ajax({
+        type: "POST",
+        url: ctx.ajaxUrl + "img/" + $('#imageRow')[0].entityId,
+        data: fd,
+        contentType: false,
+        processData: false,
+    }).done(function () {
+        $("#imageRow").modal("hide");
+        ctx.updateTable();
+        successNoty("common.saved");
+        $('.preview img').show();
     });
 }
 
@@ -106,6 +129,12 @@ function renderEditBtn(data, type, row) {
 function renderDeleteBtn(data, type, row) {
     if (type === "display") {
         return "<a onclick='deleteRow(" + row.id + ");'><span class='fa fa-remove'></span></a>";
+    }
+}
+
+function renderImgBtn(data, type, row) {
+    if (type === "display") {
+        return "<a onclick='setImageRow(" + row.id + ");'><span class='fa fa-paint-brush'></span></a>";
     }
 }
 

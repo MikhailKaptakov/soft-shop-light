@@ -30,6 +30,8 @@
                 <th th:utext="#{products.ndsInclude}"></th>
                 <th th:utext="#{products.requiredTechnicalSupport}"></th>
                 <th th:utext="#{products.available}"></th>
+                <th>Image</th>
+                <th></th>
                 <th></th>
                 <th></th>
             </tr>
@@ -85,6 +87,35 @@
                     <span th:utext="#{common.cancel}"></span>
                 </button>
                 <button type="button" class="btn btn-primary" onclick="save()">
+                    <span class="fa fa-check"></span>
+                    <span th:utext="#{common.save}"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="imageRow">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modalTitle2"></h4>
+                <button type="button" class="close" data-dismiss="modal" onclick="closeNoty()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="imageForm" method="post" action="" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="image" class="col-form-label">Изображение</label>
+                        <input type="file" accept="image/*" id="image" name="image">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeNoty()">
+                    <span class="fa fa-close"></span>
+                    <span th:utext="#{common.cancel}"></span>
+                </button>
+                <button type="button" class="btn btn-primary" onclick="saveImage()" id="mdl-img-btn">
                     <span class="fa fa-check"></span>
                     <span th:utext="#{common.save}"></span>
                 </button>

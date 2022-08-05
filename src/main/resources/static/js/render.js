@@ -32,8 +32,12 @@ render.product.getFieldContainer = function(product) {
     const fieldContainer = document.createElement("div");
     fieldContainer.id = "f" + product.id;
     fieldContainer.className = "card h-100";
-    //здесь добавить аппенд изображения (вполне вероятно с ссылкой на загрузку изображения по айди)
-    //изображению установить стиль class="card-img-top"
+    const image = render.product.getImage(product);
+    if (image !== undefined) {
+        fieldContainer.append(image);
+    } else {
+        //добавить загрузку стандартного изображения
+    }
     //здесь же импорт кнопок
     return fieldContainer;
 }
@@ -49,4 +53,11 @@ render.product.getDataContainer = function(product) {
                                     '<li>' + 'Время лицензии ' + product.licenseTime + '</li>' +
                                '</ul></div>';
     return dataContainer;
+}
+
+render.product.getImage = function(product) {
+    const image = document.createElement("img");
+    image.className="card-img-top";
+    image.src = "data:image/png;base64,"+ product.image;
+    return image;
 }

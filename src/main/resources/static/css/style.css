@@ -53,3 +53,14 @@ body {
     line-height: 60px; /* Vertically center the text there */
     background-color: #f5f5f5;
 }
+
+.preview {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+}
+
+.preview img {
+    display:none
+}
+

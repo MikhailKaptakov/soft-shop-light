@@ -106,6 +106,20 @@ $(function () {
                     return data;
                 }
              },
+             {
+                "data": "image",
+                "render": function (data, type, row) {
+                    if (row.id!==null && row.image !== null && row.image !== undefined) {
+                        return '<img id="img' + row.id + '" src="data:image/png;base64,'+ row.image +'">';
+                    }
+                    return "";
+                }
+             },
+            {
+                "orderable": false,
+                "defaultContent": "",
+                "render": renderImgBtn
+            },
             {
                 "orderable": false,
                 "defaultContent": "",
