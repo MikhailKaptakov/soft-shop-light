@@ -33,12 +33,8 @@ render.product.getFieldContainer = function(product) {
     fieldContainer.id = "f" + product.id;
     fieldContainer.className = "card h-100";
     const image = render.product.getImage(product);
-    if (image !== undefined) {
-        fieldContainer.append(image);
-    } else {
-        //добавить загрузку стандартного изображения
-    }
-    //здесь же импорт кнопок
+    fieldContainer.append(image);
+    //todo здесь же импорт кнопок
     return fieldContainer;
 }
 
@@ -58,6 +54,10 @@ render.product.getDataContainer = function(product) {
 render.product.getImage = function(product) {
     const image = document.createElement("img");
     image.className="card-img-top";
-    image.src = "data:image/svg+xml;base64,"+ product.image;
+    if (product.image !== undefined && product.image !== null) {
+        image.src = "data:image/svg+xml;base64,"+ product.image;
+    } else {
+        image.src = "/default.svg";
+    }
     return image;
 }
