@@ -58,6 +58,6 @@ render.product.getDataContainer = function(product) {
 render.product.getImage = function(product) {
     const image = document.createElement("img");
     image.className="card-img-top";
-    image.src = "data:image/png;base64,"+ product.image;
+    image.src = "data:image/svg+xml;base64,"+ product.image;
     return image;
 }

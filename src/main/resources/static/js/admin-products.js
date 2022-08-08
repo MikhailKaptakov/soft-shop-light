@@ -110,7 +110,7 @@ $(function () {
                 "data": "image",
                 "render": function (data, type, row) {
                     if (row.id!==null && row.image !== null && row.image !== undefined) {
-                        return '<img id="img' + row.id + '" src="data:image/png;base64,'+ row.image +'">';
+                        return '<img id="img' + row.id + '" src="data:image/svg+xml;base64,'+ row.image +'">';
                     }
                     return "";
                 }

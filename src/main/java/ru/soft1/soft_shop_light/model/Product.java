@@ -140,5 +140,6 @@ public class Product extends AbstractEntity {
                 product.ndsInclude,
                 product.requiredTechnicalSupport,
                 product.available);
+        this.setImage(product.image);
     }
 }

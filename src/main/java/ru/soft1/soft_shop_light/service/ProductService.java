@@ -25,7 +25,6 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    @Cacheable("products")
     public List<Product> getAll() {
         return productRepository.getAllOrderById();
     }

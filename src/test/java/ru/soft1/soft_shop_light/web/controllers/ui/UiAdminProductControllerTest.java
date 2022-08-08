@@ -204,4 +204,11 @@ class UiAdminProductControllerTest extends AbstractControllerTest {
     void saveOrUpdate() throws Exception {
         //todo
     }
+
+    //todo алфавитный указатель
+    //todo поисковое окно
+    //todo статьи на главной
+    //todo список самвых покупаемых товаров на главной
+    //todo создать ProductTo передавать без параметра эвейлебл и без параметра - mostPopular (если его сделать,
+    // подумать как сделать список для витрины маст популяр)
 }

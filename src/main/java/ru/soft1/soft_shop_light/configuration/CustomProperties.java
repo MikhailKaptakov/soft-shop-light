@@ -20,4 +20,7 @@ public class CustomProperties {
 
     private String adminPassword = "1";
 
+    private int[] favoriteIds = {}; //todo id избранные товары
+
+
 }
