@@ -111,6 +111,10 @@
                 </form>
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="deleteImage()">
+                    <span class="fa fa-backspace"></span>
+                    <span>Удалить изображение</span>
+                </button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeNoty()">
                     <span class="fa fa-close"></span>
                     <span th:utext="#{common.cancel}"></span>

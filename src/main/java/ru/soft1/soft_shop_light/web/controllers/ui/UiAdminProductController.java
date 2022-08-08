@@ -94,6 +94,12 @@ public class UiAdminProductController {
         productService.saveImage(id, image);
     }
 
+    @PostMapping("/img/delete/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteImage(@PathVariable long id) {
+        productService.deleteImage(id);
+    }
+
     @Transactional
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

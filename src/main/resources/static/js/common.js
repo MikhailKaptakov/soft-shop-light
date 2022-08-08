@@ -96,8 +96,18 @@ function saveImage() {
     }).done(function () {
         $("#imageRow").modal("hide");
         ctx.updateTable();
-        successNoty("common.saved");
+        successNoty("Изображение сохранено");
         $('.preview img').show();
+    });
+}
+
+function deleteImage() {
+//  https://stackoverflow.com/a/22213543/548473
+    $.ajax({
+        url: productAjaxUrl + "img/delete/" + $('#imageRow')[0].entityId,
+        type: "POST",
+    }).done(function () {
+        successNoty("Изображение удалено");
     });
 }
 

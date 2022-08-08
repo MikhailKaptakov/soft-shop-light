@@ -96,6 +96,14 @@ public class ProductService {
         productRepository.save(product);
     }
 
+    @Transactional
+    @CacheEvict(value ="products", allEntries = true)
+    public void deleteImage(long id) {
+        Product product = get(id);
+        product.setImage(null);
+        productRepository.save(product);
+    }
+
     private byte[] toBytes(MultipartFile image) {
         try {
             return image.getBytes();
