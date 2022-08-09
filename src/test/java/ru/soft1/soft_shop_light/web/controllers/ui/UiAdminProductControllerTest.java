@@ -83,6 +83,7 @@ class UiAdminProductControllerTest extends AbstractControllerTest {
         Assertions.assertFalse(productService.get(5).isRequiredTechnicalSupport());
     }
 
+    //todo tests to addImage and deleteImage
 
     @Test
     void get() throws Exception {
@@ -204,6 +205,8 @@ class UiAdminProductControllerTest extends AbstractControllerTest {
     void saveOrUpdate() throws Exception {
         //todo
     }
+
+
 
     //todo алфавитный указатель
     //todo поисковое окно

@@ -47,7 +47,64 @@
   <div class="container"><p class="m-0 text-center text-white">Copyright &copy;Заполни это 2022</p></div>
 </footer>
 
-
-
+<div th:fragment="modal-product" class="modal fade" tabindex="-1" id="modal-product">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="w-25 text-center">
+          <img src="/default.svg" class="img-circle img-responsive" id="modal-product-image">
+        </div>
+        <h4 class="modal-title" id="modal-product-name"></h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="container w-100">
+          <table class="table">
+            <tbody>
+            <tr>
+              <th scope="row">Вендор:</th>
+              <td id="modal-product-vendor"></td>
+            </tr>
+            <tr>
+              <th scope="row">Страна:</th>
+              <td id="modal-product-country"></td>
+            </tr>
+            <tr>
+              <th scope="row">Длительность лицензии:</th>
+              <td id="modal-product-license"></td>
+            </tr>
+            <tr>
+              <th scope="row">Время доставки:</th>
+              <td id="modal-product-delivery"></td>
+            </tr>
+            <tr>
+              <th scope="row">НДС:</th>
+              <td id="modal-product-nds"></td>
+            </tr>
+            <tr>
+              <th scope="row">Тех. поддержка:</th>
+              <td id="modal-product-tech-support"></td>
+            </tr>
+            </tbody>
+          </table>
+          <h5 class="modal-title">Описание товара</h5>
+          <div class="text-justify">
+            <p id="modal-product-description"> </p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="addToCart()">
+          <span class="fa fa-backspace"></span>
+          <span id="modal-product-add-to-cart">В корзину</span>
+        </button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          <span class="fa fa-close"></span>
+          <span>Закрыть</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
