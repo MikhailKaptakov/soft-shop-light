@@ -84,7 +84,7 @@ class UiAdminProductControllerTest extends AbstractControllerTest {
     }
 
     //todo tests to addImage and deleteImage
-
+    //todo скрыть информацию об отправки сообщения. Со стороны фронта не должно быть инфы о том, что отправляется письмо на почту
     @Test
     void get() throws Exception {
         Product expected = ProductTestData.getProductOne();

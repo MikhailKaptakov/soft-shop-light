@@ -26,7 +26,7 @@ render.product.renderProductContainer = function(product, productListContainer) 
 }
 
 render.product.getProductContainer = function(product) {
-    const productContainer = document.createElement("div");
+    const productContainer = document.createElement("li");
     productContainer.id = "p" + product.id;
     productContainer.className = "col mb-5";
     return productContainer;
@@ -67,7 +67,7 @@ render.product.getDataRender = function(product) {
     const name = document.createElement("div");
     name.className = "text-center";
     let dataElement = document.createElement("h5");
-    dataElement.className = "fw-bolder";
+    dataElement.className = "fw-bolder mark-product-name";
     dataElement.innerText = product.name;
     name.append(dataElement);
     dataElement = document.createElement("p");
@@ -105,8 +105,8 @@ render.product.getToCartButton = function(product) {
     button.append(textElem);
     const reference = document.createElement("a");
     reference.className = "btn btn-outline-dark mt-auto";
-    reference.href = "#";
-    reference.innerText = "Add to cart"; 
+    reference.href = "#"; 
+    reference.innerText = "В корзину"; //todo i18n
     textElem.append(reference);
     return button;
 }
@@ -122,7 +122,7 @@ render.product.getModalProduct = function(product) {
 
     const buttonText = document.createElement("span");
     buttonText.className = "btn btn-outline-dark mt-auto";
-    buttonText.innerText = "About"; 
+    buttonText.innerText = "Описание"; //todo i18n
     button.append(buttonText);
     return buttonWrapper;
 }
@@ -142,12 +142,8 @@ render.modalProduct.openProductModal = function(productId) {
     $('#modal-product-nds')[0].innerText = product.ndsInclude?"Включено":"Не включено";
     $('#modal-product-tech-support')[0].innerText = product.requiredTechnicalSupport?"Есть":"Отсутствует";
     $('#modal-product-description')[0].innerText = product.description;
-    //todo add to cart - тот же рендер и вызов метода, что и на основной странице
+    //todo добавить add to cart с тем же рендером и вызовом метода, что и на основной странице
 }; 
-
-render.modalProduct.closeProductModal = function() {
-    $("#editRow").modal("hide");
-}
 
 function closeNoty() {
     if (failedNote) {

@@ -10,7 +10,14 @@ ajaxApi.getAllAvailable = function() {
 
 ajaxApi.getAllDataHandler = function(data) {
     render.product.render(data);
-    ajaxApi.productMap = ajaxApi.getDataMap(data)
+    ajaxApi.productMap = ajaxApi.getDataMap(data);
+    $(function(){
+        $('#product-list').listnav({
+            filterSelector: '.mark-product-name',
+            includeNums: false,
+            removeDisabled: true,
+        });
+    });
 }
 
 ajaxApi.getDataMap = function(data) {
@@ -22,4 +29,6 @@ ajaxApi.getDataMap = function(data) {
 }
 
 ajaxApi.getAllAvailable();
+
+
 

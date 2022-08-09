@@ -74,7 +74,13 @@ $(function () {
                 "data": "price"
              },
              {
-                "data": "description"
+                "data": "description",
+                "render": function (data, type, row) {
+                    if (row.description.length > 50) {
+                        return row.description.substr(0,50) + "...";
+                    } 
+                    return data;
+                }
              },
              {
                 "data": "deliveryTimeInDays"
