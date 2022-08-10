@@ -124,12 +124,12 @@ $(function () {
             {
                 "orderable": false,
                 "defaultContent": "",
-                "render": renderImgBtn
+                "render": renderEditBtn
             },
             {
                 "orderable": false,
                 "defaultContent": "",
-                "render": renderEditBtn
+                "render": renderImgBtn
             },
             {
                 "orderable": false,

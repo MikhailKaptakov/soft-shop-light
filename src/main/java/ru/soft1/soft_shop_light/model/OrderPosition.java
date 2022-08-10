@@ -39,6 +39,7 @@ public class OrderPosition extends AbstractEntity{
     private ProductDetails productDetails;
 
     public OrderPosition() {
+        this.value = 0;
     }
 
     public OrderPosition(long id, Product product, int value) {

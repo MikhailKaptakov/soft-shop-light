@@ -99,30 +99,6 @@ public class ProductOrder extends AbstractEntity {
         this.positions = positions;
     }
 
-    public boolean isIncluded(long productId) {
-        return getById(productId) == null;
-    }
-
-    public OrderPosition getById(long productId) {
-        return positions.stream()
-                .filter((p)-> p.getProduct().getId().equals(id))
-                .findFirst()
-                .orElse(null);
-    }
-
-    public boolean addProduct(Product product) {
-        if (product == null) {
-            return false;
-        }
-        OrderPosition pos = getById(product.getId());
-        if (pos != null) {
-            pos.addOne();
-        } else {
-            positions.add(new OrderPosition(product, 1));
-        }
-        return true;
-    }
-
     public int takeTotalPrice() {
         return positions.stream().map((p)->{return p.getValue()*p.getProductDetails().getPrice();})
                 .toList().stream().reduce(0, Integer::sum);
