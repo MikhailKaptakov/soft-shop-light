@@ -11,16 +11,25 @@ import ru.soft1.soft_shop_light.to.OrderPositionList;
 
 @Slf4j
 @RestController
+@SessionAttributes("userOrderPositions")
 @RequestMapping(value = UiCartController.URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class UiCartController {
-    static final String URL = "/cart";
+    static final String URL = "/ui/cart";
 
     @Autowired
     private ProductService productService;
 
+    @GetMapping()
+    public OrderPositionList getCartPositions
+            (@ModelAttribute("userOrderPositions") OrderPositionList userOrderPositions) {
+        log.info("get cart");
+        return userOrderPositions;
+    }
+
     @PostMapping(value = "/add/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void addProductToCart(@PathVariable("id") long id, @ModelAttribute OrderPositionList userOrderPositions) {
+    public void addProductToCart(@PathVariable("id") long id,
+                                 @ModelAttribute("userOrderPositions") OrderPositionList userOrderPositions) {
         Product product = productService.getAvailable(id);
         if (product != null) {
             userOrderPositions.addProduct(product);
@@ -28,21 +37,47 @@ public class UiCartController {
         }
     }
 
+    @PostMapping(value = "/minus/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void minusProductFromCart(@PathVariable("id") long id,
+                                 @ModelAttribute("userOrderPositions") OrderPositionList userOrderPositions) {
+        Product product = productService.getAvailable(id);
+        if (product != null) {
+            userOrderPositions.deleteOne(id);
+            log.debug("Deleted one product from cart: " + product.toString());
+        }
+    }
+
     @PostMapping(value = "/set/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void setValue(@PathVariable("id") long id, @RequestParam int value, @ModelAttribute OrderPositionList userOrderPositions) {
+    public void setValue(@PathVariable("id") long id, @RequestParam int value,
+                         @ModelAttribute("userOrderPositions") OrderPositionList userOrderPositions) {
         userOrderPositions.setValue(value, id);
         log.debug("Set value " + value + "to productId " + id);
     }
 
     @PostMapping(value = "/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletePosition(@PathVariable("id") long id, @ModelAttribute OrderPositionList userOrderPositions) {
+    public void deletePosition(@PathVariable("id") long id,
+                               @ModelAttribute("userOrderPositions") OrderPositionList userOrderPositions) {
         userOrderPositions.removePosition(id);
         log.debug("Deleted product " + id);
     }
 
-    //todo кнопки добавить в корзину и кнопки внутри самой корзины должны вызывать методы js для отправки пост запроса
-    //todo визуалку взять с образца, начинка - переработать через этот контроллер
+    @PostMapping(value = "/clear")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void clearOrderPositionList(
+            @ModelAttribute("userOrderPositions") OrderPositionList userOrderPositions) {
+        userOrderPositions.removeAll();
+        log.debug("Cart is clear");
+    }
+
+
     //todo сбросить сессию после отправки пост запроса заказа (для пересылки имейла с заказом)
+    //todo сделать навигационную панель для телефонов
+    //todo сделать окошечко для ввода количества
+    //todo сделать форму для отправления заказа (все запрашиваемые данные ProductOrderForm) при нажатии ок - сохраняет
+    //данные формы и выдает окно с товарами С надписью вы хотите заказать: и две кнопки ок и отмена
+    //затем данные записываются в текст письма и отправляются на почту
+    //корзина очищается
 }

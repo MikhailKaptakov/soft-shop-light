@@ -6,7 +6,6 @@ import ru.soft1.soft_shop_light.model.Product;
 import ru.soft1.soft_shop_light.util.exception.NotFoundException;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -41,18 +40,27 @@ public class OrderPositionList {
                 .setValue(value);
     }
 
-    public boolean addProduct(Product product) {
+    public void addProduct(Product product) {
         if (product == null) {
-            return false;
         }
-        getById(product.getId()).
-                orElse(addNewPosition(product))
-                .addOne();
-        return true;
+        OrderPosition orderPosition = getById(product.getId()).
+                orElse(getNewPosition(product)).addOne();
+        if (orderPosition.getValue() == 1) {
+            positions.add(orderPosition);
+        }
+    }
+
+    public void deleteOne(long productId) {
+        OrderPosition orderPosition = getById(productId).
+                orElseThrow(() -> {throw new NotFoundException("Order Position not found");});
+        orderPosition.setValue(orderPosition.getValue() - 1);
+        if (orderPosition.getValue() <= 0) {
+            removePosition(productId);
+        }
     }
 
     public void removePosition(long productId) {
-        OrderPosition position= getById(productId)
+        OrderPosition position = getById(productId)
                 .orElseThrow(() -> {throw new NotFoundException("Order Position not found");});
         positions.remove(position);
     }
@@ -62,11 +70,13 @@ public class OrderPositionList {
                 .toList().stream().reduce(0, Integer::sum);
     }
 
-    private OrderPosition addNewPosition(Product product) {
+    private OrderPosition getNewPosition(Product product) {
         OrderPosition position = new OrderPosition(product, 0);
-        positions.add(position);
         return position;
     }
 
+    public void removeAll() {
+        positions = new ArrayList<>();
+    }
 
 }

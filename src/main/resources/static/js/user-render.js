@@ -98,34 +98,29 @@ render.product.getDescriptionTableLine = function(text, fieldValue) {
 }
 
 render.product.getToCartButton = function(product) {
-    const button = document.createElement("div");
-    button.className = "card-footer p-4 pt-0 border-top-0 bg-transparent";
-    const textElem = document.createElement("div");
-    textElem.className = "text-center";
-    button.append(textElem);
-    const reference = document.createElement("a");
-    reference.className = "btn btn-outline-dark mt-auto";
-    reference.href = "#"; 
-    reference.innerText = "В корзину"; //todo i18n
-    textElem.append(reference);
-    return button;
+    return render.product.createButton("ajaxApi.addProductToCart(" + product.id + ")", "В корзину");
 }
 
 render.product.getModalProduct = function(product) {
+    return render.product.createButton("render.modalProduct.openProductModal(" + product.id + ")", "Описание");
+}
+
+render.product.createButton = function(functionNameString, buttonText) {
     const buttonWrapper = document.createElement("div");
     buttonWrapper.className = "card-footer p-4 pt-0 border-top-0 bg-transparent text-center";
 
     const button = document.createElement("button");
-    button.setAttribute("onclick", "render.modalProduct.openProductModal(" + product.id + ")");
+    button.setAttribute("onclick", functionNameString);
     button.className =  "btn text-center";
     buttonWrapper.append(button);
 
-    const buttonText = document.createElement("span");
-    buttonText.className = "btn btn-outline-dark mt-auto";
-    buttonText.innerText = "Описание"; //todo i18n
-    button.append(buttonText);
+    const buttonLetter = document.createElement("span");
+    buttonLetter.className = "btn btn-outline-dark mt-auto";
+    buttonLetter.innerText = buttonText; //todo i18n
+    button.append(buttonLetter);
     return buttonWrapper;
 }
+
 render.modalProduct = {};
 
 render.modalProduct.openProductModal = function(productId) {
@@ -142,8 +137,168 @@ render.modalProduct.openProductModal = function(productId) {
     $('#modal-product-nds')[0].innerText = product.ndsInclude?"Включено":"Не включено";
     $('#modal-product-tech-support')[0].innerText = product.requiredTechnicalSupport?"Есть":"Отсутствует";
     $('#modal-product-description')[0].innerText = product.description;
+    $('#btn-product-add-to-cart')[0].setAttribute("onclick", "ajaxApi.addProductToCart(" + product.id + ")");
+    
     //todo добавить add to cart с тем же рендером и вызовом метода, что и на основной странице
 }; 
+
+render.cart = {};
+
+render.cart.openCart = function() {
+    $('#modal-cart').modal();
+    ajaxApi.getCart();
+}; 
+
+
+render.cart.render = function(positions) {
+    const tbody = $('#modal-cart-tbody')[0];
+    tbody.innerHTML = "";
+    for (const position of positions) {
+        const tr = render.cart.getTableRow(position);
+        tbody.append(tr);
+        render.cart.imageCell(position);
+        render.cart.nameCell(position);
+        render.cart.priceCell(position);
+        render.cart.addCell(position);
+        render.cart.valueCell(position);
+        render.cart.minusCell(position);
+        render.cart.fullPriceCell(position);
+        render.cart.deleteCell(position);
+    }
+    const tr = render.cart.getTableRow(-1);
+    tbody.append(tr);
+    render.cart.getTableRowCell(-1, 5).innerText = "Итого:";
+    render.cart.getTableRowCell(-1, 6).innerText =  render.cart.getTotalPrice(positions);
+}
+
+render.cart.getTotalPrice = function(positions) {
+    let summ = 0;
+    for (position of positions) {
+        summ += render.cart.getPositionPrice(position);
+    }
+    return summ;
+}
+
+render.cart.getPositionPrice = function(position) {
+    return position.value*position.product.price;
+}
+
+render.cart.imageCell = function(position) {
+    const image = document.createElement("img");
+    if (position.product.image !== undefined && position.product.image !== null) {
+        image.src = "data:image/svg+xml;base64,"+ position.product.image;
+        image.setAttribute("onerror","this.src='/default.svg'");
+    } else {
+        image.src = "/default.svg";
+    }
+    const cell = render.cart.getTableRowCell(position, 0);
+    cell.innerHTML = "";
+    cell.append(image);
+}
+
+render.cart.nameCell = function(position) {
+    const name = document.createElement("p");
+    name.innerText = position.product.name;
+    const cell = render.cart.getTableRowCell(position, 1);
+    cell.innerHTML = "";
+    cell.append(name);
+}
+
+render.cart.priceCell = function(position) {
+    const price = document.createElement("p");
+    price.innerText = position.product.price;
+    const cell = render.cart.getTableRowCell(position, 2);
+    cell.innerHTML = "";
+    cell.append(price);
+}
+
+render.cart.valueCell = function(position) {
+    const value = document.createElement("p");
+    value.innerText = position.value;
+    const cell = render.cart.getTableRowCell(position, 4);
+    cell.innerHTML = "";
+    cell.append(value);
+}
+
+render.cart.fullPriceCell = function(position) {
+    const fullPrice = document.createElement("p");
+    fullPrice.innerText = render.cart.getPositionPrice(position);
+    const cell = render.cart.getTableRowCell(position, 6);
+    cell.innerHTML = "";
+    cell.append(fullPrice);
+}
+
+render.cart.deleteCell = function(position) {
+    const button = document.createElement("button");
+    button.setAttribute("onclick", "ajaxApi.deleteFromCart(" + position.product.id + ");");
+    button.setAttribute("type", "button");
+    button.className = "btn btn-outline-dark mt-auto";
+    const icon = document.createElement("span");
+    icon.className = "fa fa-remove";
+    button.append(icon);
+    const cell = render.cart.getTableRowCell(position, 7);
+    cell.innerHTML = "";
+    cell.append(button);
+}
+
+render.cart.addCell = function(position) {
+    const button = document.createElement("button");
+    button.setAttribute("onclick", "ajaxApi.addOne(" + position.product.id + ");");
+    button.setAttribute("type", "button");
+    button.className = "btn btn-outline-dark mt-auto";
+    const icon = document.createElement("span");
+    icon.className = "fa fa-plus";
+    button.append(icon);
+    const cell = render.cart.getTableRowCell(position, 3);
+    cell.innerHTML = "";
+    cell.append(button);
+}
+
+render.cart.minusCell = function(position) {
+    const button = document.createElement("button");
+    button.setAttribute("onclick", "ajaxApi.minusProduct(" + position.product.id + ");");
+    button.setAttribute("type", "button");
+    button.className = "btn btn-outline-dark mt-auto";
+    const icon = document.createElement("span");
+    icon.className = "fa fa-minus";
+    button.append(icon);
+    const cell = render.cart.getTableRowCell(position, 5);
+    cell.innerHTML = "";
+    cell.append(button);
+}
+
+render.cart.updateTable = function() {
+    ajaxApi.getCart();
+}
+
+render.cart.getTableRow = function(position) {
+    const tr = document.createElement("tr");
+    tr.id = render.cart.getTableRowId(position);
+    for(let i=0; i<8; i++) {
+        let td = document.createElement("td");
+        td.id= render.cart.getTableRowCellId(position, i);
+        tr.append(td);
+    }
+    return tr;
+}
+
+render.cart.getTableRowId = function(position) {
+    if (typeof position === "number") {
+        return "mp"+ position;
+    }
+    return "mp" + position.product.id;
+}
+
+render.cart.getTableRowCell = function(position, cellIndex) {
+    return $("#" + render.cart.getTableRowCellId(position, cellIndex))[0];
+}
+
+render.cart.getTableRowCellId = function(position, cellIndex) {
+    if (typeof position === "number") {
+        return "mp"+ position + "c" + cellIndex;
+    }
+    return "mp"+ position.product.id + "c" + cellIndex;
+}
 
 function closeNoty() {
     if (failedNote) {
@@ -155,7 +310,7 @@ function closeNoty() {
 function successNoty(key) {
     closeNoty();
     new Noty({
-        text: "<span class='fa fa-lg fa-check'></span> &nbsp;" + i18n[key],
+        text: "<span class='fa fa-lg fa-check'></span> &nbsp;" + /*i18n[key]*/ key,
         type: 'success',
         layout: "bottomRight",
         timeout: 1000
@@ -173,6 +328,8 @@ function failNoty(jqXHR) {
     });
     failedNote.show()
 }
+
+
 
 
 //todo add success noty to user-products page js

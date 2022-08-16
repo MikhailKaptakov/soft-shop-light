@@ -26,7 +26,6 @@ public class OrderPosition extends AbstractEntity{
     @JoinColumn(name = "product_id", nullable = false)
     @NotNull
     private Product product;
-    //todo или вообще заменить продукт айди? Тогда как передавать продукт дитейлз?
 
     @Column(name = "product_value", nullable = false)
     @NotNull
@@ -55,7 +54,8 @@ public class OrderPosition extends AbstractEntity{
         this.productDetails = new ProductDetails(product);
     }
 
-    public void addOne() {
+    public OrderPosition addOne() {
         value++;
+        return this;
     }
 }

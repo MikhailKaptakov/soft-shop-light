@@ -64,3 +64,33 @@ body {
     display:none
 }
 
+//from cart styles
+
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+@media (min-width: 900px) {
+  .container {
+    padding: 0;
+  }
+}
+
+a:link,
+a:visited,
+a:hover,
+a:active,
+a:focus {
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.card {
+  line-height: 1;
+  transition: all 0.3s;
+}
+.card:hover, .card:active {
+  transform: scale(1.1);
+  border: 1px solid #daed0e;
+}
