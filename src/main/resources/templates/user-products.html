@@ -4,7 +4,7 @@
 <body>
 <script th:src="@{/js/jquery-listnav.js}" defer></script>   <!--todo переместить в head-tag и в webjars-->
 <script th:src="@{/js/vendor.js}" defer></script>           <!--todo переместить в head-tag и в webjars-->
-<link th:href="@{css/listnav.css}" rel="stylesheet" />   <!--todo переместить в head-tag и в webjars-->
+<link th:href="@{css/listnav.css}" rel="stylesheet" />    <!--todo переместить в head-tag и в webjars-->
 <link th:href="@{css/styles.css}" rel="stylesheet" />
 <script th:src="@{/js/user-render.js}" defer></script>
 <script th:src="@{/js/user-products.js}" defer></script>
@@ -24,6 +24,8 @@
 </section>
 <div th:replace="fragments/fragments.html::modal-product"></div>
 <div th:replace="fragments/fragments.html::modal-cart"></div>
+<div th:replace="fragments/fragments.html::modal-order-form"></div>
+<div th:replace="fragments/fragments.html::modal-verify-order"></div>
 <!-- Footer-->
 <footer th:replace="fragments/fragments.html::footer"></footer>
 </body>

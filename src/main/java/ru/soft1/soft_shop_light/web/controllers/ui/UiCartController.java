@@ -4,14 +4,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.soft1.soft_shop_light.configuration.ValidationCustomer;
 import ru.soft1.soft_shop_light.model.Product;
 import ru.soft1.soft_shop_light.service.ProductService;
 import ru.soft1.soft_shop_light.to.OrderPositionList;
+import ru.soft1.soft_shop_light.to.ProductOrderForm;
 
 @Slf4j
 @RestController
-@SessionAttributes("userOrderPositions")
+@SessionAttributes({"userOrderPositions", "userOrderForm"})
 @RequestMapping(value = UiCartController.URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class UiCartController {
     static final String URL = "/ui/cart";
@@ -22,7 +25,7 @@ public class UiCartController {
     @GetMapping()
     public OrderPositionList getCartPositions
             (@ModelAttribute("userOrderPositions") OrderPositionList userOrderPositions) {
-        log.info("get cart");
+        log.info("get positions in cart");
         return userOrderPositions;
     }
 
@@ -72,9 +75,30 @@ public class UiCartController {
         log.debug("Cart is clear");
     }
 
+    @PostMapping(value = "/form")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void fillClientForm(
+            @ModelAttribute("userOrderForm") ProductOrderForm userOrderForm,
+            @Validated(ValidationCustomer.Web.class) ProductOrderForm productOrderForm) {
+        userOrderForm.setValues(productOrderForm);
+        log.info("Fill client form");
+    }
 
-    //todo сбросить сессию после отправки пост запроса заказа (для пересылки имейла с заказом)
-    //todo сделать навигационную панель для телефонов
+    @GetMapping(value = "/form")
+    public ProductOrderForm getOrderForm
+            (@ModelAttribute("userOrderForm") ProductOrderForm userOrderForm) {
+        log.info("get cart");
+        return userOrderForm;
+    }
+
+    @GetMapping(value = "/check")
+    public boolean isEmptyCart
+            (@ModelAttribute("userOrderPositions") OrderPositionList userOrderPositions) {
+        log.info("Check cart is empty");
+        return userOrderPositions.itsPositionsEmpty();
+    }
+
+    //todo сделать навигационную панель для мобильных устройств
     //todo сделать окошечко для ввода количества
     //todo сделать форму для отправления заказа (все запрашиваемые данные ProductOrderForm) при нажатии ок - сохраняет
     //данные формы и выдает окно с товарами С надписью вы хотите заказать: и две кнопки ок и отмена

@@ -138,8 +138,6 @@ render.modalProduct.openProductModal = function(productId) {
     $('#modal-product-tech-support')[0].innerText = product.requiredTechnicalSupport?"Есть":"Отсутствует";
     $('#modal-product-description')[0].innerText = product.description;
     $('#btn-product-add-to-cart')[0].setAttribute("onclick", "ajaxApi.addProductToCart(" + product.id + ")");
-    
-    //todo добавить add to cart с тем же рендером и вызовом метода, что и на основной странице
 }; 
 
 render.cart = {};
@@ -300,6 +298,24 @@ render.cart.getTableRowCellId = function(position, cellIndex) {
     return "mp"+ position.product.id + "c" + cellIndex;
 }
 
+render.order = {};
+
+render.order.render = function(orderForm) {
+    $("#firstname")[0].innerText = orderForm.firstname;
+    $("#surname")[0].innerText = orderForm.surname;
+    $("#secondName")[0].innerText = orderForm.secondName;
+    $("#email")[0].innerText = orderForm.email;
+    $("#telephoneNumber")[0].innerText = orderForm.telephoneNumber;
+    $("#companyName")[0].innerText = orderForm.companyName;
+    $("#address")[0].innerText = orderForm.address;
+    $("#comment")[0].innerText = orderForm.comment;
+}
+
+render.order.renderVerify = function(orderData) {
+    console.log(orderData);
+    $("#modal-verify-order-text")[0].innerText = orderData[0];
+}
+
 function closeNoty() {
     if (failedNote) {
         failedNote.close();
@@ -329,9 +345,17 @@ function failNoty(jqXHR) {
     failedNote.show()
 }
 
+function handlefailNoty(message) {
+    closeNoty();
+    failedNote = new Noty({
+        text: "<span class='fa fa-lg fa-exclamation-circle'></span> &nbsp;" + message + "<br>",
+        type: "error",
+        layout: "bottomRight"
+    });
+    failedNote.show()
+}
 
 
 
-//todo add success noty to user-products page js
 //todo refactor js. noty to отдельный файл.без дублирования. Подгружать в header-tags.
 //todo Весь рендер вынести в отдельные файлы имя-страницы-рендер

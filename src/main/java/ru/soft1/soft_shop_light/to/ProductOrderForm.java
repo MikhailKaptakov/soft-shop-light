@@ -15,33 +15,41 @@ public class ProductOrderForm {
     @Email
     @NotBlank
     @Size(max = 128)
-    private String email;
+    private String email ="";
 
     @TelephoneRu
     @NotBlank
-    private String telephoneNumber;
+    private String telephoneNumber = "";
 
     @NotBlank
     @Size(min=3, max=50)
-    private String firstname;
+    private String firstname = "";
 
     @NotBlank
     @Size(min=3, max=50)
-    private String surname;
+    private String surname = "";
 
     @NotBlank
     @Size(min=3, max=50)
-    private String secondName;
+    private String secondName = "";
 
-    @Size(min=3, max=100)
-    private String companyName;
+    @Size(max=100)
+    private String companyName = "";
 
-    @Size(min=3, max=100)
-    private String address;
+    @Size(max=100)
+    private String address = "";
 
-    @Size(min=3, max=256)
-    private String comment;
+    @Size(max=256)
+    private String comment = "";
 
-    @NotNull
-    private LocalDateTime orderDateTime;
+    public void setValues(ProductOrderForm productOrderForm) {
+        this.email = productOrderForm.email;
+        this.firstname = productOrderForm.firstname;
+        this.secondName = productOrderForm.secondName;
+        this.surname = productOrderForm.surname;
+        this.telephoneNumber = productOrderForm.telephoneNumber;
+        this.comment = productOrderForm.comment;
+        this.address = productOrderForm.address;
+        this.companyName = productOrderForm.companyName;
+    }
 }

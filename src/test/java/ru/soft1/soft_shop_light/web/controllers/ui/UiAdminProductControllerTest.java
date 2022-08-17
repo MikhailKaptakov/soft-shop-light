@@ -83,7 +83,6 @@ class UiAdminProductControllerTest extends AbstractControllerTest {
         Assertions.assertFalse(productService.get(5).isRequiredTechnicalSupport());
     }
 
-    //todo скрыть информацию об отправке сообщения. Со стороны фронта не должно быть инфы о том, что отправляется письмо на почту
     @Test
     void get() throws Exception {
         Product expected = ProductTestData.getProductOne();
@@ -229,20 +228,10 @@ class UiAdminProductControllerTest extends AbstractControllerTest {
      *   Добавить страницу товара
      *  */
 
-    /* TODO Корзина
-       - сохранять заказ в контексте страницы
-       - страница корзины и формы отправки
-       - модальное окно по кнопке корзины
-       - отправка и обработка запроса (пока нет возможности отправки имейла
-       будем отправлять сообщение с заказом в лог)
-     */
-
     /* TODO Статьи на главной странице
         - сделать БД для загрузки html документов - статей с админки
         - сделать область для загрузки статей на главной странице
         - сделать загрузку AJAX с главной страницы
         - изучить как лучше орагнизовать загрузку html страницы из бд
      */
-
-
 }

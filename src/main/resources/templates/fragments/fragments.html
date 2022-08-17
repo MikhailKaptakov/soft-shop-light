@@ -10,13 +10,28 @@
 <nav th:fragment="navigation" class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container px-4 px-lg-5">
     <a class="navbar-brand">Сокращённое название</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+    <button class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
         <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
         <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+          <a class="nav-link dropdown-toggle"
+             id="navbarDropdown"
+             href="#"
+             role="button"
+             data-bs-toggle="dropdown"
+             aria-expanded="false">
+            Shop
+          </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="#!">All Products</a></li>
             <li><hr class="dropdown-divider" /></li>
@@ -88,15 +103,19 @@
             </tbody>
           </table>
           <h5 class="modal-title">Описание товара</h5>
-          <p class="text-justify">
-            <div id="modal-product-description"> </div>
-          </p>
+          <p class="text-justify" id="modal-product-description"></p>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark mt-auto" id="btn-product-add-to-cart" data-dismiss="modal" onclick="addToCart()">
+        <button type="button"
+                class="btn btn-outline-dark mt-auto"
+                id="btn-product-add-to-cart"
+                data-dismiss="modal"
+                onclick="addToCart()">
           <span class="fa fa-backspace"></span>
-          <span id="modal-product-add-to-cart">В корзину</span> <!--//todo i18n-->
+          <span id="modal-product-add-to-cart">
+            В корзину
+          </span> <!--//todo i18n-->
         </button>
         <button type="button" class="btn btn-outline-dark mt-auto" data-dismiss="modal">
           <span class="fa fa-close"></span>
@@ -118,14 +137,14 @@
             <table class="table" id="modal-cart-content">
               <thead>
               <tr>
-                <th></th> <!--изображение-->
+                <th></th>
                 <th>Наименование</th>
                 <th>Цена</th>
-                <th></th>  <!--плюс кол-во-->
-                <th>Кол-во</th> <!--кол-во-->
-                <th></th> <!--минус кол-во-->
+                <th></th>
+                <th>Кол-во</th>
+                <th></th>
                 <th>Общ. цена</th>
-                <th></th> <!--удалить-->
+                <th></th>
               </tr>
               </thead>
               <tbody id="modal-cart-tbody">
@@ -138,7 +157,7 @@
           <span class="fa fa-trash"></span>
           <span>Очистить корзину</span>
         </button>
-        <button class="btn btn-outline-dark"> <!--onclick=""--><!--//todo переход к странице корзины и форме-->
+        <button class="btn btn-outline-dark" id="modal-cart-to-order" onclick="ajaxApi.goToOrderForm()">
           <span class="fa fa-check"></span><span>Перейти к оформлению </span>
         </button>
         <button type="button" class="btn btn-outline-dark mt-auto" data-dismiss="modal">
@@ -149,9 +168,93 @@
     </div>
   </div>
 </div>
+
+<div th:fragment="modal-order-form" class="modal fade" tabindex="-1" id="modal-order">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Сведения</h4>
+        <button type="button" class="close" data-dismiss="modal" onclick="closeNoty()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="modal-order-form">
+          <div class="form-group">
+            <label for="firstname" class="col-form-label">Имя</label>
+            <input type="text" class="form-control" id="firstname" name="firstname">
+          </div>
+          <div class="form-group">
+            <label for="surname" class="col-form-label">Фамилия</label>
+            <input type="text" class="form-control" id="surname" name="surname">
+          </div>
+          <div class="form-group">
+            <label for="secondName" class="col-form-label">Отчество</label>
+            <input type="text" class="form-control" id="secondName" name="secondName">
+          </div>
+          <div class="form-group">
+            <label for="email" class="col-form-label">Email</label>
+            <input type="text" class="form-control" id="email" name="email">
+          </div>
+          <div class="form-group">
+            <label for="telephoneNumber" class="col-form-label">Тел.:</label>
+            <input type="text" class="form-control" id="telephoneNumber" name="telephoneNumber">
+          </div>
+          <div class="form-group">
+            <label for="companyName" class="col-form-label">Имя компании</label>
+            <input type="text" class="form-control" id="companyName" name="companyName">
+          </div>
+          <div class="form-group">
+            <label for="address" class="col-form-label">Адрес компании</label>
+            <input type="text" class="form-control" id="address" name="address">
+          </div>
+          <div class="form-group">
+            <label for="comment" class="col-form-label">Комментарий</label>
+            <input type="text" class="form-control" id="comment" name="comment">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark mt-auto" data-dismiss="modal">
+          <span class="fa fa-close"></span>
+          <span>Закрыть</span>
+        </button>
+        <button type="button" class="btn btn-outline-dark" onclick="ajaxApi.sendOrderForm()">
+          <span class="fa fa-check"></span>
+          <span>Отправить</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div th:fragment="modal-verify-order" class="modal fade" tabindex="-1" id="modal-verify-order">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="container w-100">
+          <pre id="modal-verify-order-text"></pre>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark mt-auto" data-dismiss="modal">
+          <span class="fa fa-close"></span>
+          <span>Закрыть</span>
+        </button>
+        <button type="button"
+                class="btn btn-outline-dark"
+                data-dismiss="modal"
+                onclick="ajaxApi.sendOrderFinal()">
+          <span class="fa fa-check"></span>
+          <span>Отправить</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
 
-<!--
-//todo сделать корзину через модальное окно, написать рендер для заполнения позиций, проработать подсчёт суммы,суммы тотал
-и проирисовки позиций-->
+

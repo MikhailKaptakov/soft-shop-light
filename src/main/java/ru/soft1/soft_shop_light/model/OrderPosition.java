@@ -58,4 +58,9 @@ public class OrderPosition extends AbstractEntity{
         value++;
         return this;
     }
+
+    public OrderPosition minusOne() {
+        value--;
+        return this;
+    }
 }

@@ -30,7 +30,6 @@ public class ExceptionInfoHandler {
 
     public static final String EXCEPTION_DUPLICATE_EMAIL = "exception.user.duplicateEmail";
 
-
     private static final Map<String, String> CONSTRAINS_I18N_MAP = Map.of(
             "users_unique_email_idx", EXCEPTION_DUPLICATE_EMAIL);
 
@@ -52,7 +51,7 @@ public class ExceptionInfoHandler {
             String lowerCaseMsg = rootMsg.toLowerCase();
             for (Map.Entry<String, String> entry : CONSTRAINS_I18N_MAP.entrySet()) {
                 if (lowerCaseMsg.contains(entry.getKey())) {
-                    return logAndGetErrorInfo(req, e, false, ErrorType.BAD_EMAIL_SEND,
+                    return logAndGetErrorInfo(req, e, false, ErrorType.APP_ERROR,
                             messageSourceAccessor.getMessage(entry.getValue()));
                 }
             }
@@ -67,7 +66,7 @@ public class ExceptionInfoHandler {
             String lowerCaseMsg = rootMsg.toLowerCase();
             for (Map.Entry<String, String> entry : CONSTRAINS_I18N_MAP.entrySet()) {
                 if (lowerCaseMsg.contains(entry.getKey())) {
-                    return logAndGetErrorInfo(req, e, false, ErrorType.BAD_EMAIL_SEND,
+                    return logAndGetErrorInfo(req, e, false, ErrorType.APP_ERROR,
                             messageSourceAccessor.getMessage(entry.getValue()));
                 }
             }

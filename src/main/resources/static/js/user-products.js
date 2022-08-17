@@ -4,6 +4,7 @@ ajaxApi.productMap;
 
 ajaxApi.productsUrl = "/ui/products/";
 ajaxApi.cartUrl = "/ui/cart/";
+ajaxApi.orderUrl = "/ui/orders/";
 
 ajaxApi.init = function() {
     $(document).ajaxError(function (event, jqXHR, options, jsExc) {
@@ -84,7 +85,7 @@ ajaxApi.minusProduct = function(id) {
         url: ajaxApi.cartUrl + "minus/" + id,
         type: "POST",
     }).done(function () {
-            render.cart.updateTable();
+        render.cart.updateTable();
     });
 }
 
@@ -94,7 +95,7 @@ ajaxApi.setProductValueToCart = function(id, value) {
         type: "POST",
         data: value,
     }).done(function () {
-            //todo
+        render.cart.updateTable();
     });
 }
 
@@ -104,6 +105,58 @@ ajaxApi.getCart = function() {
 
 ajaxApi.getCartDataHandler = function(data) {
     render.cart.render(data.positions);
+}
+
+ajaxApi.goToOrderForm = function() {
+    const func = function(data) {
+        if (data) {
+            handlefailNoty("Корзина пуста");
+        } else {
+            $("#modal-cart").modal("hide");
+            $("#modal-order").modal();
+            $.get(ajaxApi.cartUrl + "form", ajaxApi.getUserOrderFormDataHandler);
+        }
+    };
+    ajaxApi.isEmptyCart(func);
+}
+
+ajaxApi.isEmptyCart = function(func) {
+    $.get(ajaxApi.cartUrl + "check", func);
+}
+
+ajaxApi.getUserOrderFormDataHandler = function(data) {
+    render.order.render(data);
+}
+
+ajaxApi.sendOrderForm = function() {
+    $.ajax({
+        type: "POST",
+        url: ajaxApi.cartUrl + "form",
+        data: $("#modal-order-form").serialize()
+    }).done(function () {
+        ajaxApi.verificationModal();
+    });
+}
+
+ajaxApi.verificationModal = function() {
+    $("#modal-order").modal("hide");
+    $("#modal-verify-order").modal();
+    ajaxApi.getOrderString();
+    //todo запросы на заполнение открытие и рендер формы верификации
+}
+
+ajaxApi.getOrderString = function() {
+    $.get(ajaxApi.orderUrl, render.order.renderVerify);
+}
+
+ajaxApi.sendOrderFinal = function() {
+    $.ajax({
+        url: ajaxApi.orderUrl,
+        type: "POST"
+    }).done(function () {
+        $("#modal-verify-order").modal("hide");
+        successNoty("Заказ отправлен");
+    });
 }
 
 ajaxApi.getAllAvailable();

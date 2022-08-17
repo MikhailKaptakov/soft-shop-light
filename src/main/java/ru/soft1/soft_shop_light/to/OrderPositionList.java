@@ -53,7 +53,7 @@ public class OrderPositionList {
     public void deleteOne(long productId) {
         OrderPosition orderPosition = getById(productId).
                 orElseThrow(() -> {throw new NotFoundException("Order Position not found");});
-        orderPosition.setValue(orderPosition.getValue() - 1);
+        orderPosition.minusOne();
         if (orderPosition.getValue() <= 0) {
             removePosition(productId);
         }
@@ -65,8 +65,8 @@ public class OrderPositionList {
         positions.remove(position);
     }
 
-    public int takeTotalPrice() {
-        return positions.stream().map((p)->{return p.getValue()*p.getProductDetails().getPrice();})
+    public int getTotalPrice() {
+        return positions.stream().map((p)->{return p.getValue()*p.getProduct().getPrice();})
                 .toList().stream().reduce(0, Integer::sum);
     }
 
@@ -77,6 +77,10 @@ public class OrderPositionList {
 
     public void removeAll() {
         positions = new ArrayList<>();
+    }
+
+    public boolean itsPositionsEmpty() {
+        return positions.isEmpty();
     }
 
 }
