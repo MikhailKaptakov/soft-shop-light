@@ -13,10 +13,9 @@
 <!-- Header-->
 <header th:replace="fragments/fragments.html::header" ></header>
 <!-- Section-->
+<div th:replace="fragments/fragments.html::alphabetic-navigator"></div>
+<div th:replace="fragments/fragments.html::search-panel"></div>
 <section class="py-5">
-    <div class="row">
-        <div class="listNav w-50 mx-auto" id="product-list-nav"></div>
-    </div>
     <div class="container px-4 px-lg-5 mt-5 ">
         <ul class="row gx-4 gx-lg-5 row-cols-1 row-cols-md-3 row-cols-xl-4 justify-content-center list-unstyled" id="product-list">
         </ul>

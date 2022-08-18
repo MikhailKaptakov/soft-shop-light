@@ -34,7 +34,7 @@ public class UiProductOrderController {
         return str;
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void sendOrderToEmail(@ModelAttribute("userOrderPositions") OrderPositionList userOrderPositions,
                                  @ModelAttribute("userOrderForm") ProductOrderForm userProductOrderForm) {

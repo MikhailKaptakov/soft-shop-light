@@ -63,4 +63,8 @@ public class OrderPosition extends AbstractEntity{
         value--;
         return this;
     }
+
+    public int getPositionPrice() {
+        return this.product.getPrice()*this.value;
+    }
 }

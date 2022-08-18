@@ -16,10 +16,6 @@ public class OrderPositionList {
 
     private List<OrderPosition> positions = new ArrayList<>();
 
-    public boolean isIncluded(long productId) {
-        return getById(productId) == null;
-    }
-
     public Optional<OrderPosition> getById(long productId) {
         return positions.stream()
                 .filter((p)-> p.getProduct().getId().equals(productId))
@@ -66,7 +62,7 @@ public class OrderPositionList {
     }
 
     public int getTotalPrice() {
-        return positions.stream().map((p)->{return p.getValue()*p.getProduct().getPrice();})
+        return positions.stream().map(OrderPosition::getPositionPrice)
                 .toList().stream().reduce(0, Integer::sum);
     }
 

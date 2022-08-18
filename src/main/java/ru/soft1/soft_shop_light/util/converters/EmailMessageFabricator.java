@@ -51,7 +51,7 @@ public class EmailMessageFabricator {
                         productDetails.isRequiredTechnicalSupport()) +
                 getSeparatedString("Price:", "" + productDetails.getPrice()) +
                 getSeparatedString("Count:", orderPosition.getValue() + "") +
-                getSeparatedString("Total price:", orderPosition.getValue()+productDetails.getPrice() + "");
+                getSeparatedString("Total price:", orderPosition.getPositionPrice() + "");
     }
 
     private static String getSeparatedString(String title, String fieldValue) {

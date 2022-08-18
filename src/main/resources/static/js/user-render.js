@@ -4,6 +4,7 @@ render.product = {};
 
 render.product.render = function(productArray) {
     const productListContainer = render.product.renderProductListContainer("product-list");
+    productListContainer.innerHTML = "";
     for (const product of productArray) {
         render.product.renderProductContainer(product, productListContainer);
     }
@@ -312,9 +313,56 @@ render.order.render = function(orderForm) {
 }
 
 render.order.renderVerify = function(orderData) {
-    console.log(orderData);
     $("#modal-verify-order-text")[0].innerText = orderData[0];
 }
+
+
+render.alphabet = {};
+
+render.alphabet.getProductContainer = function(product) {
+    const productContainer = document.createElement("li");
+    productContainer.id = "ap" + product.id;
+    productContainer.className = "col mb-1";
+    return productContainer;
+}
+
+render.alphabet.getFieldContainer = function(product) {
+    const fieldContainer = document.createElement("div");
+    fieldContainer.id = "af" + product.id;
+    fieldContainer.className = "card h-100";
+    return fieldContainer;
+}
+
+render.alphabet.getButton = function(product, type) {
+    const button = document.createElement("button");
+    button.id = "btnp" + product.id;
+    button.className = "btn-outline btn";
+    button.setAttribute("onclick", "render.modalProduct.openProductModal(" + product.id + ")");
+    const field = document.createElement("span");
+    field.className ="mark-field";
+    if (type = "name") {
+        field.innerText = product.name;
+    } else if (type = "vendor"){
+        field.innerText = product.vendor;
+    }
+    button.append(field);
+    return button;
+}
+
+render.alphabet.render = function(productArray, type) {
+    const productListContainer =$("#alphabetic-product-list")[0];
+    productListContainer.innerHTML = "";
+    for (const product of productArray) {
+        const container = render.alphabet.getProductContainer(product);
+        const fieldContainer = render.alphabet.getFieldContainer(product);
+        const button = render.alphabet.getButton(product, type)
+        container.append(fieldContainer);
+        fieldContainer.append(button);
+        productListContainer.append(container);
+    }
+}
+
+
 
 function closeNoty() {
     if (failedNote) {
@@ -354,6 +402,7 @@ function handlefailNoty(message) {
     });
     failedNote.show()
 }
+
 
 
 
