@@ -88,6 +88,13 @@ public class UiAdminProductController {
         productService.setTechSupport(id, isTechSupport);
     }
 
+    @PostMapping("/favorite/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void setFavorite(@PathVariable long id, @RequestParam boolean favorite) {
+        log.info(favorite ? "favorite {}" : "not favorite {}", id);
+        productService.setFavorite(id, favorite);
+    }
+
     @PostMapping("/img/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void setImage(@PathVariable long id, @RequestParam MultipartFile image) {

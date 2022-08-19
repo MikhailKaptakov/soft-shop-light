@@ -43,4 +43,8 @@ public class ProductRepository {
     public List<Product> getAllAvailable() {
         return crudProductRepository.findAllAvailableOrderedById();
     }
+
+    public List<Product> getAllFavoriteAvailable() {
+        return crudProductRepository.findAllFavoritesAvailableOrderedById();
+    }
 }

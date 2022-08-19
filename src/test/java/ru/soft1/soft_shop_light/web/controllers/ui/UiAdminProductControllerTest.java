@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.soft1.soft_shop_light.configuration.CustomProperties;
@@ -203,20 +205,17 @@ class UiAdminProductControllerTest extends AbstractControllerTest {
     void saveOrUpdate() throws Exception {
         //todo
     }
+
+    @Test
+    void setFavorite() throws Exception {
+        //todo
+    }
+
     //todo сделать полноценный рендер модального окна верификации (а не текстовое представление заказа)
 
     /* TODO Алфавитный указатель -
     * добавить осртировку по вендорам
     * */
-
-    /* TODO Список товаров на главной странице -
-     *   Создать отдельный запрос - для списка фаворитных товаров - их выводим на главной странице
-     *  в окошке списка товаров. При запросе поиском список фаворитных заменяется на искомые
-     * база данных - плюс булево поле фаворитных товаров,
-     * в таблицу админа добавить поел с галочкой, добавить запрос на смену фароритности
-     * добавить кеш фаворитных товаров
-     * добавить кеш запроса одиночных товаров
-     *  */
 
     /* TODO Статьи на главной странице
         - сделать БД для загрузки html документов - статей с админки
@@ -224,6 +223,4 @@ class UiAdminProductControllerTest extends AbstractControllerTest {
         - сделать загрузку AJAX с главной страницы
         - изучить как лучше орагнизовать загрузку html страницы из бд
      */
-
-    //todo сделать навигационную панель для мобильных устройств
 }

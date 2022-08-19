@@ -1,5 +1,4 @@
 const productAjaxUrl = "/admin/ui/products/";
-
 // https://stackoverflow.com/a/5064235/548473
 const ctx = {
     ajaxUrl: productAjaxUrl,
@@ -20,6 +19,21 @@ function setAvailable(chkbox, id) {
         successNoty(isAvailable ? "common.enabled" : "common.disabled");
     }).fail(function () {
         $(chkbox).prop("checked", !isAvailable);
+    });
+}
+
+function setFavorite(chkbox, id) {
+    var isFavorite = chkbox.is(":checked");
+//  https://stackoverflow.com/a/22213543/548473
+    $.ajax({
+        url: productAjaxUrl + "favorite/" + id,
+        type: "POST",
+        data: "favorite=" + isFavorite
+    }).done(function () {
+        chkbox.closest("tr").attr("data-product-favorite", isFavorite);
+        successNoty(isFavorite ? "common.enabled" : "common.disabled");
+    }).fail(function () {
+        $(chkbox).prop("checked", !isFavorite);
     });
 }
 
@@ -113,6 +127,15 @@ $(function () {
                 }
              },
              {
+                "data": "favorite",
+                "render": function (data, type, row) {
+                    if (type === "display") {
+                        return "<input type='checkbox' " + (data ? "checked" : "") + " onclick='setFavorite($(this)," + row.id + ");'/>";
+                    }
+                    return data;
+                }
+             },
+             {
                 "data": "image",
                 "render": function (data, type, row) {
                     if (row.id!==null && row.image !== null && row.image !== undefined) {
@@ -150,3 +173,5 @@ $(function () {
         }
     });
 });
+
+

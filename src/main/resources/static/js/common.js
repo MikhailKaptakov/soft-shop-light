@@ -1,4 +1,17 @@
 let form;
+const i18n = [];
+
+function initI18n() {
+    i18n["addTitle"] = $("#i18-common-add")[0].innerText;
+    i18n["editTitle"] = $("#i18-common-edit")[0].innerText;
+    i18n["common.deleted"] = $("#i18-common-deleted")[0].innerText;
+    i18n["common.saved"] = $("#i18-common-saved")[0].innerText;
+    i18n["common.enabled"] = $("#i18-common-enabled")[0].innerText;
+    i18n["common.disabled"] = $("#i18-common-disabled")[0].innerText;
+    i18n["common.search"] = $("#i18-common-search")[0].innerText;
+    i18n["common.confirm"] = $("#i18-common-confirm")[0].innerText;
+};
+initI18n();
 
 function makeEditable(datatableOpts) {
     ctx.datatableApi = $("#datatable").DataTable(

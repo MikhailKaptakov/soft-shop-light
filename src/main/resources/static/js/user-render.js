@@ -117,7 +117,7 @@ render.product.createButton = function(functionNameString, buttonText) {
 
     const buttonLetter = document.createElement("span");
     buttonLetter.className = "btn btn-outline-dark mt-auto";
-    buttonLetter.innerText = buttonText; //todo i18n
+    buttonLetter.innerText = buttonText;
     button.append(buttonLetter);
     return buttonWrapper;
 }

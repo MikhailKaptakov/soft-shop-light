@@ -24,7 +24,7 @@ ajaxApi.init = function() {
 
 
 ajaxApi.getFavorite = function() {
-    $.get(ajaxApi.productsUrl, ajaxApi.getFavoriteDataHandler);
+    $.get(ajaxApi.productsUrl + "favorite", ajaxApi.getFavoriteDataHandler);
 }
 
 ajaxApi.getFavoriteDataHandler = function(data) {
@@ -43,6 +43,7 @@ ajaxApi.getDataMap = function(data) {
     ajaxApi.productMap = dataMap;
     return dataMap;
 }
+
 
 ajaxApi.addProductToCart = function(id) {
     $.ajax({
@@ -171,9 +172,14 @@ ajaxApi.getAllAvailableToAlphabeticNameDataHandler = function(data) {
     render.alphabet.render(data, "name");
     $(function(){
         $('#alphabetic-product-list').listnav({
+            allText: 'Все',
             filterSelector: '.mark-field',
             includeNums: false,
             removeDisabled: true,
+            letters: ['_', 'а', 'б', 'в', 'г', 'д','е','ё','ж','з','и','й','к','л',
+            'м','н','о','п','р','с','т','у','ф','х','ц','ч','ш','щ','ъ','ы','ь','э',
+            'ю','я','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p',
+            'q','r','s','t','u','v','w','x','y','z','-'],
         });
     });
 }
@@ -217,7 +223,7 @@ searcher.toggleArrow = function() {
 searcher.startSearch = function() {
     const selector = $("#search-panel-selector")[0];
     const type = selector.options[selector.selectedIndex].value;
-    const value = $("#search-panel-window")[0].value; 
+    const value = $("#search-panel-window")[0].value;   
     searcher.search(type, value); 
 }
 

@@ -24,4 +24,7 @@ public interface CrudProductRepository extends JpaRepository<Product, Long> {
 
     @Query("SELECT p FROM Product p WHERE p.available=TRUE ORDER BY p.id ASC")
     List<Product> findAllAvailableOrderedById();
+
+    @Query("SELECT p FROM Product p WHERE p.available=TRUE AND p.favorite=TRUE ORDER BY p.id ASC")
+    List<Product> findAllFavoritesAvailableOrderedById();
 }

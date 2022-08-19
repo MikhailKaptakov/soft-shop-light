@@ -10,22 +10,22 @@ public class ProductTestData {
 
     private static final Product product = new Product(FIRST_ID, "prod1", "vendor1",
             "country1", "33 minutes", "description",
-            1000, 5, true, true, true);
+            1000, 5, true, true, true, false);
     private static final Product product2 = new Product(FIRST_ID+1, "prod2", "vendor2",
             "country2", "33 years", "undescription",
-            5, 55, true, false, true);
+            5, 55, true, false, true, true);
     private static final Product product3 = new Product(FIRST_ID+2, "prod3", "vendor3",
             "country3", "5 seconds", "useless program",
-            100000, 5, false, true, true);
+            100000, 5, false, true, true, false);
     private static final Product product4 = new Product(FIRST_ID+3, "prod4", "vendor3",
             "country3", "5 seconds", "useless program",
-            1000, 5, false, false, true);
+            1000, 5, false, false, true, false);
     private static final Product product5 = new Product(FIRST_ID+4, "prod5", "vendor3",
             "country3", "5 seconds", "useless program",
-            10000, 5, false, true, false);
+            10000, 5, false, true, false, true);
     private static final Product newProduct = new Product("new Prod", "new Vendor",
             "russia", "unlimited", "do something",
-            100000000, 3000, false, false, true);
+            100000000, 3000, false, false, true, false);
 
     public static Product getProductOne() {
         return new Product(product);

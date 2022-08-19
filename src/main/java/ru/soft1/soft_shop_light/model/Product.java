@@ -67,6 +67,9 @@ public class Product extends AbstractEntity {
     @Column(name="available", nullable = false, columnDefinition = "boolean default true")
     private boolean available;
 
+    @Column(name="favorite", nullable = false, columnDefinition = "boolean default false")
+    private boolean favorite;
+
     @Column(name="image", columnDefinition = "BLOB(25M)")
     @Lob
     private byte[] image;
@@ -87,9 +90,10 @@ public class Product extends AbstractEntity {
                    int deliveryTimeInDays,
                    boolean ndsInclude,
                    boolean requiredTechnicalSupport,
-                   boolean available) {
+                   boolean available,
+                   boolean favorite) {
         this(name, vendor, country, licenseTime, description, price,
-                deliveryTimeInDays, ndsInclude, requiredTechnicalSupport, available);
+                deliveryTimeInDays, ndsInclude, requiredTechnicalSupport, available, favorite);
         this.id = id;
     }
 
@@ -102,7 +106,8 @@ public class Product extends AbstractEntity {
                    int deliveryTimeInDays,
                    boolean ndsInclude,
                    boolean requiredTechnicalSupport,
-                   boolean available) {
+                   boolean available,
+                   boolean favorite) {
         this.name = name;
         this.vendor = vendor;
         this.country = country;
@@ -113,6 +118,7 @@ public class Product extends AbstractEntity {
         this.ndsInclude = ndsInclude;
         this.requiredTechnicalSupport = requiredTechnicalSupport;
         this.available = available;
+        this.favorite = favorite;
     }
 
     public Product(String name,
@@ -125,7 +131,7 @@ public class Product extends AbstractEntity {
                    boolean ndsInclude,
                    boolean requiredTechnicalSupport) {
         this(name, vendor, country, licenseTime, description, price,
-                deliveryTimeInDays, ndsInclude, requiredTechnicalSupport, true);
+                deliveryTimeInDays, ndsInclude, requiredTechnicalSupport, true, false);
     }
 
     public Product(Product product) {
@@ -139,7 +145,8 @@ public class Product extends AbstractEntity {
                 product.deliveryTimeInDays,
                 product.ndsInclude,
                 product.requiredTechnicalSupport,
-                product.available);
+                product.available,
+                product.favorite);
         this.setImage(product.image);
     }
 }

@@ -9,8 +9,8 @@
 <script th:src="@{/js/common.js}" defer></script>
 <script th:src="@{/js/admin-products.js}" defer></script>
 
-<div class="jumbotron pt-4">
-    <div class="container">
+<div class="jumbotron  pt-4" >
+    <div>
         <h3 class="text-center" th:utext="#{products.title}"></h3>
         <button class="btn btn-primary" onclick="add()">
             <span class="fa fa-plus"></span>
@@ -30,6 +30,7 @@
                 <th th:utext="#{products.ndsInclude}"></th>
                 <th th:utext="#{products.requiredTechnicalSupport}"></th>
                 <th th:utext="#{products.available}"></th>
+                <th th:utext="#{products.favorite}"></th>
                 <th>Image</th>
                 <th></th>
                 <th></th>
@@ -37,6 +38,16 @@
             </tr>
             </thead>
         </table>
+        <div id="i18n-init" style="display:none">
+            <span th:utext="#{common.add}" id="i18-common-add"></span><br>
+            <span th:utext="#{common.edit}" id="i18-common-edit"></span><br>
+            <span th:utext="#{common.deleted}" id="i18-common-deleted"></span><br>
+            <span th:utext="#{common.saved}" id="i18-common-saved"></span><br>
+            <span th:utext="#{common.enabled}" id="i18-common-enabled"></span><br>
+            <span th:utext="#{common.disabled}" id="i18-common-disabled"></span><br>
+            <span th:utext="#{common.search}" id="i18-common-search"></span><br>
+            <span th:utext="#{common.confirm}" id="i18-common-confirm"></span><br>
+        </div>
     </div>
 </div>
 
@@ -127,21 +138,5 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" th:inline="javascript">
-    var i18n = [];
-
-    i18n["addTitle"] = '<span th:utext="#{common.add}"></span>';
-    i18n["editTitle"] = '<span th:utext="#{common.edit}"></span>';
-    i18n["common.deleted"] = '<span th:utext="#{common.deleted}"></span>';
-    i18n["common.saved"] = '<span th:utext="#{common.saved}"></span>';
-    i18n["common.enabled"] = '<span th:utext="#{common.enabled}"></span>';
-    i18n["common.disabled"] = '<span th:utext="#{common.disabled}"></span>';
-    i18n["common.search"] = '<span th:utext="#{common.search}"></span>';
-    i18n["common.confirm"] = '<span th:utext="#{common.confirm}"></span>';
-</script>
 </body>
 </html>
-
-<!--
-todo fix exception message
--->

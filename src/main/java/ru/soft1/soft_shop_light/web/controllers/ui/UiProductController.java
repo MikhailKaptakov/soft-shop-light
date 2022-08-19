@@ -27,6 +27,12 @@ public class UiProductController {
         return productService.getAllAvailable();
     }
 
+    @GetMapping("/favorite")
+    public List<Product> getAllFavoriteAvailable() {
+        log.info("get All favorite");
+        return productService.getAllFavoriteAvailable();
+    }
+
     @GetMapping("/{id}")
     public Product getAvailable(@PathVariable("id") long id) {
         log.info("get available");

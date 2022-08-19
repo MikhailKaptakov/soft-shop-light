@@ -7,13 +7,13 @@
 <body>
 
 
-<nav th:fragment="navigation" class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container px-4 px-lg-5">
+<nav th:fragment="navigation" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container ">
     <a class="navbar-brand">Сокращённое название</a>
     <button class="navbar-toggler"
             type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent"
             aria-expanded="false"
             aria-label="Toggle navigation">
@@ -25,24 +25,11 @@
         <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
         <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle"
-             id="navbarDropdown"
-             href="#"
-             role="button"
-             data-bs-toggle="dropdown"
-             aria-expanded="false">
-            Shop
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#!">All Products</a></li>
-            <li><hr class="dropdown-divider" /></li>
-            <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-            <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
-          </ul>
+          <div th:replace="fragments/fragments.html::search-panel"></div>
         </li>
       </ul>
       <div class="d-flex">
-        <button class="btn btn-outline-dark" type="button" onclick="render.cart.openCart()">
+        <button class="btn btn-outline-light" type="button" onclick="render.cart.openCart()">
           <i class="bi-cart-fill me-1"></i>
           Корзина
           <span class="fa fa-shopping-cart"></span>
@@ -51,6 +38,7 @@
     </div>
   </div>
 </nav>
+
 <header th:fragment="header" class="bg-dark py-5">
   <div class="container px-4 px-lg-5 my-5">
     <div class="text-center text-white">
@@ -64,7 +52,7 @@
 </footer>
 
 <div th:fragment="modal-product" class="modal fade" tabindex="-1" id="modal-product">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <div class="w-25 text-center">
@@ -116,7 +104,7 @@
           <span class="fa fa-backspace"></span>
           <span id="modal-product-add-to-cart">
             В корзину
-          </span> <!--//todo i18n-->
+          </span>
         </button>
         <button type="button" class="btn btn-outline-dark mt-auto" data-dismiss="modal">
           <span class="fa fa-close"></span>
@@ -128,7 +116,7 @@
 </div>
 
 <div th:fragment="modal-cart" class="modal fade" tabindex="-1" id="modal-cart">
-  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -181,22 +169,27 @@
         <form id="modal-order-form">
           <div class="form-group">
             <label for="firstname" class="col-form-label">Имя</label>
-            <input type="text" class="form-control" id="firstname" name="firstname">
+            <label style="color:red">*</label>
+            <input type="text" class="form-control" id="firstname" name="firstname" required="">
           </div>
           <div class="form-group">
             <label for="surname" class="col-form-label">Фамилия</label>
+            <label style="color:red">*</label>
             <input type="text" class="form-control" id="surname" name="surname">
           </div>
           <div class="form-group">
             <label for="secondName" class="col-form-label">Отчество</label>
+            <label style="color:red">*</label>
             <input type="text" class="form-control" id="secondName" name="secondName">
           </div>
           <div class="form-group">
             <label for="email" class="col-form-label">Email</label>
+            <label style="color:red">*</label>
             <input type="text" class="form-control" id="email" name="email">
           </div>
           <div class="form-group">
             <label for="telephoneNumber" class="col-form-label">Тел.:</label>
+            <label style="color:red">*</label>
             <input type="text" class="form-control" id="telephoneNumber" name="telephoneNumber">
           </div>
           <div class="form-group">
@@ -286,27 +279,28 @@
    </button>
    </div>
 </div>
-<div th:fragment="search-panel" class="container button-center">
+
+<div th:fragment="search-panel" class="d-flex">
     <div class="d-inline">
       <button type="button"
-            class="btn btn-outline-dark"
+            class="btn btn-outline-light"
              onclick="searcher.slidePanel()" id="search-panel-btn">
        <i class="fa fa-arrow-right"></i>
        <span>Поиск</span>
       </button>
     </div>
-    <div id="search-panel-slide" class="d-none col">
-      <input type="text" id="search-panel-window" class="btn-outline-dark d-inline">
-      <select id="search-panel-selector" class="btn-outline-dark d-inline">
+    <div id="search-panel-slide" class="col d-none">
+      <input type="text" id="search-panel-window" class="bg-light d-inline">
+      <button type="button"
+              class="btn justify-content-center btn-outline-light d-inline"
+              onclick="searcher.startSearch()">
+        <i class="fa fa-check"></i>
+      </button>
+      <select id="search-panel-selector" class="bg-light">
         <option label="По названию" value="name" selected>По названию</option>
         <option value="vendor">По вендору</option>
         <option value="country">По стране</option>
       </select>
-      <button type="button"
-              class="btn btn-outline-dark btn-slide justify-content-center btn-outline-dark d-inline"
-              onclick="searcher.startSearch()">
-        <i class="fa fa-check"></i>
-      </button>
     </div>
 </div>
 </body>

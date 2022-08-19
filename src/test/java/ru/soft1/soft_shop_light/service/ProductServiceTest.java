@@ -97,4 +97,14 @@ class ProductServiceTest {
         productService.setTechSupport(expected.getId(), true);
         ProductTestData.PRODUCT_MATCHER.assertMatch(productService.get(expected.getId()), expected);
     }
+
+    @Test
+    void getAllFavoriteAvailableTest() {
+        //todo
+    }
+
+    @Test
+    void setFavoriteTest() {
+        //todo
+    }
 }

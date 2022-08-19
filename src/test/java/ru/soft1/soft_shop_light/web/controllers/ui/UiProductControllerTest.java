@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 class UiProductControllerTest extends AbstractControllerTest {
 
-    private static final String REST_URL = UiProductController.URL + '/';
+    private static final String URL = UiProductController.URL + '/';
 
     @Autowired
     private ProductService productService;
@@ -28,7 +28,7 @@ class UiProductControllerTest extends AbstractControllerTest {
     @Test
     void getAllAvailable() throws Exception {
         List<Product> expected = ProductTestData.getAllAvailableProduct();
-        perform(MockMvcRequestBuilders.get(REST_URL))
+        perform(MockMvcRequestBuilders.get(URL))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -38,7 +38,7 @@ class UiProductControllerTest extends AbstractControllerTest {
     @Test
     void getAvailable() throws Exception {
         Product expected = ProductTestData.getProductOne();
-        perform(MockMvcRequestBuilders.get(REST_URL + expected.getId()))
+        perform(MockMvcRequestBuilders.get(URL + expected.getId()))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -47,16 +47,20 @@ class UiProductControllerTest extends AbstractControllerTest {
 
     @Test
     void invalidGetAvailable() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + 100))
+        perform(MockMvcRequestBuilders.get(URL + 100))
                 .andExpect(status().isUnprocessableEntity())
                 .andDo(print());
     }
 
     @Test
     void GetNotAvailable() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + 5))
+        perform(MockMvcRequestBuilders.get(URL + 5))
                 .andExpect(status().isUnprocessableEntity())
                 .andDo(print());
     }
 
+    @Test
+    void getAllFavoriteAvailable() {
+        //todo
+    }
 }
