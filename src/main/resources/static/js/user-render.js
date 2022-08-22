@@ -402,9 +402,3 @@ function handlefailNoty(message) {
     });
     failedNote.show()
 }
-
-
-
-
-//todo refactor js. noty to отдельный файл.без дублирования. Подгружать в header-tags.
-//todo Весь рендер вынести в отдельные файлы имя-страницы-рендер

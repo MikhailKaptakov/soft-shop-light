@@ -41,7 +41,7 @@ public class UiAdminProductController {
     public ResponseEntity<Product> create(@Validated(ValidationCustomer.Web.class) @RequestBody Product product) {
         log.info("create {}", product);
         checkNew(product);
-        Product created = productService.create(product);
+        Product created = productService.save(product);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(URL + "/" + created.getId()).build().toUri();
         return ResponseEntity.created(uriOfNewResource).body(created);
@@ -53,11 +53,11 @@ public class UiAdminProductController {
         if (product.itsNew()) {
             log.info("create {}", product);
             checkNew(product);
-            productService.create(product);
+            productService.save(product);
         } else {
             log.info("update {} with id={}", product, product.getId());
             ValidationUtil.assureIdConsistent(product, product.getId());
-            productService.update(product);
+            productService.save(product);
         }
     }
 
@@ -113,14 +113,6 @@ public class UiAdminProductController {
     public void delete(@PathVariable long id) {
         log.info("delete {}", id);
         productService.delete(id);
-    }
-
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@Validated(ValidationCustomer.Web.class) @RequestBody Product product, @PathVariable long id) {
-        log.info("update {} with id={}", product, id);
-        ValidationUtil.assureIdConsistent(product, id);
-        productService.update(product);
     }
 }
 

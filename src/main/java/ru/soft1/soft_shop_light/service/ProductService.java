@@ -9,11 +9,10 @@ import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 import ru.soft1.soft_shop_light.model.Product;
 import ru.soft1.soft_shop_light.repository.ProductRepository;
-import ru.soft1.soft_shop_light.util.exception.ImageConversionException;
 import ru.soft1.soft_shop_light.util.validation.ValidationUtil;
-
-import java.io.IOException;
 import java.util.List;
+
+import static ru.soft1.soft_shop_light.util.Util.toBytes;
 
 @Slf4j
 @Service
@@ -43,7 +42,6 @@ public class ProductService {
         return productRepository.getAllFavoriteAvailable();
     }
 
-    @Cacheable("products")
     public Product getAvailable(long id) {
         Product product = ValidationUtil.checkNotFoundWithId(productRepository.get(id), id);
         ValidationUtil.checkNotFoundWithId(product.isAvailable(), id);
@@ -57,13 +55,7 @@ public class ProductService {
     }
 
     @CacheEvict(value = {"products", "favorites"}, allEntries = true)
-    public void update(Product product) {
-        Assert.notNull(product, "product must not be null");
-        productRepository.save(product);
-    }
-
-    @CacheEvict(value = {"products", "favorites"}, allEntries = true)
-    public Product create(Product product) {
+    public Product save(Product product) {
         Assert.notNull(product, "product must not be null");
         return productRepository.save(product);
     }
@@ -116,11 +108,4 @@ public class ProductService {
         productRepository.save(product);
     }
 
-    private byte[] toBytes(MultipartFile image) {
-        try {
-            return image.getBytes();
-        } catch (IOException e) {
-            throw new ImageConversionException("Не удалось преобразовать изображение");
-        }
-    }
 }

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head-tag.html::head-tag-import"></head>
+<link th:href="@{css/styles.css}" rel="stylesheet" />
+<body>
+<nav th:replace="fragments/fragments.html::navigation"></nav>
+<header th:replace="fragments/fragments.html::header" ></header>
+<section class="py-5">
+  <div class="container px-1 px-lg-5 mt-5 ">
+    <ul class="row gx-4 gx-lg-5 row-cols-1 row-cols-md-1 row-cols-xl-4 justify-content-center list-unstyled" id="product-list">
+      <div> карточки статей
+        <div>
+        </div>
+        <div>
+          <h5 class="">Вставить заголовок статьи</h5>
+          <p class="text-justify" >Превью статьи</p>
+        </div>
+      </div>
+
+      вставить карточки ссылкой настраницу статьи
+    </ul>
+  </div>
+</section>
+<footer th:replace="fragments/fragments.html::footer"></footer>
+</body>
+</html>

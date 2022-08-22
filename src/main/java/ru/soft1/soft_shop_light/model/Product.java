@@ -70,7 +70,7 @@ public class Product extends AbstractEntity {
     @Column(name="favorite", nullable = false, columnDefinition = "boolean default false")
     private boolean favorite;
 
-    @Column(name="image", columnDefinition = "BLOB(25M)")
+    @Column(name="image", columnDefinition = "BLOB(1M)")
     @Lob
     private byte[] image;
 

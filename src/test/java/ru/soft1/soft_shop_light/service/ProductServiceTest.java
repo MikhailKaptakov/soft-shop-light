@@ -56,14 +56,14 @@ class ProductServiceTest {
     void update() {
         Product expected = ProductTestData.getProductOne();
         expected.setName("New name for product 1");
-        productService.update(expected);
+        productService.save(expected);
         ProductTestData.PRODUCT_MATCHER.assertMatch(productService.get(expected.getId()), expected);
     }
 
     @Test
     void create() {
         Product expected = ProductTestData.getNewProduct();
-        Product actual = productService.create(expected);
+        Product actual = productService.save(expected);
         expected.setId((long)Product.START_SEQ);
         ProductTestData.PRODUCT_MATCHER.assertMatch(actual, expected);
     }
