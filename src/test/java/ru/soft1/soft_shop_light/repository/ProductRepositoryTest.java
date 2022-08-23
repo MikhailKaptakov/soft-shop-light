@@ -1,6 +1,5 @@
 package ru.soft1.soft_shop_light.repository;
 
-import org.attoparser.ParsingDocTypeMarkupUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,8 +12,6 @@ import ru.soft1.soft_shop_light.model.Product;
 import ru.soft1.soft_shop_light.support.ProductTestData;
 import ru.soft1.soft_shop_light.support.TimingExtension;
 
-import javax.persistence.PersistenceException;
-import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;

@@ -5,10 +5,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import ru.soft1.soft_shop_light.configuration.CustomProperties;
 import ru.soft1.soft_shop_light.model.Product;
 import ru.soft1.soft_shop_light.service.ProductService;
@@ -16,7 +14,6 @@ import ru.soft1.soft_shop_light.support.ProductTestData;
 import ru.soft1.soft_shop_light.util.exception.NotFoundException;
 import ru.soft1.soft_shop_light.web.AuthorizationUtil;
 import ru.soft1.soft_shop_light.web.controllers.AbstractControllerTest;
-import ru.soft1.soft_shop_light.web.json.JsonUtil;
 
 import java.util.List;
 
@@ -25,12 +22,12 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.soft1.soft_shop_light.util.exception.ErrorType.VALIDATION_ERROR;
 
 @Slf4j
+@Transactional
 class UiAdminProductControllerTest extends AbstractControllerTest {
 
-    private static final String REST_URL = UiAdminProductController.URL + '/';
+    private static final String URL = UiAdminProductController.URL + '/';
 
     @Autowired
     private ProductService productService;
@@ -41,7 +38,7 @@ class UiAdminProductControllerTest extends AbstractControllerTest {
     @Test
     void getAll() throws Exception {
         List<Product> expected = ProductTestData.getAllProduct();
-        perform(MockMvcRequestBuilders.get(REST_URL)
+        perform(MockMvcRequestBuilders.get(URL)
                 .with(AuthorizationUtil.adminAuth(properties)))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -51,7 +48,7 @@ class UiAdminProductControllerTest extends AbstractControllerTest {
 
     @Test
     void setAvailable() throws Exception{
-        perform(MockMvcRequestBuilders.post(REST_URL +"available/"+ 5)
+        perform(MockMvcRequestBuilders.post(URL +"available/"+ 5)
                 .param("available", "true")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(csrf())
@@ -63,7 +60,7 @@ class UiAdminProductControllerTest extends AbstractControllerTest {
 
     @Test
     void setNds() throws Exception {
-        perform(MockMvcRequestBuilders.post(REST_URL +"nds/"+ 5)
+        perform(MockMvcRequestBuilders.post(URL +"nds/"+ 5)
                 .param("isNds", "true")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(csrf())
@@ -75,7 +72,7 @@ class UiAdminProductControllerTest extends AbstractControllerTest {
 
     @Test
     void setTechSupport() throws Exception {
-        perform(MockMvcRequestBuilders.post(REST_URL +"techSupport/"+ 5)
+        perform(MockMvcRequestBuilders.post(URL +"techSupport/"+ 5)
                 .param("isTechSupport", "false")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(csrf())
@@ -88,7 +85,7 @@ class UiAdminProductControllerTest extends AbstractControllerTest {
     @Test
     void get() throws Exception {
         Product expected = ProductTestData.getProductOne();
-        perform(MockMvcRequestBuilders.get(REST_URL + expected.getId())
+        perform(MockMvcRequestBuilders.get(URL + expected.getId())
                 .with(AuthorizationUtil.adminAuth(properties)))
                 .andExpect(status().isOk())
                 .andDo(print())
@@ -98,7 +95,7 @@ class UiAdminProductControllerTest extends AbstractControllerTest {
 
     @Test
     void invalidGet() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + 100)
+        perform(MockMvcRequestBuilders.get(URL + 100)
                 .with(AuthorizationUtil.adminAuth(properties)))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity());
@@ -106,7 +103,7 @@ class UiAdminProductControllerTest extends AbstractControllerTest {
 
     @Test
     void delete() throws Exception{
-        perform(MockMvcRequestBuilders.delete(REST_URL + 4)
+        perform(MockMvcRequestBuilders.delete(URL + 4)
                 .with(csrf())
                 .with(AuthorizationUtil.adminAuth(properties)))
                 .andExpect(status().isNoContent())
@@ -117,7 +114,7 @@ class UiAdminProductControllerTest extends AbstractControllerTest {
     //попытка удалить связанную сущность
     @Test
     void deleteInvalid() throws Exception{
-        perform(MockMvcRequestBuilders.delete(REST_URL + 3)
+        perform(MockMvcRequestBuilders.delete(URL + 3)
                 .with(csrf())
                 .with(AuthorizationUtil.adminAuth(properties)))
                 .andExpect(status().isConflict())
@@ -127,14 +124,14 @@ class UiAdminProductControllerTest extends AbstractControllerTest {
 
     @Test
     void deleteNotFound() throws Exception{
-        perform(MockMvcRequestBuilders.delete(REST_URL + 100)
+        perform(MockMvcRequestBuilders.delete(URL + 100)
                 .with(csrf())
                 .with(AuthorizationUtil.adminAuth(properties)))
                 .andExpect(status().isUnprocessableEntity())
                 .andDo(print());
     }
 
-    @Test
+/*    @Test
     void update() throws Exception {
         Product expected = ProductTestData.getProductOne();
         expected.setName("New name");
@@ -199,7 +196,7 @@ class UiAdminProductControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity())
                 .andExpect(errorType(VALIDATION_ERROR));
-    }
+    } todo в тест saveOrUpdate*/
 
     @Test
     void saveOrUpdate() throws Exception {
@@ -212,9 +209,13 @@ class UiAdminProductControllerTest extends AbstractControllerTest {
     }
 
     //todo сделать полноценный рендер модального окна верификации (а не текстовое представление заказа)
-
+    //todo к окошку поиска добавить возможность нажатием клавиши интер начинать поиск
     /* TODO Статьи на главной странице
-        - сделать загрузку html документов - статей с админки
-        - сделать домашнюю страницу со статьями
+        добавить в популейт дб - тестовые записи
+        подготовить тесты методов
+        подготовить юай
+        в user-article - открываем шаблон тсатей, аджакс запрос данных и заполнение
+        в index - список превьюшек к статьям с заголовками и label
+        в admin-article - dataTables (аналогично продуктам)
      */
 }

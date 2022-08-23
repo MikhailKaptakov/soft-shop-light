@@ -30,6 +30,11 @@ public class ArticleService {
     public List<Article> getAllAvailable() {
         return articleRepository.getAllAvailable();
     }
+
+    public Article get(long id) {
+        return ValidationUtil.checkNotFoundWithId(articleRepository.get(id), id);
+    }
+
     @Cacheable("articles")
     public Article getAvailable(long id) {
         Article article = ValidationUtil.checkNotFoundWithId(articleRepository.get(id), id);
@@ -37,9 +42,6 @@ public class ArticleService {
         return article;
     }
 
-    public Article get(long id) {
-        return ValidationUtil.checkNotFoundWithId(articleRepository.get(id), id);
-    }
 
     @Transactional
     @CacheEvict(value ="articles", allEntries = true)
@@ -68,6 +70,22 @@ public class ArticleService {
     public void deleteImage(long id) {
         Article article = get(id);
         article.setImage(null);
+        articleRepository.save(article);
+    }
+
+    @Transactional
+    @CacheEvict(value ="articles", allEntries = true)
+    public void saveLogo(long id, MultipartFile image) {
+        Article article = get(id);
+        article.setLogo(toBytes(image));
+        articleRepository.save(article);
+    }
+
+    @Transactional
+    @CacheEvict(value ="articles", allEntries = true)
+    public void deleteLogo(long id) {
+        Article article = get(id);
+        article.setLogo(null);
         articleRepository.save(article);
     }
 

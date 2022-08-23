@@ -36,17 +36,6 @@ public class UiAdminProductController {
         return productService.getAll();
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Product> create(@Validated(ValidationCustomer.Web.class) @RequestBody Product product) {
-        log.info("create {}", product);
-        checkNew(product);
-        Product created = productService.save(product);
-        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(URL + "/" + created.getId()).build().toUri();
-        return ResponseEntity.created(uriOfNewResource).body(created);
-    }
-
     @PostMapping(value = "/save")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void saveOrUpdate(@Validated(ValidationCustomer.Web.class) Product product) {

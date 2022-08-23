@@ -36,16 +36,19 @@ public class Article extends AbstractEntity {
     @Size(min=3, max=3500)
     private String text;
 
-    @Column(name="labelSvg", columnDefinition = "BLOB(30k)")
+    @Column(name="logo", columnDefinition = "BLOB(30k)")
     @Lob
-    private byte[] labelSvg;
+    private byte[] logo;
 
-    @Column(name="labelSvg", columnDefinition = "BLOB(10M)")
+    @Column(name="image", columnDefinition = "BLOB(1M)")
     @Lob
     private byte[] image;
 
     @Column(name="available", nullable = false, columnDefinition = "boolean default true")
     private boolean available;
+
+    public Article() {
+    }
 
     public Article(Long id,
                    String header,
@@ -58,15 +61,24 @@ public class Article extends AbstractEntity {
         this.text = text;
         this.available = available;
     }
+    public Article(String header,
+                   String preview,
+                   String text,
+                   boolean available) {
+        this.header = header;
+        this.preview = preview;
+        this.text = text;
+        this.available = available;
+    }
     public Article(Long id,
                    String header,
                    String preview,
                    String text,
-                   byte[] labelSvg,
+                   byte[] logo,
                    byte[] image,
                    boolean available) {
         this(id, header, preview, text, available);
-        setLabelSvg(labelSvg);
+        setLogo(logo);
         setImage(image);
     }
 
@@ -75,7 +87,7 @@ public class Article extends AbstractEntity {
                 article.header,
                 article.preview,
                 article.text,
-                article.labelSvg,
+                article.logo,
                 article.image,
                 article.available);
     }

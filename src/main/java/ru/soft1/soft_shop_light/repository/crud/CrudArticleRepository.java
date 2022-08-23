@@ -23,7 +23,7 @@ public interface CrudArticleRepository extends JpaRepository<Article, Long> {
     @Query("SELECT a FROM Article a ORDER BY a.id ASC")
     List<Article> findAllOrderedById();
 
-    @Query("SELECT a FROM Article a WHERE a.available=TRUE ORDER BY p.id ASC")
+    @Query("SELECT a FROM Article a WHERE a.available=TRUE ORDER BY a.id ASC")
     List<Article> findAllAvailableOrderedById();
 
 }

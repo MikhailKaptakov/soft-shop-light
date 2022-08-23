@@ -26,9 +26,6 @@ class ProductServiceTest {
     @Autowired
     private ProductService productService;
 
-    @Autowired
-    private ProductRepository productRepository;
-
     @Test
     void getAll() {
         List<Product> expected = ProductTestData.getAllProduct();
@@ -49,7 +46,7 @@ class ProductServiceTest {
     @Test
     void delete() {
         productService.delete(ProductTestData.FIRST_ID + 3);
-        Assertions.assertNull(productRepository.get(ProductTestData.FIRST_ID + 3));
+        assertThrows(NotFoundException.class, () -> productService.get(ProductTestData.FIRST_ID + 3));
     }
 
     @Test
@@ -69,7 +66,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void getAvailable() {
+    void getAllAvailable() {
         List<Product> expected = ProductTestData.getAllAvailableProduct();
         ProductTestData.PRODUCT_MATCHER.assertMatch(productService.getAllAvailable(), expected);
     }

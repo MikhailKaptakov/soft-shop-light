@@ -19,10 +19,6 @@ public class ArticleRepository {
         return crudArticleRepository.findAllOrderedById();
     }
 
-    public List<Article> getAllBySort(Sort sort) {
-        return  crudArticleRepository.findAll(sort).stream().toList();
-    }
-
     @Transactional
     public Article save(Article article) {
         return crudArticleRepository.save(article);
