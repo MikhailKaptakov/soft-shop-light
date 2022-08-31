@@ -303,6 +303,207 @@
       </select>
     </div>
 </div>
+
+<div th:fragment="edit-article" class="modal fade" tabindex="-1" id="edit-article">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modalTitle">Редактировать</h4>
+        <button type="button" class="close" data-dismiss="modal" onclick="closeNoty()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="edit-article-details">
+          <input type="hidden" id="id" name="id">
+          <div class="form-group">
+            <label for="header" class="col-form-label">Заголовок</label>
+            <input type="text" class="form-control" id="header" name="header">
+          </div>
+          <div class="form-group">
+            <label for="preview" class="col-form-label">Превью</label>
+            <textarea rows="10" maxlength="2000" class="form-control" id="preview" name="preview"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="text" class="col-form-label">Текст</label>
+            <textarea rows="20" maxlength="12000" class="form-control" id="text" name="text"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeNoty()">
+          <span class="fa fa-close"></span>
+          <span>Закрыть</span>
+        </button>
+        <button type="button" class="btn btn-primary" onclick="ajax.save()">
+          <span class="fa fa-check"></span>
+          <span>Ок</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div th:fragment="edit-article-logo"
+     class="modal fade"
+     tabindex="-1"
+     id="edit-article-logo">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"
+            id="edit-article-logo-title"></h4>
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                onclick="closeNoty()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <img src="/default-article.svg"
+               class="img-responsive"
+               id="edit-article-logo-preview">
+        </div>
+        <form id="edit-article-logo-form"
+              method="post"
+              action=""
+              enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="logo"
+                   class="col-form-label"
+                   id="edit-article-logo-label">Лого (svg)</label>
+            <input type="file"
+                   accept="image/svg+xml"
+                   id="logo"
+                   name="logo">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+                id="edit-article-logo-delete-btn"
+                onclick="ajax.deleteLogo()">
+          <span class="fa fa-backspace"></span>
+          <span>Удалить изображение</span>
+        </button>
+        <button type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+                onclick="closeNoty()">
+          <span class="fa fa-close"></span>
+          <span>Отмена</span>
+        </button>
+        <button type="button"
+                class="btn btn-primary"
+                onclick="ajax.saveLogo()"
+                id="edit-article-logo-save-btn">
+          <span class="fa fa-check"></span>
+          <span>Сохранить</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div th:fragment="edit-article-image"
+     class="modal fade" tabindex="-1"
+     id="edit-article-image">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"
+            id="edit-article-image-title"></h4>
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                onclick="closeNoty()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="container w-100">
+          <img src="/default.jpg"
+               class="img-responsive"
+               id="edit-article-image-preview">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <form id="edit-article-image-form"
+              method="post" action=""
+              enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="image"
+                   class="col-form-label"
+                   id="edit-article-image-label">Изображение (jpeg)</label>
+            <input type="file"
+                   accept="image/jpeg"
+                   id="image" name="image">
+          </div>
+        </form>
+        <button type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+                onclick="ajax.deleteImage()"
+                id="edit-article-image-delete-btn">
+          <span class="fa fa-backspace"></span>
+          <span>Удалить изображение</span>
+        </button>
+        <button type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+                onclick="closeNoty()">
+          <span class="fa fa-close"></span>
+          <span>Отмена</span>
+        </button>
+        <button type="button"
+                class="btn btn-primary"
+                onclick="ajax.saveImage()"
+                id="edit-article-image-save-btn">
+          <span class="fa fa-check"></span>
+          <span>Сохранить</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div th:fragment="article-text" class="modal fade" tabindex="-1" id="article-text">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="article-text-header"></h4> <!--todo вывести имя статьи-->
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="container" id="article-text-body">
+          <!-- для включения изображения в статью, использовать блок div c id="article-image-full"
+           для блока с фоновым изображением div c id="article-image-back" -->
+         <!--todo выводит содержимое описания-->
+        </div>
+      </div>
+      <div class="modal-footer">
+       <!--todo кнопку для закрытия моадльного окна-->
+        <button type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+                onclick="closeNoty()">
+          <span class="fa fa-close"></span>
+          <span>Отмена</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div th:fragment="i18n-init" id="i18n-init" style="display:none">
+  <span th:utext="#{common.add}" id="i18-common-add"></span><br>
+  <span th:utext="#{common.edit}" id="i18-common-edit"></span><br>
+  <span th:utext="#{common.deleted}" id="i18-common-deleted"></span><br>
+  <span th:utext="#{common.saved}" id="i18-common-saved"></span><br>
+  <span th:utext="#{common.enabled}" id="i18-common-enabled"></span><br>
+  <span th:utext="#{common.disabled}" id="i18-common-disabled"></span><br>
+  <span th:utext="#{common.search}" id="i18-common-search"></span><br>
+  <span th:utext="#{common.confirm}" id="i18-common-confirm"></span><br>
+</div>
+
 </body>
 </html>
 

@@ -64,7 +64,7 @@ public class Product extends AbstractEntity {
     @Column(name = "req_tech_support", nullable = false/*, columnDefinition = "bool default false"*/)
     private boolean requiredTechnicalSupport;
 
-    @Column(name="available", nullable = false, columnDefinition = "boolean default true")
+    @Column(name="available", nullable = false, columnDefinition = "boolean default false")
     private boolean available;
 
     @Column(name="favorite", nullable = false, columnDefinition = "boolean default false")
@@ -77,7 +77,7 @@ public class Product extends AbstractEntity {
     public Product() {
         this.ndsInclude = true;
         this.requiredTechnicalSupport = false;
-        this.available = true;
+        this.available = false;
     }
 
     public Product(Long id,

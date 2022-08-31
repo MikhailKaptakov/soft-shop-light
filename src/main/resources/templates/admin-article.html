@@ -1,10 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:spring="http://www.springframework.org/tags">
+<head th:replace="fragments/head-tag.html::head-tag-import"></head>
 
+<body>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<script th:src="@{/js/common.js}" defer></script>
+<script th:src="@{/js/admin-article-ajax.js}" defer></script>
+<script th:src="@{/js/admin-article-render.js}" defer></script>
+
+<div class="jumbotron  pt-4">
+    <div>
+        <h3 class="text-center">Статьи</h3>
+        <button class="btn btn-primary" onclick="context.add()">
+            <span class="fa fa-plus">Добавить</span>
+        </button>
+        <table class="table table-striped" id="datatable">
+            <thead>
+            <tr>
+                <th>id</th>
+                <th>Заголовок</th>
+                <th>Превью</th>
+                <th>Текст</th>
+                <!--todo вывести кнопку с тремя точками,
+                 при нажатии открытие модалки с контейнером
+                  соответствующим тому, что на странице статьи
+                   для пользователя
+                    тут же снизу окошко ввода и кнопка изменить текст,
+                    по нажатию обновляет изображение в окошечке контейнера справа-->
+                <th>Лого</th>
+                <!--todo лого выводим-->
+                <!--todo при нажатии - изменить лого -->
+                <th>jpeg</th>
+                <!--todo не выводим кнопка для просмотра формат jpeg
+                при нажатии открывает модальное окно с изображением и
+                кнопками изменить/удалить/закрыть-->
+                <th>Доступно</th>
+                <th></th>
+                <!--todo редактировать-->
+                <th></th>
+                <!--todo удалить-->
+            </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<div th:replace="fragments/fragments.html::edit-article"></div>
+<div th:replace="fragments/fragments.html::edit-article-logo"></div>
+<div th:replace="fragments/fragments.html::edit-article-image"></div>
+<div th:replace="fragments/fragments.html::article-text"></div>
+<div th:replace="fragments/fragments.html::i18n-init"></div>
 </body>
 </html>

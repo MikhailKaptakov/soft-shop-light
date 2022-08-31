@@ -38,16 +38,7 @@
             </tr>
             </thead>
         </table>
-        <div id="i18n-init" style="display:none">
-            <span th:utext="#{common.add}" id="i18-common-add"></span><br>
-            <span th:utext="#{common.edit}" id="i18-common-edit"></span><br>
-            <span th:utext="#{common.deleted}" id="i18-common-deleted"></span><br>
-            <span th:utext="#{common.saved}" id="i18-common-saved"></span><br>
-            <span th:utext="#{common.enabled}" id="i18-common-enabled"></span><br>
-            <span th:utext="#{common.disabled}" id="i18-common-disabled"></span><br>
-            <span th:utext="#{common.search}" id="i18-common-search"></span><br>
-            <span th:utext="#{common.confirm}" id="i18-common-confirm"></span><br>
-        </div>
+        <div th:replace="fragments/fragments.html::i18n-init"></div>
     </div>
 </div>
 
@@ -90,6 +81,10 @@
                         <label for="description" class="col-form-label" th:utext="#{products.description}"></label>
                         <textarea rows="10" maxlength="3000" class="form-control" id="description" name="description"></textarea>
                     </div>
+                    <input type="hidden" id="ndsInclude" name="ndsInclude">
+                    <input type="hidden" id="requiredTechnicalSupport" name="requiredTechnicalSupport">
+                    <input type="hidden" id="available" name="available">
+                    <input type="hidden" id="favorite" name="favorite">
                 </form>
             </div>
             <div class="modal-footer">
@@ -117,22 +112,22 @@
                 <form id="imageForm" method="post" action="" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="image" class="col-form-label">Изображение</label>
-                        <input type="file" accept="image/*" id="image" name="image">
+                        <input type="file" accept="image/svg+xml" id="image" name="image">
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="deleteImage()">
                     <span class="fa fa-backspace"></span>
-                    <span>Удалить изображение</span>
+                    <span>Удалить</span>
                 </button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeNoty()">
                     <span class="fa fa-close"></span>
-                    <span th:utext="#{common.cancel}"></span>
+                    <span>Отмена</span>
                 </button>
                 <button type="button" class="btn btn-primary" onclick="saveImage()" id="mdl-img-btn">
                     <span class="fa fa-check"></span>
-                    <span th:utext="#{common.save}"></span>
+                    <span>Сохранить</span>
                 </button>
             </div>
         </div>

@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.soft1.soft_shop_light.model.Article;
-import ru.soft1.soft_shop_light.model.Product;
 import ru.soft1.soft_shop_light.service.ArticleService;
-import ru.soft1.soft_shop_light.service.ProductService;
+import ru.soft1.soft_shop_light.to.ArticlePreview;
+import ru.soft1.soft_shop_light.util.Util;
 
 import java.util.List;
 
@@ -33,5 +33,11 @@ public class UiArticleController {
     public List<Article> getAllAvailable() {
         log.info("get All available");
         return articleService.getAllAvailable();
+    }
+
+    @GetMapping("/preview")
+    public List<ArticlePreview> getAllAvailablePreview() {
+        log.info("getAllAvailablePreview");
+        return Util.toArticlePreviewList(articleService.getAllAvailable());
     }
 }

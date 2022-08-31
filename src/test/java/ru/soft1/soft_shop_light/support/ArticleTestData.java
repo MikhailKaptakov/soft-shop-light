@@ -1,11 +1,15 @@
 package ru.soft1.soft_shop_light.support;
 import ru.soft1.soft_shop_light.model.Article;
+import ru.soft1.soft_shop_light.to.ArticlePreview;
 
 import java.util.List;
 
 public class ArticleTestData {
     public static final MatcherFactory.Matcher<Article> ARTICLE_MATCHER =
             MatcherFactory.usingIgnoringFieldsComparator(Article.class);
+
+    public static final MatcherFactory.Matcher<ArticlePreview> ARTICLE_PREVIEW_MATCHER =
+            MatcherFactory.usingIgnoringFieldsComparator(ArticlePreview.class);
 
     public static final long FIRST_ID = 1;
 

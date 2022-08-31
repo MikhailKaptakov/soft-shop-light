@@ -28,12 +28,12 @@ public class Article extends AbstractEntity {
     @Column(name = "preview", nullable = false)
     @NotBlank
     @NoHtml
-    @Size(min=3, max=150)
+    @Size(min=3, max=1000)
     private String preview;
 
     @Column(name = "text", nullable = false)
     @NotBlank
-    @Size(min=3, max=3500)
+    @Size(min=3, max=16000)
     private String text;
 
     @Column(name="logo", columnDefinition = "BLOB(30k)")

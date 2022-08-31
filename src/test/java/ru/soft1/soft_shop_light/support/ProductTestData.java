@@ -58,4 +58,7 @@ public class ProductTestData {
     public static List<Product> getAllAvailableProduct() {
         return List.of(getProductOne(), getProductTwo(), getProductThree(), getProductFour());
     }
+    public static List<Product> getAllFavoriteAvailable() {
+        return List.of(getProductTwo());
+    }
 }

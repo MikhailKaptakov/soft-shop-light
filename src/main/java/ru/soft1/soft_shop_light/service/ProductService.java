@@ -6,7 +6,9 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.multipart.MultipartFile;
+import ru.soft1.soft_shop_light.configuration.ValidationCustomer;
 import ru.soft1.soft_shop_light.model.Product;
 import ru.soft1.soft_shop_light.repository.ProductRepository;
 import ru.soft1.soft_shop_light.util.validation.ValidationUtil;
@@ -56,8 +58,35 @@ public class ProductService {
 
     @CacheEvict(value = {"products", "favorites"}, allEntries = true)
     public Product save(Product product) {
+        product.setNdsInclude(true);
+        product.setRequiredTechnicalSupport(false);
+        product.setAvailable(false);
+        product.setFavorite(false);
         Assert.notNull(product, "product must not be null");
         return productRepository.save(product);
+    }
+
+    @CacheEvict(value = {"products", "favorites"}, allEntries = true)
+    public Product saveNewByForm(Product product) {
+        //save new product and setDefault data to other fields
+        product.setNdsInclude(true);
+        product.setRequiredTechnicalSupport(false);
+        product.setAvailable(false);
+        product.setFavorite(false);
+        return save(product);
+    }
+
+    @CacheEvict(value = {"products", "favorites"}, allEntries = true)
+    public Product updateByForm(Product product) {
+        Product fromRepo = productRepository.get(product.getId());
+        fromRepo.setName(product.getName());
+        fromRepo.setVendor(product.getVendor());
+        fromRepo.setCountry(product.getCountry());
+        fromRepo.setLicenseTime(product.getLicenseTime());
+        fromRepo.setDescription(product.getDescription());
+        fromRepo.setPrice(product.getPrice());
+        fromRepo.setDeliveryTimeInDays(product.getDeliveryTimeInDays());
+        return save(fromRepo);
     }
 
     @Transactional
@@ -89,6 +118,7 @@ public class ProductService {
     public void saveImage(long id, MultipartFile image) {
         Product product = get(id);
         product.setImage(toBytes(image));
+
         productRepository.save(product);
     }
 

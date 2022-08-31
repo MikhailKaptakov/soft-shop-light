@@ -96,12 +96,18 @@ class ProductServiceTest {
     }
 
     @Test
-    void getAllFavoriteAvailableTest() {
-        //todo
+    void setFavoriteTest() {
+        Product expected = ProductTestData.getProductFive();
+        expected.setFavorite(false);
+        productService.setFavorite(expected.getId(), false);
+        ProductTestData.PRODUCT_MATCHER.assertMatch(productService.get(expected.getId()), expected);
     }
 
     @Test
-    void setFavoriteTest() {
-        //todo
+    void getAllFavoriteAvailableTest() {
+        List<Product> expected = ProductTestData.getAllFavoriteAvailable();
+        ProductTestData.PRODUCT_MATCHER.assertMatch(productService.getAllFavoriteAvailable(), expected);
     }
+
+
 }

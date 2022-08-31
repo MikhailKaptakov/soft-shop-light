@@ -11,6 +11,8 @@ import ru.soft1.soft_shop_light.service.ArticleService;
 import ru.soft1.soft_shop_light.service.ProductService;
 import ru.soft1.soft_shop_light.support.ArticleTestData;
 import ru.soft1.soft_shop_light.support.ProductTestData;
+import ru.soft1.soft_shop_light.to.ArticlePreview;
+import ru.soft1.soft_shop_light.util.Util;
 import ru.soft1.soft_shop_light.web.controllers.AbstractControllerTest;
 
 import java.util.List;
@@ -39,6 +41,16 @@ class UiArticleControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    void getAllAvailablePreview() throws Exception {
+        List<ArticlePreview> expected = Util.toArticlePreviewList(ArticleTestData.getAllAvailable());
+        perform(MockMvcRequestBuilders.get(URL + "preview"))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(ArticleTestData.ARTICLE_PREVIEW_MATCHER.contentJson(expected));
+    }
+
+    @Test
     void getAvailable() throws Exception {
         Article expected = ArticleTestData.getFirst();
         perform(MockMvcRequestBuilders.get(URL + expected.getId()))
@@ -56,7 +68,7 @@ class UiArticleControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void GetNotAvailable() throws Exception {
+    void getNotAvailable() throws Exception {
         perform(MockMvcRequestBuilders.get(URL + 5))
                 .andExpect(status().isUnprocessableEntity())
                 .andDo(print());

@@ -45,11 +45,11 @@ public class UiAdminArticleController {
         if (article.itsNew()) {
             log.info("create {}", article);
             checkNew(article);
-            articleService.save(article);
+            articleService.saveNewByForm(article);
         } else {
             log.info("update {} with id={}", article, article.getId());
             ValidationUtil.assureIdConsistent(article, article.getId());
-            articleService.save(article);
+            articleService.updateByForm(article);
         }
     }
 

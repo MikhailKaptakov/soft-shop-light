@@ -14,6 +14,7 @@ import ru.soft1.soft_shop_light.support.ProductTestData;
 import ru.soft1.soft_shop_light.util.exception.NotFoundException;
 import ru.soft1.soft_shop_light.web.AuthorizationUtil;
 import ru.soft1.soft_shop_light.web.controllers.AbstractControllerTest;
+import ru.soft1.soft_shop_light.web.json.JsonUtil;
 
 import java.util.List;
 
@@ -83,6 +84,18 @@ class UiAdminProductControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    void setFavorite() throws Exception {
+        perform(MockMvcRequestBuilders.post(URL +"favorite/"+ 5)
+                .param("favorite", "false")
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(csrf())
+                .with(AuthorizationUtil.adminAuth(properties)))
+                .andDo(print())
+                .andExpect(status().isNoContent());
+        Assertions.assertFalse(productService.get(5).isFavorite());
+    }
+
+    @Test
     void get() throws Exception {
         Product expected = ProductTestData.getProductOne();
         perform(MockMvcRequestBuilders.get(URL + expected.getId())
@@ -131,88 +144,10 @@ class UiAdminProductControllerTest extends AbstractControllerTest {
                 .andDo(print());
     }
 
-/*    @Test
-    void update() throws Exception {
-        Product expected = ProductTestData.getProductOne();
-        expected.setName("New name");
-        perform(MockMvcRequestBuilders.put(REST_URL + expected.getId())
-                .contentType(MediaType.APPLICATION_JSON)
-                .with(csrf())
-                .with(AuthorizationUtil.adminAuth(properties))
-                .content( JsonUtil.writeValue(expected)))
-                .andExpect(status().isNoContent());
-        ProductTestData.PRODUCT_MATCHER.assertMatch(productService.get(expected.id()), expected);
-    }
-
-    @Test
-    void updateInvalid() throws Exception{
-        Product invalid = ProductTestData.getProductOne();
-        invalid.setName("");
-        perform(MockMvcRequestBuilders.put(REST_URL + invalid.getId())
-                .contentType(MediaType.APPLICATION_JSON)
-                .with(csrf())
-                .with(AuthorizationUtil.adminAuth(properties)))
-                .andDo(print())
-                .andExpect(status().isUnprocessableEntity())
-                .andExpect(errorType(VALIDATION_ERROR));
-    }
-
-    @Test
-    void updateHtmlUnsafe() throws Exception{
-        Product updated = ProductTestData.getProductOne();
-        updated.setName("<script>alert(123)</script>");
-        perform(MockMvcRequestBuilders.put(REST_URL + updated.getId())
-                .contentType(MediaType.APPLICATION_JSON)
-                .with(csrf())
-                .with(AuthorizationUtil.adminAuth(properties)))
-                .andDo(print())
-                .andExpect(status().isUnprocessableEntity())
-                .andExpect(errorType(VALIDATION_ERROR));
-    }
-
-    @Test
-    void create() throws Exception {
-        Product expected = ProductTestData.getNewProduct();
-        ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
-                .contentType(MediaType.APPLICATION_JSON)
-                .with(csrf())
-                .with(AuthorizationUtil.adminAuth(properties))
-                .content(JsonUtil.writeValue(expected)));
-
-        expected.setId((long)Product.START_SEQ);
-        Product actual = ProductTestData.PRODUCT_MATCHER.readFromJson(action);
-        ProductTestData.PRODUCT_MATCHER.assertMatch(actual, expected);
-        ProductTestData.PRODUCT_MATCHER.assertMatch(productService.get(expected.getId()), expected);
-    }
-
-    @Test
-    void createInvalid() throws Exception {
-        Product invalid = ProductTestData.getNewProduct();
-        invalid.setName("");
-        perform(MockMvcRequestBuilders.post(REST_URL)
-                .contentType(MediaType.APPLICATION_JSON)
-                .with(csrf())
-                .with(AuthorizationUtil.adminAuth(properties)))
-                .andDo(print())
-                .andExpect(status().isUnprocessableEntity())
-                .andExpect(errorType(VALIDATION_ERROR));
-    } todo в тест saveOrUpdate*/
-
-    @Test
-    void saveOrUpdate() throws Exception {
-        //todo
-    }
-
-    @Test
-    void setFavorite() throws Exception {
-        //todo
-    }
 
     //todo сделать полноценный рендер модального окна верификации (а не текстовое представление заказа)
     //todo к окошку поиска добавить возможность нажатием клавиши интер начинать поиск
     /* TODO Статьи на главной странице
-        добавить в популейт дб - тестовые записи
-        подготовить тесты методов
         подготовить юай
         в user-article - открываем шаблон тсатей, аджакс запрос данных и заполнение
         в index - список превьюшек к статьям с заголовками и label

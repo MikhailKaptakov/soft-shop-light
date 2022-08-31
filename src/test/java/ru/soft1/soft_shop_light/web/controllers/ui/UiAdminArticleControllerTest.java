@@ -1,6 +1,7 @@
 package ru.soft1.soft_shop_light.web.controllers.ui;
 
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -84,12 +85,14 @@ class UiAdminArticleControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void saveOrUpdate() {
-        //todo
-    }
-
-    @Test
-    void setAvailable() {
-        //todo
+    void setAvailable() throws Exception {
+        perform(MockMvcRequestBuilders.post(URL +"available/"+ 3)
+                .param("available", "true")
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(csrf())
+                .with(AuthorizationUtil.adminAuth(properties)))
+                .andDo(print())
+                .andExpect(status().isNoContent());
+        Assertions.assertTrue(articleService.get(3).isAvailable());
     }
 }

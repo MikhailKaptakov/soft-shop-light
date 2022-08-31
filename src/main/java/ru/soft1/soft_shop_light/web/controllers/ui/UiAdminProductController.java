@@ -4,18 +4,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.soft1.soft_shop_light.configuration.ValidationCustomer;
 import ru.soft1.soft_shop_light.model.Product;
 import ru.soft1.soft_shop_light.service.ProductService;
 import ru.soft1.soft_shop_light.util.validation.ValidationUtil;
 
-import java.net.URI;
 import java.util.List;
 
 import static ru.soft1.soft_shop_light.util.validation.ValidationUtil.checkNew;
@@ -42,11 +39,11 @@ public class UiAdminProductController {
         if (product.itsNew()) {
             log.info("create {}", product);
             checkNew(product);
-            productService.save(product);
+            productService.saveNewByForm(product);
         } else {
             log.info("update {} with id={}", product, product.getId());
             ValidationUtil.assureIdConsistent(product, product.getId());
-            productService.save(product);
+            productService.updateByForm(product);
         }
     }
 
