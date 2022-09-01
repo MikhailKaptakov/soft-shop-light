@@ -1,20 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" >
 <head th:replace="fragments/head-tag.html::head-tag-import"></head>
-<body>
+<body class="bg-dark">
 <script th:src="@{/js/jquery-listnav.js}" defer></script>
 <script th:src="@{/js/vendor.js}" defer></script>
-<link th:href="@{css/listnav.css}" rel="stylesheet" />
-<link th:href="@{css/styles.css}" rel="stylesheet" />
+<link th:href="@{css/listnav.css}" rel="stylesheet"/>
 <script th:src="@{/js/user-render.js}" defer></script>
 <script th:src="@{/js/user-products.js}" defer></script>
 <!-- Navigation-->
-<nav th:replace="fragments/fragments.html::navigation"></nav>
+<nav th:replace="fragments/fragments.html::navigation-shop"></nav>
 <!-- Header-->
 <header th:replace="fragments/fragments.html::header" ></header>
 <!-- Section-->
 <div th:replace="fragments/fragments.html::alphabetic-navigator"></div>
-<!--<div th:replace="fragments/fragments.html::search-panel"></div>-->
 <section class="py-5">
     <div class="container px-1 px-lg-5 mt-5 ">
         <ul class="row gx-1 gx-lg-5 row-cols-1 row-cols-md-3 row-cols-xl-4 justify-content-center list-unstyled" id="product-list">

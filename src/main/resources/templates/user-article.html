@@ -5,14 +5,13 @@
 <script th:src="@{/js/user-article.js}" defer></script>
 <link th:href="@{css/styles.css}" rel="stylesheet"/>
 <link rel="stylesheet" th:href="@{/css/style.css}">
-<nav th:replace="fragments/fragments.html::navigation"></nav>
+<nav th:replace="fragments/fragments.html::navigation-base"></nav>
 <header th:replace="fragments/fragments.html::header" ></header>
-<section class="py-5 bg-dark">
-  <div class="text-center text-white">    <!--<img th:src="data:image/svg+xml;base64, ${article.logo}" onerror="this.src='/default.svg'"/>-->
+<section class="py-5">
+  <div class="text-center text-white">
     <h3 th:text="${article.header}" class = "d-inline"></h3>
   </div>
-<!--  <img th:src="data:image/png;base64, ${article.image}" onerror="this.src='/default.png'"/>-->
-  <div class="text-justify text-white container" th:utext="${article.text}"></div>
+  <div class="text-justify container" th:utext="${article.text}"></div>
 </section>
 <footer th:replace="fragments/fragments.html::footer"></footer>
 <var id="article-id"

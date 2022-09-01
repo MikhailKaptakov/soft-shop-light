@@ -362,37 +362,6 @@ render.alphabet.render = function(productArray, type) {
     }
 }
 
-
-
-function closeNoty() {
-    if (failedNote) {
-        failedNote.close();
-        failedNote = undefined;
-    }
-}
-
-function successNoty(key) {
-    closeNoty();
-    new Noty({
-        text: "<span class='fa fa-lg fa-check'></span> &nbsp;" + /*i18n[key]*/ key,
-        type: 'success',
-        layout: "bottomRight",
-        timeout: 1000
-    }).show();
-}
-
-
-function failNoty(jqXHR) {
-    closeNoty();
-    var errorInfo = jqXHR.responseJSON;
-    failedNote = new Noty({
-        text: "<span class='fa fa-lg fa-exclamation-circle'></span> &nbsp;" + errorInfo.typeMessage + "<br>" + errorInfo.details.join("<br>"),
-        type: "error",
-        layout: "bottomRight"
-    });
-    failedNote.show()
-}
-
 function handlefailNoty(message) {
     closeNoty();
     failedNote = new Noty({
@@ -402,3 +371,4 @@ function handlefailNoty(message) {
     });
     failedNote.show()
 }
+

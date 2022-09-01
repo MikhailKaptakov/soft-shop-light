@@ -1,4 +1,3 @@
-let failedNote;
 const ajaxApi = {};
 ajaxApi.productMap;
 
@@ -20,6 +19,12 @@ ajaxApi.init = function() {
     $(document).ajaxSend(function (e, xhr, options) {
         xhr.setRequestHeader(header, token);
     });
+
+    $('#search-panel-window').keypress(function(e) {
+        if (e.which == 10 || e.which == 13) {
+            searcher.startSearch();
+        }
+    })
 }
 
 
@@ -258,9 +263,12 @@ searcher.sort = function(outerData, fieldname) {
     }
     outerData.sort(compare);
 }
+
+
+
 ajaxApi.getAllAvailable();
 ajaxApi.getFavorite();
 ajaxApi.init();
-
+searcher.init();
 
 

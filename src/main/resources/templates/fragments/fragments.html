@@ -7,59 +7,158 @@
 <body>
 
 
-<nav th:fragment="navigation" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-  <div class="container ">
-    <a class="navbar-brand">Сокращённое название</a>
-    <button class="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse"
-         id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-        <li class="nav-item dropdown">
-          <div th:replace="fragments/fragments.html::search-panel"></div>
-        </li>
-      </ul>
-      <div class="d-flex">
-        <button class="btn btn-outline-light" type="button" onclick="render.cart.openCart()">
-          <i class="bi-cart-fill me-1"></i>
-          Корзина
-          <span class="fa fa-shopping-cart"></span>
-        </button>
-      </div>
+<nav th:fragment="navigation-base" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container px-4 px-lg-5">
+    <div th:replace="fragments/fragments.html::navigation-toggler"></div>
+    <div th:replace="fragments/fragments.html::navigation-insert-base"></div>
+  </div>
+</nav>
+
+<nav th:fragment="navigation-shop" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container px-4 px-lg-5">
+    <div th:replace="fragments/fragments.html::navigation-toggler"></div>
+    <div th:replace="fragments/fragments.html::navigation-insert-shop"></div>
+  </div>
+</nav>
+
+<nav th:fragment="navigation-admin" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container px-4 px-lg-5">
+    <div th:replace="fragments/fragments.html::navigation-toggler"></div>
+    <div th:replace="fragments/fragments.html::navigation-insert-admin">
     </div>
   </div>
 </nav>
 
-<header th:fragment="header" class="bg-dark py-5">
+<div th:fragment="navigation-toggler">
+  <a class="navbar-brand">Сокращённое название</a>
+  <button class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+</div>
+
+<div th:fragment="navigation-insert-base" class="collapse navbar-collapse"
+     id="navbarSupportedContent">
+  <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+    <li th:replace="fragments/fragments.html::navigation-home"></li>
+    <li th:replace="fragments/fragments.html::navigation-about"></li>
+  </ul>
+</div>
+
+<div th:fragment="navigation-insert-shop" class="collapse navbar-collapse"
+     id="navbarSupportedContent">
+  <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+    <li th:replace="fragments/fragments.html::navigation-home"></li>
+    <li th:replace="fragments/fragments.html::navigation-about"></li>
+    <li th:replace="fragments/fragments.html::navigation-search"></li>
+  </ul>
+  <div th:replace="fragments/fragments.html::navigation-cart"></div>
+</div>
+
+<div th:fragment="navigation-insert-admin" class="collapse navbar-collapse"
+     id="navbarSupportedContent">
+  <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+    <li th:replace="fragments/fragments.html::navigation-home"></li>
+    <li th:replace="fragments/fragments.html::navigation-admin-products"></li>
+    <li th:replace="fragments/fragments.html::navigation-admin-articles"></li>
+    <li th:replace="fragments/fragments.html::navigation-about"></li>
+  </ul>
+</div>
+
+<li th:fragment="navigation-about"
+    class="nav-item">
+  <a class="nav-link"
+     href="#!">
+    About
+  </a>
+</li>
+
+<li th:fragment="navigation-admin-articles"
+    class="nav-item">
+  <a class="nav-link"
+     href="#!">
+    Articles
+  </a>
+</li>
+
+<li th:fragment="navigation-admin-products"
+    class="nav-item">
+  <a class="nav-link"
+     href="#!">
+    Products
+  </a>
+</li>
+
+<li th:fragment="navigation-home"
+    class="nav-item">
+  <a class="nav-link active"
+     aria-current="page"
+     href="#!">Home
+  </a> <!--настроить выставление текущей страницы-->
+</li>
+
+<li th:fragment="navigation-search"
+    class="nav-item dropdown">
+  <div th:replace="fragments/fragments.html::search-panel"></div>
+</li>
+
+<div th:fragment="navigation-cart"
+     id="cart-open-button"
+     class="d-inline">
+  <button class="btn btn-outline-light"
+          type="button"
+          onclick="render.cart.openCart()">
+    <i class="bi-cart-fill me-1"></i>
+    Корзина
+    <span class="fa fa-shopping-cart"></span>
+  </button>
+</div>
+
+
+<header th:fragment="header"
+        class="bg-dark py-5">
   <div class="container px-4 px-lg-5 my-5">
     <div class="text-center text-white">
       <h1 class="display-4 fw-bolder">Придумай название</h1>
-      <p class="lead fw-normal text-white-50 mb-0">Андрей, придумай уже слоган!</p>
+      <p class="lead fw-normal text-white-50 mb-0">
+        Андрей, придумай уже слоган!
+      </p>
     </div>
   </div>
 </header>
-<footer th:fragment="footer" class="py-5 bg-dark">
-  <div class="container"><p class="m-0 text-center text-white">Copyright &copy;Заполни это 2022</p></div>
+<footer th:fragment="footer"
+        class="py-5 bg-dark">
+  <div class="container">
+    <p class="m-0 text-center text-white">
+    Copyright &copy;Заполни это 2022
+    </p>
+  </div>
+  <div th:replace="fragments/fragments.html::i18n-init"></div>
 </footer>
 
-<div th:fragment="modal-product" class="modal fade" tabindex="-1" id="modal-product">
-  <div class="modal-dialog modal-dialog-scrollable" role="document">
+<div th:fragment="modal-product"
+     class="modal fade"
+     tabindex="-1"
+     id="modal-product">
+  <div class="modal-dialog modal-dialog-scrollable"
+       role="document">
     <div class="modal-content">
       <div class="modal-header">
         <div class="w-25 text-center">
-          <img src="/default.svg" class="img-circle img-responsive" id="modal-product-image">
+          <img src="/default.svg"
+               class="img-circle img-responsive"
+               id="modal-product-image">
         </div>
-        <h4 class="modal-title" id="modal-product-name"></h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"
+            id="modal-product-name"></h4>
+        <button type="button"
+                class="close"
+                data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
         <div class="container w-100">
@@ -106,7 +205,9 @@
             В корзину
           </span>
         </button>
-        <button type="button" class="btn btn-outline-dark mt-auto" data-dismiss="modal">
+        <button type="button"
+                class="btn btn-outline-dark mt-auto"
+                data-dismiss="modal">
           <span class="fa fa-close"></span>
           <span>Закрыть</span>
         </button>
@@ -115,15 +216,22 @@
   </div>
 </div>
 
-<div th:fragment="modal-cart" class="modal fade" tabindex="-1" id="modal-cart">
-  <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+<div th:fragment="modal-cart"
+     class="modal fade"
+     tabindex="-1"
+     id="modal-cart">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable"
+       role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button"
+                class="close"
+                data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
         <div class="container w-100">
-            <table class="table" id="modal-cart-content">
+            <table class="table"
+                   id="modal-cart-content">
               <thead>
               <tr>
                 <th></th>
@@ -142,14 +250,20 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-outline-dark" onclick="ajaxApi.clearCart()">
+        <button class="btn btn-outline-dark"
+                onclick="ajaxApi.clearCart()">
           <span class="fa fa-trash"></span>
           <span>Очистить корзину</span>
         </button>
-        <button class="btn btn-outline-dark" id="modal-cart-to-order" onclick="ajaxApi.goToOrderForm()">
-          <span class="fa fa-check"></span><span>Перейти к оформлению </span>
+        <button class="btn btn-outline-dark"
+                id="modal-cart-to-order"
+                onclick="ajaxApi.goToOrderForm()">
+          <span class="fa fa-check"></span>
+          <span>Перейти к оформлению </span>
         </button>
-        <button type="button" class="btn btn-outline-dark mt-auto" data-dismiss="modal">
+        <button type="button"
+                class="btn btn-outline-dark mt-auto"
+                data-dismiss="modal">
           <span class="fa fa-close"></span>
           <span>Закрыть</span>
         </button>
@@ -158,60 +272,107 @@
   </div>
 </div>
 
-<div th:fragment="modal-order-form" class="modal fade" tabindex="-1" id="modal-order">
+<div th:fragment="modal-order-form"
+     class="modal fade"
+     tabindex="-1"
+     id="modal-order">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Сведения</h4>
-        <button type="button" class="close" data-dismiss="modal" onclick="closeNoty()">&times;</button>
+        <h4 class="modal-title">
+          Сведения
+        </h4>
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                onclick="closeNoty()">&times;</button>
       </div>
       <div class="modal-body">
         <form id="modal-order-form">
           <div class="form-group">
-            <label for="firstname" class="col-form-label">Имя</label>
+            <label for="firstname"
+                   class="col-form-label">
+              Имя
+            </label>
             <label style="color:red">*</label>
-            <input type="text" class="form-control" id="firstname" name="firstname" required="">
+            <input type="text"
+                   class="form-control"
+                   id="firstname"
+                   name="firstname"
+                   required="">
           </div>
           <div class="form-group">
-            <label for="surname" class="col-form-label">Фамилия</label>
+            <label for="surname"
+                   class="col-form-label">Фамилия</label>
             <label style="color:red">*</label>
-            <input type="text" class="form-control" id="surname" name="surname">
+            <input type="text"
+                   class="form-control"
+                   id="surname"
+                   name="surname">
           </div>
           <div class="form-group">
-            <label for="secondName" class="col-form-label">Отчество</label>
+            <label for="secondName"
+                   class="col-form-label">Отчество</label>
             <label style="color:red">*</label>
-            <input type="text" class="form-control" id="secondName" name="secondName">
+            <input type="text"
+                   class="form-control"
+                   id="secondName"
+                   name="secondName">
           </div>
           <div class="form-group">
-            <label for="email" class="col-form-label">Email</label>
+            <label for="email"
+                   class="col-form-label">Email</label>
             <label style="color:red">*</label>
-            <input type="text" class="form-control" id="email" name="email">
+            <input type="text"
+                   class="form-control"
+                   id="email"
+                   name="email">
           </div>
           <div class="form-group">
-            <label for="telephoneNumber" class="col-form-label">Тел.:</label>
+            <label for="telephoneNumber"
+                   class="col-form-label">Тел.:</label>
             <label style="color:red">*</label>
-            <input type="text" class="form-control" id="telephoneNumber" name="telephoneNumber">
+            <input type="text"
+                   class="form-control"
+                   id="telephoneNumber"
+                   name="telephoneNumber">
           </div>
           <div class="form-group">
-            <label for="companyName" class="col-form-label">Имя компании</label>
-            <input type="text" class="form-control" id="companyName" name="companyName">
+            <label for="companyName"
+                   class="col-form-label">Имя компании</label>
+            <input type="text"
+                   class="form-control"
+                   id="companyName"
+                   name="companyName">
           </div>
           <div class="form-group">
-            <label for="address" class="col-form-label">Адрес компании</label>
-            <input type="text" class="form-control" id="address" name="address">
+            <label for="address"
+                   class="col-form-label">Адрес компании</label>
+            <input type="text"
+                   class="form-control"
+                   id="address"
+                   name="address">
           </div>
           <div class="form-group">
-            <label for="comment" class="col-form-label">Комментарий</label>
-            <input type="text" class="form-control" id="comment" name="comment">
+            <label for="comment"
+                   class="col-form-label">Комментарий</label>
+            <input type="text"
+                   class="form-control"
+                   id="comment"
+                   name="comment">
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark mt-auto" data-dismiss="modal">
+        <button type="button"
+                class="btn btn-outline-dark mt-auto"
+                data-dismiss="modal">
           <span class="fa fa-close"></span>
           <span>Закрыть</span>
         </button>
-        <button type="button" class="btn btn-outline-dark" onclick="ajaxApi.sendOrderForm()">
+        <button type="button"
+                class="btn btn-outline-dark"
+                onclick="ajaxApi.sendOrderForm()">
           <span class="fa fa-check"></span>
           <span>Отправить</span>
         </button>
@@ -220,11 +381,17 @@
   </div>
 </div>
 
-<div th:fragment="modal-verify-order" class="modal fade" tabindex="-1" id="modal-verify-order">
-  <div class="modal-dialog modal-lg" role="document">
+<div th:fragment="modal-verify-order"
+     class="modal fade"
+     tabindex="-1"
+     id="modal-verify-order">
+  <div class="modal-dialog modal-lg"
+       role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button"
+                class="close"
+                data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
         <div class="container w-100">
@@ -232,7 +399,9 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark mt-auto" data-dismiss="modal">
+        <button type="button"
+                class="btn btn-outline-dark mt-auto"
+                data-dismiss="modal">
           <span class="fa fa-close"></span>
           <span>Закрыть</span>
         </button>
@@ -249,7 +418,10 @@
 </div>
 
 <div th:fragment="alphabetic-navigator">
-  <div  id="alphabetic-navigator"  class="py-5 bg-dark" stateIsOpen="false" style="display: none;">
+  <div  id="alphabetic-navigator"
+        class="bg-dark"
+        stateIsOpen="false"
+        style="display: none;">
     <div class="text-center button-center">
       <button type="button"
               class="btn btn-outline-dark justify-content-center"
@@ -260,7 +432,8 @@
       </button>
     </div>
     <div class="row text-center" >
-      <div class="listNav w-50 mx-auto button-center" id="alphabetic-product-list-nav"></div>
+      <div class="listNav w-50 mx-auto button-center"
+           id="alphabetic-product-list-nav"></div>
     </div>
     <div class="container px-6 px-lg-2 mt-3">
       <ul class="row gx-4 gx-lg-5 row-cols-1 row-cols-md-3 row-cols-xl-4 justify-content-center list-unstyled"
@@ -270,7 +443,7 @@
   </div>
   <div class="text-center button-center">
    <button type="button"
-           class="btn btn-outline-dark btn-slide justify-content-center"
+           class="btn btn-outline-light btn-slide justify-content-center"
            onclick="alphabetic.slidePannel()"
            id="alphabetic-nav-btn">
      <i class="fa fa-arrow-down"></i>
@@ -280,60 +453,96 @@
    </div>
 </div>
 
-<div th:fragment="search-panel" class="d-flex">
-    <div class="d-inline">
+<div th:fragment="search-panel"
+     class="d-flex">
+    <div id="search-panel-button"
+         class="d-flex">
       <button type="button"
             class="btn btn-outline-light"
-             onclick="searcher.slidePanel()" id="search-panel-btn">
+             onclick="searcher.slidePanel()"
+              id="search-panel-btn">
        <i class="fa fa-arrow-right"></i>
        <span>Поиск</span>
       </button>
     </div>
-    <div id="search-panel-slide" class="col d-none">
-      <input type="text" id="search-panel-window" class="bg-light d-inline">
+    <div id="search-panel-slide"
+         class="col d-none">
+      <input type="text"
+             id="search-panel-window"
+             class="bg-light d-inline">
       <button type="button"
               class="btn justify-content-center btn-outline-light d-inline"
               onclick="searcher.startSearch()">
         <i class="fa fa-check"></i>
       </button>
-      <select id="search-panel-selector" class="bg-light">
-        <option label="По названию" value="name" selected>По названию</option>
+      <select id="search-panel-selector"
+              class="bg-light">
+        <option label="По названию"
+                value="name" selected>По названию</option>
         <option value="vendor">По вендору</option>
         <option value="country">По стране</option>
       </select>
     </div>
 </div>
 
-<div th:fragment="edit-article" class="modal fade" tabindex="-1" id="edit-article">
+<div th:fragment="edit-article"
+     class="modal fade"
+     tabindex="-1"
+     id="edit-article">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" id="modalTitle">Редактировать</h4>
-        <button type="button" class="close" data-dismiss="modal" onclick="closeNoty()">&times;</button>
+        <h4 class="modal-title"
+            id="modalTitle">Редактировать</h4>
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                onclick="closeNoty()">&times;</button>
       </div>
       <div class="modal-body">
         <form id="edit-article-details">
-          <input type="hidden" id="id" name="id">
+          <input type="hidden"
+                 id="id"
+                 name="id">
           <div class="form-group">
-            <label for="header" class="col-form-label">Заголовок</label>
-            <input type="text" class="form-control" id="header" name="header">
+            <label for="header"
+                   class="col-form-label">Заголовок</label>
+            <input type="text"
+                   class="form-control"
+                   id="header"
+                   name="header">
           </div>
           <div class="form-group">
-            <label for="preview" class="col-form-label">Превью</label>
-            <textarea rows="10" maxlength="2000" class="form-control" id="preview" name="preview"></textarea>
+            <label for="preview"
+                   class="col-form-label">Превью</label>
+            <textarea rows="10"
+                      maxlength="1000"
+                      class="form-control"
+                      id="preview"
+                      name="preview"></textarea>
           </div>
           <div class="form-group">
-            <label for="text" class="col-form-label">Текст</label>
-            <textarea rows="20" maxlength="12000" class="form-control" id="text" name="text"></textarea>
+            <label for="text"
+                   class="col-form-label">Текст</label>
+            <textarea rows="20"
+                      maxlength="16000"
+                      class="form-control"
+                      id="text"
+                      name="text"></textarea>
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeNoty()">
+        <button type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+                onclick="closeNoty()">
           <span class="fa fa-close"></span>
           <span>Закрыть</span>
         </button>
-        <button type="button" class="btn btn-primary" onclick="ajax.save()">
+        <button type="button"
+                class="btn btn-primary"
+                onclick="ajax.save()">
           <span class="fa fa-check"></span>
           <span>Ок</span>
         </button>
@@ -432,7 +641,8 @@
           <div class="form-group">
             <label for="image"
                    class="col-form-label"
-                   id="edit-article-image-label">Изображение (jpeg)</label>
+                   id="edit-article-image-label">
+              Изображение (jpeg)</label>
             <input type="file"
                    accept="image/jpeg"
                    id="image" name="image">
@@ -465,22 +675,26 @@
   </div>
 </div>
 
-<div th:fragment="article-text" class="modal fade" tabindex="-1" id="article-text">
-  <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+<div th:fragment="article-text"
+     class="modal fade"
+     tabindex="-1"
+     id="article-text">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable"
+       role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" id="article-text-header"></h4> <!--todo вывести имя статьи-->
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"
+            id="article-text-header"></h4>
+        <button type="button"
+                class="close"
+                data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
-        <div class="container" id="article-text-body">
-          <!-- для включения изображения в статью, использовать блок div c id="article-image-full"
-           для блока с фоновым изображением div c id="article-image-back" -->
-         <!--todo выводит содержимое описания-->
+        <div class="container"
+             id="article-text-body">
         </div>
       </div>
       <div class="modal-footer">
-       <!--todo кнопку для закрытия моадльного окна-->
         <button type="button"
                 class="btn btn-secondary"
                 data-dismiss="modal"

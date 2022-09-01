@@ -5,40 +5,39 @@
       xmlns:spring="http://www.springframework.org/tags">
 <head th:replace="fragments/head-tag.html::head-tag-import"></head>
 
-<body>
-<script th:src="@{/js/common.js}" defer></script>
+<body class="bg-dark">
+<nav th:replace="fragments/fragments.html::navigation-admin"></nav>
 <script th:src="@{/js/admin-products.js}" defer></script>
-
-<div class="jumbotron  pt-4" >
-    <div>
+<header th:replace="fragments/fragments.html::header" ></header>
+<div class="container jumbotron  pt-1 py-2 bg-dark text-white" >
+    <div class="">
         <h3 class="text-center" th:utext="#{products.title}"></h3>
-        <button class="btn btn-primary" onclick="add()">
+        <button class="btn btn-primary d-inline" onclick="add()">
             <span class="fa fa-plus"></span>
             <spring:message code="common.add"/>
         </button>
-        <table class="table table-striped" id="datatable">
+        <table class="table table-striped table-dark table-sm" id="datatable">
             <thead>
             <tr>
                 <th>id</th>
-                <th th:utext="#{products.name}"></th>
-                <th th:utext="#{products.vendor}"></th>
-                <th th:utext="#{products.country}"></th>
-                <th th:utext="#{products.licenseTime}"></th>
-                <th th:utext="#{products.price}"></th>
-                <th th:utext="#{products.description}"></th>
-                <th th:utext="#{products.deliveryTimeInDays}"></th>
-                <th th:utext="#{products.ndsInclude}"></th>
-                <th th:utext="#{products.requiredTechnicalSupport}"></th>
-                <th th:utext="#{products.available}"></th>
-                <th th:utext="#{products.favorite}"></th>
-                <th>Image</th>
+                <th>Назв.</th>
+                <th>Вендор</th>
+                <th>Страна</th>
+                <th>Время лиценз.</th>
+                <th>Цена</th>
+                <th>Описание</th>
+                <th>Доставка, дн</th>
+                <th>НДС</th>
+                <th>Тех.подд.</th>
+                <th>Доступ</th>
+                <th>Избран.</th>
+                <th>Лого</th>
                 <th></th>
                 <th></th>
                 <th></th>
             </tr>
             </thead>
         </table>
-        <div th:replace="fragments/fragments.html::i18n-init"></div>
     </div>
 </div>
 
@@ -133,5 +132,6 @@
         </div>
     </div>
 </div>
+<footer th:replace="fragments/fragments.html::footer"></footer>
 </body>
 </html>
