@@ -21,7 +21,7 @@ render.available = function (data,type,row) {
 render.jpeg = function(data,type,row){
     if (type === "display") {
         return '<button type="button" class="btn" onclick="context.openEditArticleImage(' + row.id + ')">' +
-        '<span class="fa fa-paint-brush"></span></button>';
+        '<span class="fa fa-paint-brush text-white"></span></button>';
     }
     return "";
 }
@@ -29,20 +29,20 @@ render.jpeg = function(data,type,row){
 render.text = function(data,type,row){
     if (type === "display") {
         return '<button type="button" class="btn" onclick="context.openArticleText(' + row.id + ')">' +
-        '<span class="fa fa-file-text-o"></span></button>';
+        '<span class="fa fa-file-text-o text-white"></span></button>';
     }
     return "";
 }
 
 render.editBtn = function(data, type, row) {
     if (type === "display") {
-        return "<a onclick='context.updateRow(" + row.id + ");'><span class='fa fa-pencil'></span></a>";
+        return "<a onclick='context.updateRow(" + row.id + ");'><span class='fa fa-pencil text-white'></span></a>";
     }
 }
 
 render.deleteBtn = function(data, type, row) {
     if (type === "display") {
-        return "<a onclick='context.deleteRow(" + row.id + ");'><span class='fa fa-remove'></span></a>";
+        return "<a onclick='context.deleteRow(" + row.id + ");'><span class='fa fa-remove text-white'></span></a>";
     }
 }
 

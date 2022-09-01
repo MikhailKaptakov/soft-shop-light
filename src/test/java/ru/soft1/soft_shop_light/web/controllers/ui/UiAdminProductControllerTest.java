@@ -166,4 +166,6 @@ class UiAdminProductControllerTest extends AbstractControllerTest {
     //todo придумать защиту от спам атак заказами на почту
     //todo навигационная панель для админов
 
+    //todo настроить подсветку активной страницы (в инит js страницы)
+
 }

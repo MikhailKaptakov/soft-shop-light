@@ -108,7 +108,7 @@ render.product.getModalProduct = function(product) {
 
 render.product.createButton = function(functionNameString, buttonText) {
     const buttonWrapper = document.createElement("div");
-    buttonWrapper.className = "card-footer p-4 pt-0 border-top-0 bg-transparent text-center";
+    buttonWrapper.className = "card-footer p-1 pt-0 border-top-0 bg-transparent text-center";
 
     const button = document.createElement("button");
     button.setAttribute("onclick", functionNameString);
