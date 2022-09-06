@@ -68,9 +68,24 @@ render.setArticleText = function(data) {
         for (element of $('.input-article-image-here')) {
             render.getArticleImage(element, data);
         }
+        for (element of $('.input-article-logo-here')) {
+            render.getArticleLogo(element, data);
+        }
 }
 
 render.image = {};
+
+render.getArticleLogo = function(element, data) {
+    const strId = "inserted-image-" + data.id;
+    const defaultImg = "/default-article.svg";
+    const dataType = "svg+xml";
+    if (element.nodeName === "IMG") {
+        render.image.imgTagChange(element, data.logo, dataType, defaultImg , strId); 
+    } else {
+        const image = render.image.imgTag(data.logo, dataType, defaultImg , strId); 
+        element.append(image);
+    }
+}
 
 render.getArticleImage = function(element, data) {
     const strId = "inserted-image-" + data.id;
