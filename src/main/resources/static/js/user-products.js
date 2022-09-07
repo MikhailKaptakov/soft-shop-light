@@ -271,6 +271,5 @@ searcher.sort = function(outerData, fieldname) {
 ajaxApi.getAllAvailable();
 ajaxApi.getFavorite();
 ajaxApi.init();
-searcher.init();
 
 
