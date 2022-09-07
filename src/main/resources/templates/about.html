@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head-tag.html::head-tag-import"></head>
 <body>
+    <script th:src="@{/js/about.js}" defer></script>
+    <nav th:replace="fragments/fragments.html::navigation-base"></nav>
+    <header th:replace="fragments/fragments.html::header" ></header>
+    <section class="py-5">
 
+    </section>
+    <footer th:replace="fragments/fragments.html::footer"></footer>
 </body>
 </html>

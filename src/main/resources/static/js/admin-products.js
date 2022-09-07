@@ -206,6 +206,8 @@ $(function () {
             }
         }
     });
+    setActiveRef("admin-products-page-id");
+    
 });
 
 function renderEditBtn(data, type, row) {

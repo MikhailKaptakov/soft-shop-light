@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import ru.soft1.soft_shop_light.util.exception.*;
 import ru.soft1.soft_shop_light.util.validation.ValidationUtil;
 
@@ -43,7 +44,10 @@ public class ExceptionInfoHandler {
     public ResponseEntity<ErrorInfo> handleError(HttpServletRequest req, NotFoundException e) {
         return logAndGetErrorInfo(req, e, false, ErrorType.DATA_NOT_FOUND);
     }
-
+    @ExceptionHandler(MissingServletRequestPartException.class)
+    public ResponseEntity<ErrorInfo> handleError(HttpServletRequest req, MissingServletRequestPartException e) {
+        return logAndGetErrorInfo(req, e, false, ErrorType.VALIDATION_ERROR);
+    }
     @ExceptionHandler(SendFailedException.class)
     public ResponseEntity<ErrorInfo> conflict(HttpServletRequest req, SendFailedException e) {
         String rootMsg = ValidationUtil.getRootCause(e).getMessage();

@@ -44,3 +44,10 @@ function failNoty(jqXHR) {
     });
     failedNote.show()
 }
+
+
+function setActiveRef(id) {
+    const elem = $('#' + id)[0];
+    elem.classList.toggle("active");
+    elem.setAttribute("aria-current","page");
+}

@@ -25,6 +25,8 @@ ajaxApi.init = function() {
             searcher.startSearch();
         }
     })
+
+    setActiveRef("shop-page-id");
 }
 
 

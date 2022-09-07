@@ -75,33 +75,25 @@ render.setArticleText = function(data) {
 
 render.image = {};
 
-render.getArticleLogo = function(element, data) {
-    const strId = "inserted-image-" + data.id;
-    const defaultImg = "/default-article.svg";
-    const dataType = "svg+xml";
+render.getArticleImg = function(element, imgData, dataType, defaultImg) {
     if (element.nodeName === "IMG") {
-        render.image.imgTagChange(element, data.logo, dataType, defaultImg , strId); 
+        render.image.imgTagChange(element, imgData, dataType, defaultImg); 
     } else {
-        const image = render.image.imgTag(data.logo, dataType, defaultImg , strId); 
+        const image = render.image.imgTag(imgData, dataType, defaultImg); 
         element.append(image);
     }
+}
+
+render.getArticleLogo = function(element, data) {
+    render.getArticleImg(element, data.logo, "svg+xml", "/default-article.svg" , "inserted-image-" + data.id);
 }
 
 render.getArticleImage = function(element, data) {
-    const strId = "inserted-image-" + data.id;
-    const defaultImg = "/default.jpg";
-    const dataType = "jpeg";
-    if (element.nodeName === "IMG") {
-        render.image.imgTagChange(element, data.image, dataType, defaultImg , strId); 
-    } else {
-        const image = render.image.imgTag(data.image, dataType, defaultImg , strId); 
-        element.append(image);
-    }
+    render.getArticleImg(element, data.image, "jpeg", "/default.jpg" , "inserted-image-" + data.id);
 }
 
-render.image.imgTagChange = function(element, data, dataType, defaultSrc, id) {
+render.image.imgTagChange = function(element, data, dataType, defaultSrc) {
     if (data !== undefined && data !== null) {
-        element.setAttribute("id", id);
         element.src = "data:image/"+ dataType +";base64,"+ data;
         element.setAttribute("onerror","this.src='" + defaultSrc + "'");
     } else {
@@ -109,7 +101,7 @@ render.image.imgTagChange = function(element, data, dataType, defaultSrc, id) {
     }
 }
 
-render.image.imgTag = function(data, dataType, defaultSrc, id) {
+render.image.imgTag = function(data, dataType, defaultSrc) {
     const image = document.createElement("img");
     if (data !== undefined && data !== null) {
         image.src = "data:image/"+ dataType +";base64,"+ data;
@@ -117,6 +109,5 @@ render.image.imgTag = function(data, dataType, defaultSrc, id) {
     } else {
         image.src = defaultSrc;
     }
-    image.setAttribute("id", id);
     return image;
 }

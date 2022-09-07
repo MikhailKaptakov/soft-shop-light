@@ -178,7 +178,9 @@ $(function () {
             }
         }
     });
+    setActiveRef("admin-articles-page-id");
 });
+
 
 context.add = function() {
     context.editArticleForm.find(":input").val("");

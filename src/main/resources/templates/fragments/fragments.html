@@ -90,7 +90,8 @@
 <li th:fragment="navigation-about"
     class="nav-item">
   <a class="nav-link"
-     href="#!">
+     th:href="@{/about}"
+     id="about-page-id">
     About
   </a>
 </li>
@@ -98,7 +99,8 @@
 <li th:fragment="navigation-admin-articles"
     class="nav-item">
   <a class="nav-link"
-     th:href="@{/admin/articles}">
+     th:href="@{/admin/articles}"
+     id="admin-articles-page-id">
     Articles
   </a>
 </li>
@@ -106,15 +108,16 @@
 <li th:fragment="navigation-admin-products"
     class="nav-item">
   <a class="nav-link"
-     th:href="@{/admin}">
+     th:href="@{/admin}"
+     id="admin-products-page-id">
     Products
   </a>
 </li>
 
 <li th:fragment="navigation-home"
     class="nav-item">
-  <a class="nav-link active"
-     aria-current="page"
+  <a class="nav-link"
+     id="home-page-id"
      href="#!">
     Home
   </a> <!--настроить выставление текущей страницы-->
@@ -122,8 +125,9 @@
 
 <li th:fragment="navigation-shop-page"
     class="nav-item">
-  <a class="nav-link active"
-     th:href="@{/products}">
+  <a class="nav-link"
+     th:href="@{/products}"
+     id="shop-page-id">
     Shop
   </a> <!--настроить выставление текущей страницы-->
 </li>
