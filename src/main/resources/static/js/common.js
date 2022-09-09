@@ -33,6 +33,15 @@ function successNoty(key) {
     }).show();
 }
 
+function handSuccessNoty(value) {
+    closeNoty();
+    new Noty({
+        text: "<span class='fa fa-lg fa-check'></span> &nbsp;" + value,
+        type: 'success',
+        layout: "bottomRight",
+        timeout: 1000
+    }).show();
+}
 
 function failNoty(jqXHR) {
     closeNoty();

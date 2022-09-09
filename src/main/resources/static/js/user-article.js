@@ -16,73 +16,90 @@ ajax.init = function() {
     });
 }
 
-ajax.initial = function(id) {
-    $.get(ajax.url.user + id, ajax.getHandler);
-}
-
-
-ajax.getHandler = function(data) {
-    render.inputImages(data);
-    render.inputLogo(data);
-}
-
 render = {};
 
 render.init = function() {
-    const id = $('#article-id')[0].innerText;
-    ajax.initial(id);
+   render.articleText.inputImage();
+   render.articleText.inputLogo();
+   render.articleText.inputBackgroundImg();
+   render.articleText.setClassesToOuterContainer();
+   render.articleText.setClassesToBody();
+
 }
 
-render.inputImages = function(data) {
-    for (element of $('.input-article-image-here')) {
-        render.getArticleImage(element, data);
+render.articleText = {};
+
+render.articleText.setClassesToOuterContainer = function() {
+    const outSettings = $("#set-outer-div-classes")[0];
+    const container = $("#article-container")[0];
+    if (outSettings !== undefined) {
+        for (const cl of outSettings.classList) {
+            container.classList.add(cl);
+        }
+        outSettings.remove();
+    }
+} 
+
+render.articleText.setClassesToBody = function() {
+    const outSettings = $("#set-body-classes")[0];
+    const container = $(document.body)[0];
+    if (outSettings !== undefined) {
+        for (const cl of outSettings.classList) {
+            container.classList.add(cl);
+        }
+        outSettings.remove();
     }
 }
 
-render.inputLogo = function(data) {
-    for (element of $('.input-article-logo-here')) {
-        render.getArticleLogo(element, data);
+
+render.articleText.inputImage = function() {
+    render.articleText.inputImgTag("article-image", "input-article-image-here");
+}
+
+render.articleText.inputLogo = function() {
+    render.articleText.inputImgTag("article-logo", "input-article-logo-here");
+}
+
+render.articleText.inputImgTag = function(prototipeId, elementsClass) {
+    const img = $("#"+prototipeId)[0];
+    for (element of $('.'+elementsClass)) {
+        render.articleText.appendImagesToArticle(element, img.getAttribute("src"), img.getAttribute("onerror"));
     }
 }
 
-render.image = {};
-
-render.getArticleImg = function(element, imgData, dataType, defaultImg) {
+render.articleText.appendImagesToArticle = function(element, src, onerror) {
     if (element.nodeName === "IMG") {
-        render.image.imgTagChange(element, imgData, dataType, defaultImg); 
+        render.articleText.insertSrcToImgTag(element, src, onerror); 
     } else {
-        const image = render.image.imgTag(imgData, dataType, defaultImg); 
-        element.append(image);
+        render.articleText.appendImgToElement(element, src, onerror);
     }
 }
 
-render.getArticleLogo = function(element, data) {
-    render.getArticleImg(element, data.logo, "svg+xml", "/default-article.svg" , "inserted-image-" + data.id);
+render.articleText.insertSrcToImgTag = function(element, src, onerror) {
+    element.src = src;
+    element.setAttribute("onerror", onerror);
 }
 
-render.getArticleImage = function(element, data) {
-    render.getArticleImg(element, data.image, "jpeg", "/default.jpg" , "inserted-image-" + data.id);
-}
-
-render.image.imgTagChange = function(element, data, dataType, defaultSrc) {
-    if (data !== undefined && data !== null) {
-        element.src = "data:image/"+ dataType +";base64,"+ data;
-        element.setAttribute("onerror","this.src='" + defaultSrc + "'");
-    } else {
-        element.src = defaultSrc;
-    }
-}
-
-render.image.imgTag = function(data, dataType, defaultSrc) {
+render.articleText.appendImgToElement = function(element, src, onerror) {
     const image = document.createElement("img");
-    if (data !== undefined && data !== null) {
-        image.src = "data:image/"+ dataType +";base64,"+ data;
-        image.setAttribute("onerror","this.src='" + defaultSrc + "'");
-    } else {
-        image.src = defaultSrc;
-    }
-    return image;
+    image.src = src;
+    image.setAttribute("onerror", onerror);
+    element.append(image);
 }
+
+render.articleText.inputBackgroundImg = function() {
+    for (element of $('.input-back-article-image-here')) {
+        render.articleText.insertBackground(element, $("#article-image")[0].getAttribute("src"));
+    }
+    for (element of $('.input-back-article-logo-here')) {
+        render.articleText.insertBackground(element, $("#article-logo")[0].getAttribute("src"));
+    }
+}
+
+render.articleText.insertBackground = function(element, src) {
+    element.setAttribute("style","background-image:url(" + src + ")");
+}
+
 
 ajax.init();
 render.init();

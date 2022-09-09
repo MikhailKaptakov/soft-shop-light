@@ -71,9 +71,33 @@ render.setArticleText = function(data) {
         for (element of $('.input-article-logo-here')) {
             render.getArticleLogo(element, data);
         }
+        render.setClassesToOuterContainer();
+        render.setClassesToBody();
 }
 
 render.image = {};
+
+render.setClassesToOuterContainer = function() {
+    const outSettings = $("#set-outer-div-classes")[0];
+    const container = $("#article-container")[0];
+    if (outSettings !== undefined) {
+        for (const cl of outSettings.classList) {
+            container.classList.add(cl);
+        }
+        outSettings.remove();
+    }
+}
+
+render.setClassesToBody = function() {
+    const outSettings = $("#set-body-classes")[0];
+    const container = $("#article-container")[0];
+    if (outSettings !== undefined) {
+        for (const cl of outSettings.classList) {
+            container.classList.add(cl);
+        }
+        outSettings.remove();
+    }
+}
 
 render.getArticleImg = function(element, imgData, dataType, defaultImg) {
     if (element.nodeName === "IMG") {

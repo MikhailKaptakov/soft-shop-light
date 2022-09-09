@@ -144,15 +144,17 @@ ajaxApi.sendOrderForm = function() {
         url: ajaxApi.cartUrl + "form",
         data: $("#modal-order-form").serialize()
     }).done(function () {
-        ajaxApi.verificationModal();
+        //ajaxApi.verificationModal();
+        $("#modal-order").modal("hide");
+        ajaxApi.sendOrderFinal()
     });
 }
 
-ajaxApi.verificationModal = function() {
-    $("#modal-order").modal("hide");
-    $("#modal-verify-order").modal();
-    ajaxApi.getOrderString();
-}
+//ajaxApi.verificationModal = function() {
+//    $("#modal-order").modal("hide");
+//    $("#modal-verify-order").modal();
+//    ajaxApi.getOrderString();
+//}
 
 ajaxApi.getOrderString = function() {
     $.get(ajaxApi.orderUrl, render.order.renderVerify);
@@ -163,8 +165,8 @@ ajaxApi.sendOrderFinal = function() {
         url: ajaxApi.orderUrl,
         type: "POST"
     }).done(function () {
-        $("#modal-verify-order").modal("hide");
-        successNoty("Заказ отправлен");
+       // $("#modal-verify-order").modal("hide");
+        handSuccessNoty("Заказ отправлен");
     });
 }
 const alphabetic = {};

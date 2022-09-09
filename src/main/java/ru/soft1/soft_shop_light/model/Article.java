@@ -3,11 +3,15 @@ package ru.soft1.soft_shop_light.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.jdbc.BadSqlGrammarException;
 import ru.soft1.soft_shop_light.util.validation.NoHtml;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.Base64;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -92,7 +96,13 @@ public class Article extends AbstractEntity {
                 article.available);
     }
 
+    public String getStringLogo() {
+        return Base64.getEncoder().encodeToString(logo);
+    }
 
+    public String getStringImage() {
+        return Base64.getEncoder().encodeToString(image);
+    }
 }
 
 

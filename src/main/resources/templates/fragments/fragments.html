@@ -162,11 +162,12 @@
   </div>
 </header>
 <footer th:fragment="footer"
-        class="py-5 bg-dark">
+        class="py-1 bg-dark fixed-bottom">
   <div class="container">
     <p class="m-0 text-center text-white">
     Copyright &copy;Заполни это 2022
     </p>
+    <p class="m-0 text-center text-white"><label>*</label>Указанные цены не являются публичной офертой</p>
   </div>
   <div th:replace="fragments/fragments.html::i18n-init"></div>
 </footer>
@@ -473,7 +474,7 @@
   </div>
   <div class="text-center button-center">
    <button type="button"
-           class="btn btn-outline-light btn-slide justify-content-center"
+           class="btn btn-outline-dark btn-slide justify-content-center"
            onclick="alphabetic.slidePannel()"
            id="alphabetic-nav-btn">
      <i class="fa fa-arrow-down"></i>
@@ -719,7 +720,8 @@
                 class="close"
                 data-dismiss="modal">&times;</button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body"
+           id="article-container">
         <div class="container"
              id="article-text-body">
         </div>

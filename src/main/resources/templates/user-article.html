@@ -2,20 +2,28 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/head-tag.html::head-tag-import"></head>
 <body>
-<script th:src="@{/js/user-article.js}" defer></script>
-<link th:href="@{/css/articles.css}" rel="stylesheet"/>
-<nav th:replace="fragments/fragments.html::navigation-base"></nav>
-<header th:replace="fragments/fragments.html::header" ></header>
-<section class="py-5">
-  <div class="text-center text-white">
-    <h3 th:text="${article.header}" class = "d-inline"></h3>
+  <script th:src="@{/js/user-article.js}" defer></script>
+  <link th:href="@{/css/articles.css}" rel="stylesheet"/>
+  <nav th:replace="fragments/fragments.html::navigation-base"></nav>
+  <header th:replace="fragments/fragments.html::header" ></header>
+  <section class="py-5">
+    <div class="text-center text-white">
+       <h3 th:text="${article.header}" class = "d-inline"></h3>
+    </div>
+    <div class="text-justify container" th:utext="${article.text}" id="article-container"></div>
+  </section>
+  <footer th:replace="fragments/fragments.html::footer"></footer>
+  <var id="article-id"
+       th:text="${article.id}"
+       style="display:none"></var>
+  <div style="display:none">
+    <img th:src="${'data:image/svg+xml;charset=utf-8;base64,'+article.getStringLogo()}"
+         onerror="/default-article.svg"
+         id="article-logo">
+    <img th:src="${'data:image/jpeg;charset=utf-8;base64,'+article.getStringImage()}"
+         onerror="/default.jpeg"
+         id="article-image">
   </div>
-  <div class="text-justify container" th:utext="${article.text}"></div>
-</section>
-<footer th:replace="fragments/fragments.html::footer"></footer>
-<var id="article-id"
-     th:text="${article.id}"
-     style="display:none"></var>
 </body>
 </html>
 
