@@ -34,7 +34,12 @@ public class ArticleController {
 
     @GetMapping("/{id}")
     public String openArticle(@PathVariable("id") long id, @ModelAttribute("article") Article article) {
-        Article current = articleService.getAvailable(id);
+        Article current;
+        try {
+            current = articleService.getAvailable(id);
+        } catch (Exception e) {
+            return "redirect:/home";
+        }
         article.setHeader(current.getHeader());
         article.setText(current.getText());
         article.setLogo(current.getLogo());
