@@ -84,6 +84,13 @@
     <li th:replace="fragments/fragments.html::navigation-admin-products"></li>
     <li th:replace="fragments/fragments.html::navigation-admin-articles"></li>
     <li th:replace="fragments/fragments.html::navigation-about"></li>
+    <li>
+      <form method="post"
+               th:action="@{/logout}">
+        <input type="submit"
+               value="Logout"/>
+      </form>
+    </li>
   </ul>
 </div>
 

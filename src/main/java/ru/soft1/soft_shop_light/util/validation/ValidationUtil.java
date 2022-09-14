@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.springframework.core.NestedExceptionUtils;
 import org.springframework.lang.NonNull;
 import ru.soft1.soft_shop_light.model.HasId;
+import ru.soft1.soft_shop_light.to.OrderPositionList;
 import ru.soft1.soft_shop_light.util.exception.ErrorType;
 import ru.soft1.soft_shop_light.util.exception.IllegalRequestDataException;
 import ru.soft1.soft_shop_light.util.exception.NotFoundException;
@@ -31,6 +32,12 @@ public class ValidationUtil {
         Set<ConstraintViolation<T>> violations = validator.validate(bean);
         if (!violations.isEmpty()) {
             throw new ConstraintViolationException(violations);
+        }
+    }
+
+    public static void checkProductListIsEmpty(OrderPositionList orderPositionList) {
+        if (orderPositionList.itsPositionsEmpty()) {
+            new IllegalRequestDataException("Корзина не должна быть пустой");
         }
     }
 
