@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.soft1.soft_shop_light.configuration.CustomProperties;
 import ru.soft1.soft_shop_light.configuration.ValidationCustomer;
 import ru.soft1.soft_shop_light.model.ProductOrder;
 import ru.soft1.soft_shop_light.service.OrderService;
@@ -26,6 +27,9 @@ public class UiProductOrderController {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private CustomProperties customProperties;
+
     @GetMapping
     public String[] getOrderMessage
             (@ModelAttribute("userOrderPositions") OrderPositionList userOrderPositions,
@@ -39,13 +43,14 @@ public class UiProductOrderController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void sendOrderToEmail(@ModelAttribute("userOrderPositions") OrderPositionList userOrderPositions,
-                                 @Validated(ValidationCustomer.Web.class) @ModelAttribute("userOrderForm")
+    public void sendOrder(@ModelAttribute("userOrderPositions") OrderPositionList userOrderPositions,
+                          @Validated(ValidationCustomer.Web.class) @ModelAttribute("userOrderForm")
                                          ProductOrderForm userProductOrderForm) {
         ValidationUtil.checkProductListIsEmpty(userOrderPositions);
         log.info("send order by email");
-        //orderService.sendByEmailWithoutDb(ProductOrderUtil.toProductOrder(userOrderPositions, userProductOrderForm));
-        // todo
+        if (customProperties.isSendToEmail()) {
+            orderService.sendByEmailWithoutDb(ProductOrderUtil.toProductOrder(userOrderPositions, userProductOrderForm));
+        }
         userOrderPositions.removeAll();
     }
 

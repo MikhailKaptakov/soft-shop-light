@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.servlet.View;
 import ru.soft1.soft_shop_light.util.exception.ApplicationException;
 import ru.soft1.soft_shop_light.util.exception.ErrorType;
 import ru.soft1.soft_shop_light.util.validation.ValidationUtil;
@@ -42,7 +43,6 @@ public class GlobalExceptionHandler {
     private ModelAndView logAndGetExceptionView(HttpServletRequest req, Exception e, boolean logException,
                                                 ErrorType errorType, String code) {
         Throwable rootCause = ValidationUtil.logAndGetRootCause(log, req, e, logException, errorType);
-
         ModelAndView mav = new ModelAndView("exception",
                 Map.of("exception", rootCause, "message",
                         code != null ? messageSourceAccessor.getMessage(code) : ValidationUtil.getMessage(rootCause),

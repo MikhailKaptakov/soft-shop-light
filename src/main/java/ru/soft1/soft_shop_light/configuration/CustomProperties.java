@@ -20,4 +20,5 @@ public class CustomProperties {
 
     private String adminPassword = "1";
 
+    private boolean sendToEmail = false;
 }
