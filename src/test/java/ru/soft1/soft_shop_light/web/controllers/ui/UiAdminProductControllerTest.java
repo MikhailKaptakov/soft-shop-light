@@ -179,6 +179,8 @@ class UiAdminProductControllerTest extends AbstractControllerTest {
          полная переработка js,
         разбить по файлам, для более гибкого тематического использования
         избавиться от дублирования в js
+
+        -тест копирования на флешку
        */
 
 }
