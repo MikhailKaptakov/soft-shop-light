@@ -1,7 +1,7 @@
 package ru.soft1.soft_shop_light.model;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+import org.hibernate.Hibernate;
 import org.hibernate.validator.constraints.Range;
 import ru.soft1.soft_shop_light.util.validation.NoHtml;
 
@@ -9,9 +9,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Objects;
 
 @Data
-@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "product")
 public class Product extends AbstractEntity {
@@ -58,10 +58,10 @@ public class Product extends AbstractEntity {
     @Range(min = 0, max = Integer.MAX_VALUE)
     private int deliveryTimeInDays;
 
-    @Column(name = "nds_include", nullable = false /*columnDefinition = "bool default true"*/)
+    @Column(name = "nds_include", nullable = false, columnDefinition = "boolean default true")
     private boolean ndsInclude;
 
-    @Column(name = "req_tech_support", nullable = false/*, columnDefinition = "bool default false"*/)
+    @Column(name = "req_tech_support", nullable = false, columnDefinition = "boolean default false")
     private boolean requiredTechnicalSupport;
 
     @Column(name="available", nullable = false, columnDefinition = "boolean default false")
@@ -148,5 +148,18 @@ public class Product extends AbstractEntity {
                 product.available,
                 product.favorite);
         this.setImage(product.image);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Product product = (Product) o;
+        return id != null && Objects.equals(id, product.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

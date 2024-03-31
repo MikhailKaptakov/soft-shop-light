@@ -57,7 +57,7 @@
 </nav>
 
 <div th:fragment="navigation-insert-base" class="collapse navbar-collapse"
-     id="navbarSupportedContent">
+     id="navigationInsertBase">
   <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
     <li th:replace="fragments/fragments.html::navigation-home"></li>
     <li th:replace="fragments/fragments.html::navigation-shop-page"></li>
@@ -66,7 +66,7 @@
 </div>
 
 <div th:fragment="navigation-insert-shop" class="collapse navbar-collapse"
-     id="navbarSupportedContent">
+     id="navigationInsertShop">
   <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
     <li th:replace="fragments/fragments.html::navigation-home"></li>
     <li th:replace="fragments/fragments.html::navigation-shop-page"></li>
@@ -161,9 +161,9 @@
         class="bg-dark py-5">
   <div class="container px-4 px-lg-5 my-5">
     <div class="text-center text-white">
-      <h1 class="display-4 fw-bolder">Придумай название</h1>
+      <h1 class="display-4 fw-bolder">название</h1>
       <p class="lead fw-normal text-white-50 mb-0">
-        Андрей, придумай уже слоган!
+        слоган
       </p>
     </div>
   </div>

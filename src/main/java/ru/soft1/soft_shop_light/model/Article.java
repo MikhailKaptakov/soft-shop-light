@@ -3,14 +3,14 @@ package ru.soft1.soft_shop_light.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.springframework.jdbc.BadSqlGrammarException;
+import org.springframework.util.ResourceUtils;
 import ru.soft1.soft_shop_light.util.validation.NoHtml;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.lang.reflect.Array;
-import java.util.Arrays;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Base64;
 
 @Data
@@ -97,11 +97,31 @@ public class Article extends AbstractEntity {
     }
 
     public String getStringLogo() {
-        return Base64.getEncoder().encodeToString(logo);
+        if (logo != null) {
+            return Base64.getEncoder().encodeToString(logo);
+        } else {
+            return getDefault("src/main/resources/static/default-article.svg");
+        }
     }
 
     public String getStringImage() {
+        if (logo != null)
         return Base64.getEncoder().encodeToString(image);
+        else {
+            return getDefault("src/main/resources/static/default.jpg");
+        }
+    }
+
+    private String getDefault(String resource) {
+        try {
+            return Base64.getEncoder().encodeToString(
+                    Files.readAllBytes(ResourceUtils.getFile
+                                    (resource)
+                            .toPath()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }
 
